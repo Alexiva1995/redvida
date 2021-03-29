@@ -1,48 +1,42 @@
 @extends('layouts.login')
 
 @section('content')
-    <section class="row flexbox-container">
-        <img height="100" src="{{asset('assets/imgLanding/foto-logo.png')}}">
+    <section class="row flexbox-container" style="background: url(http://localhost:8000/assets/imgLanding/fondo-redvida.png) no-repeat fixed center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; ">
         <div class="col-12 d-flex justify-content-center">
             <div class="card bg-authentication rounded-0 mb-0">
                 <div class="row m-0" style="background-color: white;">
                     <div class="col-12 p-0">
-                        <div class="card rounded-0 mb-0 px-2">
-                            <div class="card-header pb-1">
-                                <div class="card-title inicio">
-                                    <h4 class="mb-0" style="color: #00000F; font-weight: bold;">Iniciar Sesión</h4>
-                                </div>
-                                <div class="card-title recuperar" style="display:none;">
-                                    <h4 class="mb-0" style="color: #00000F; font-weight: bold;">Recuperar tu clave</h4>
-                                </div>
-     
-                            </div><p class="px-2" style="color: #00184E;">Bienvenido de nuevo, inicie sesión en su cuenta.</p>
+                        <div class="card rounded-0 mb-0 p-2">
+                            <div class="pt-50 pb-1 pb-2 text-center">
+                                <img src="{{asset('assets/imgLanding/logo.png')}}" alt="branding logo">
+                            </div>
 
                             {{-- alertas --}}
                             @include('dashboard.componentView.alert')
 
                             <div class="card-content">
                                 <div class="card-body pt-1">
+                                    <div class="inicio">
+                                        <h4 class="mb-0" style="color: #6B6B6B; font-size: 16px; font-weight: bold;">Iniciar Sesión</h4>
+                                        <h6 class="mt-2 mb-3" style="color: #6B6B6B; font-size: 12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Euismod ac amet, ut mauris vitae.</h6>
+                                    </div>
+                                    <div class="recuperar" style="display:none;">
+                                        <h4 class="mb-0" style="color: #6B6B6B; font-size: 16px; font-weight: bold;">Recuperar Clave</h4>
+                                        <h6 class="mt-2 mb-3" style="color: #6B6B6B; font-size: 12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Euismod ac amet, ut mauris vitae.</h6>
+                                    </div>
                                     {{-- registro --}}
                                     <form class="login-form inicio" method="POST" action="{{ route('autenticacion-login') }}">
                                         {{ csrf_field() }}
-                                        <fieldset class="form-label-group form-group position-relative has-icon-left">
-                                            <input type="text" class="form-control" id="user-name" placeholder="Ingresa tu nombre de usuario"
-                                                required value="{{ old('user_email') }}" name="user_email">
-                                            <div class="form-control-position">
-                                                <i class="feather icon-user"></i>
-                                            </div>
-                                            <label for="user-name">Nombre de Usuario</label>
-                                        </fieldset>
 
-                                        <fieldset class="form-label-group position-relative has-icon-left">
-                                            <input type="password" class="form-control" id="user-password"
-                                                placeholder="Ingresa tu contraseña" required name="password">
-                                            <div class="form-control-position">
-                                                <i class="feather icon-lock"></i>
-                                            </div>
-                                            <label for="user-password">Clave</label>
-                                        </fieldset>
+                                        <div class="form-group">
+                                            <label class="mb-1" for="user_email">Usuario</label>
+                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group"  autocomplete="off" name="user_email" id="user_email" value="{{ old('user_email') }}" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="mb-1" for="password">Contraseña</label>
+                                            <input type="password" class="form-control form-control-solid placeholder-no-fix form-label-group" autocomplete="off" name="password" id="password" minlength="8" required/>
+                                        </div>
+
                                         <div class="form-group d-flex justify-content-between align-items-center">
                                             <div class="text-left">
                                                 <fieldset class="checkbox">
@@ -53,49 +47,38 @@
                                                                 <i class="vs-icon feather icon-check"></i>
                                                             </span>
                                                         </span>
-                                                        <span class="" style="font-size: 12px; color: #00184E; font-weight: bold;">Recordar</span>
+                                                        <span class="" style="font-size: 12px; color: color: #6B6B6B;">Recordar datos</span>
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                            {{-- <div class="text-right">
-                                                <a class="card-link" onclick="toggle()" href="javascript:;" style="font-size: 12px; color: #00184E; font-weight: bold;">
-                                                    ¿Olvidaste tu Contraseña?
+                                            <div class="text-right">
+                                                <a class="card-link" onclick="toggle()" href="javascript:;" style="font-size: 12px; color: #6B6B6B;">
+                                                    Olvidé mi contraseña
                                                 </a>
-                                            </div> --}}
+                                            </div>
                                         </div><br>
 
-                                        <button type="submit" class="btn" style="display: block; background-color: #C8AD77; color: white; font-weight: bold; width: 100%;">INGRESAR</button>
+                                        <button type="submit" class="btn" style="display: block; background-color: #34C900 !important; color: white; font-weight: bold; width: 100%;">Ingresar</button>
 
-                                        <div style="padding: 30px 0 0 0;" class="text-center">¿No tienes una cuenta? <a href="{{route('autenticacion.new-register')}}" style="font-size: 12px; color: #00184E; font-weight: bold;">Regístrate</a></div>
+                                        <div style="padding: 30px 0 0 0; font-size: 12px;" class="text-center">¿Aún no tienes una cuenta? <a href="{{route('autenticacion.new-register')}}" style=" color: #6B6B6B;; font-weight: bold;"><u>Regístrate</u></a></div>
                                     </form>
                                     {{-- reset password --}}
                                     <form class="forget-form recuperar" action="{{route('autenticacion.clave')}}"
                                         method="post" style="display:none;">
                                         {{ csrf_field() }}
-                                        <div class="form-label-group">
-                                            <input type="email" id="inputEmail" class="form-control" placeholder="Email" name="email">
-                                            <label for="inputEmail">Ingresa tu </label>
+                                        <div class="form-group">
+                                            <label class="mb-1" for="user_email">Ingresa tu correo</label>
+                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group"  autocomplete="off" name="email" required/>
                                         </div>
 
                                         <div style="padding: 30px 0 0 0;">
-                                            <button type="submit" class="btn" style="display: block; background-color: #C8AD77; color: white; width: 100%;">Recuperar Clave</button>
+                                            <button type="submit" class="btn" style="display: block; background-color: #34C900; color: white; width: 100%;">Recuperar Clave</button>
                                         </div>
 
-                                        <div style="padding: 30px 0 0 0;" class="text-center"><a href="javascript:;" onclick="toggle()" style="font-size: 12px; color: #00184E; font-weight: bold;">Regresar al Login</a></div>
+                                        <div style="padding: 30px 0 0 0;" class="text-center"><a href="javascript:;" onclick="toggle()" style="font-size: 12px; color: #6B6B6B;">Regresar</a></div>
                                     </form>
                                 </div>
                             </div>
-                            {{-- <div class="login-footer">
-                                <div class="divider">
-                                    <div class="divider-text">OR</div>
-                                </div>
-                                <div class="footer-btn d-inline">
-                                    <a href="#" class="btn btn-facebook"><span class="fa fa-facebook"></span></a>
-                                    <a href="#" class="btn btn-twitter white"><span class="fa fa-twitter"></span></a>
-                                    <a href="#" class="btn btn-google"><span class="fa fa-google"></span></a>
-                                    <a href="#" class="btn btn-github"><span class="fa fa-github-alt"></span></a>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
