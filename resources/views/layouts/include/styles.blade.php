@@ -184,13 +184,23 @@
     }
 
     .main-menu .nav-item.hover{
-        background: #C8AD77;
+        background: #34C900;
+        color: white !important;
+    }
+    .main-menu .nav-item.hover > a{
+        color: white !important;
     }
 
     .main-menu.menu-light .navigation > li.open > a, .main-menu.menu-light .navigation > li.sidebar-group-active > a{
-        background: #C8AD77 !important;
+        background: #34C900 !important;
+        color: white !important;
     }
-
+    .main-menu.menu-light .navigation > li ul li {
+        background: white;
+    }
+    .main-menu.menu-light .navigation > li ul li.hover > a{
+        background: #34C900;
+    }
 </style>
 
 @stack('custom_css')

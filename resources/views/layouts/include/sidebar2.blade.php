@@ -1,10 +1,10 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true"
-    style="background-color: #1b1b1b;">
+    style="background-color: #ffffff;">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <a class="navbar-brand" href="" href="" style="width: 100%; margin: 0px;">
-                <div class="brand-logo2 text-center" style="width: 100%;">
-                    <img src="{{ asset('assets/imgLanding/logo-dashboard.png') }}" height="100">
+                <div class="brand-logo2 text-center mt-2" style="width: 100%;">
+                    <img src="{{ asset('assets/imgLanding/logo.png') }}" >
                 </div>
             </a>
         </ul>
@@ -12,135 +12,61 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
-            style="background-color: #1b1b1b;">
-            {{-- INICIO --}}
-
-            {{-- RANKING --}}
-
+            style="background-color: #ffffff">
             <li class="nav-item">
-                <a href="{{url('mioficina/admin')}}" class="nav-link text-white nav-toggle">
-                    <i class="fa fa-home"></i>
-                    <span class="title">Dashboard</span>
+                <a href="{{url('mioficina/admin')}}" class="nav-link nav-toggle">
+                    <i class="feather icon-home"></i>
+                    <span class="title">Inicio</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="javascript:;" class="nav-link nav-toggle" style="color: #FFFFFF;">
-                    <i class="feather icon-bar-chart-2"></i>
-                    <span class="title">Inversiones</span>
+                <a href="{{route('referraltree', ['tree'])}}" class="nav-link nav-toggle">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="title">Árbol</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{url('mioficina/tienda')}}" class="nav-link nav-toggle">
+                    <i class="fas fa-store-alt"></i>
+                    <span class="title">Tienda</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="feather icon-briefcase"></i>
+                    <span class="title">Mi Negocio</span>
                     <span class="arrow"></span>
                 </a>
-                <ul class="sub-menu" style="background-color: #1b1b1b;">
-                    <li class="nav-item">
-                        <a href="{{url('mioficina/tienda')}}" class="nav-link" style="color: #FFFFFF;">
-                            <i class="feather icon-circle"></i>
-                            <span class="title">Invertir</span>
+                <ul class="sub-menu">
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{route('directrecords')}}" class="nav-link" >
+                            <i class="feather icon-briefcase"></i>
+                            <span class="title">Mi Negocio - Directos</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{route('wallet-invesiones')}}" class="nav-link" style="color: #FFFFFF;">
-                            <i class="feather icon-circle"></i>
-                            <span class="title">Mis Inversiones</span>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="#" class="nav-link">
+                            <i class="feather icon-briefcase"></i>
+                            <span class="title">Mi Negocio - Organización</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            {{--FIN RANKING --}}
-            {{-- INICIO LIQUIDAR --}}
-            <li>
-                <a href="{{route('liquidacion.user.comision')}}" class="nav-link text-white nav-toggle">
+            <li class="nav-item">
+                <a href="#" class="nav-link nav-toggle">
+                    <i class="feather icon-user"></i>
+                    <span class="title">Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('liquidacion.user.comision')}}" class="nav-link nav-toggle">
                     <i class="feather icon-activity"></i>
-                    <span class="title">Liquidar</span>
+                    <span class="title">Liquidaciones</span>
                 </a>
             </li>
-            {{-- FIN LIQUIDAR --}}
-            {{-- INICIO WALLET --}}
-            <li class="nav-item">
-                <a href="{{route('wallet-index')}}" class="nav-link text-white">
-                    <i class="feather icon-bar-chart"></i>
-                    <span class="title">Wallet</span>
-                </a>
-            </li>
-            {{-- FIN WALLET --}}
-            {{-- INICIO DE ORDENES --}}
-            <li class="nav-item">
-                <a href="javascript:;" class="nav-link text-white nav-toggle">
-                    <i class="feather icon-activity"></i>
-                    <span class="title">Ordenes</span>
-                    <span class="arrow"></span>
-                </a>
-                <ul class="sub-menu" style="background-color: #1b1b1b;">
-                    <li class="nav-item">
-                        <a href="{{route('personalorders')}}" class="nav-link text-white">
-                            <span class="menu-title" data-i18n="Historial de Ordenes">
-                                <i class="feather icon-circle"></i>
-                                Ordenes Personales
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('networkorders')}}" class="nav-link text-white">
-                            <span class="menu-title" data-i18n="Historial de Ordenes">
-                                <i class="feather icon-circle"></i>
-                                Ordenes en Red
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            {{-- FIN DE ORDENES --}}
-
-            {{-- GEONOLOGIA --}}
-            <li class="nav-item">
-                <a href="javascript:;" class="nav-link nav-toggle" style="color: #FFFFFF;">
-                    <i class="feather icon-users"></i>
-                    <span class="title">Mi Red</span>
-                    <span class="arrow"></span>
-                </a>
-                <ul class="sub-menu" style="background-color: #1b1b1b;">
-                    <li class="nav-item">
-                        <a href="{{route('autenticacion.new-register').'?referred_id='.Auth::user()->ID}}"
-                            class="nav-link" style="color: #FFFFFF;">
-                            <i class="feather icon-circle"></i>
-                            <span class="title">Nuevo Usuario</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('directrecords')}}" class="nav-link text-white">
-                            <i class="feather icon-circle"></i>
-                            <span class="title">Registro Directo</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('referraltree', ['matriz'])}}" class="nav-link" style="color: #FFFFFF;">
-                            <i class="feather icon-circle"></i>
-                            <span class="title">Árbol Binario</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('referraltree', ['tree'])}}" class="nav-link" style="color: #FFFFFF;">
-                            <i class="feather icon-circle"></i>
-                            <span class="title">Árbol Unilevel</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            {{-- FIN GENEALOGIA --}}
-
-
-            {{-- FIN BOT BRAINBOW --}}
-            {{--INICIO BILLETERA --}}
-
-            {{-- FIN BILLETERA --}}
-
-            {{-- TICKET --}}
-            <li>
-
-
-                {{-- CERRAR SESIÓN --}}
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link"
-                    style="color: #FFFFFF;">
+                    onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link">
                     <i class="feather icon-log-out"></i>
                     <span class="title">Cerrar Sesión</span>
                 </a>
@@ -148,7 +74,7 @@
                     {{ csrf_field() }}
                 </form>
             </li>
-            {{-- FIN CERRAR SESIÓN --}}
+            FIN CERRAR SESIÓN --}}
         </ul>
     </div>
 </div>

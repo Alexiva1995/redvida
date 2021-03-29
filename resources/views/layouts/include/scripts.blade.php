@@ -1,10 +1,12 @@
 <!-- BEGIN: Vendor JS-->
+<script src="https://kit.fontawesome.com/d6f2727f64.js" crossorigin="anonymous"></script>
 <script src="{{asset('app-assets/vendors/js/vendors.min.js')}}"></script>
 @stack('vendor_js')
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{asset('app-assets/vendors/js/charts/apexcharts.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/charts/chart.min.js') }}"></script>
 <script src="{{asset('app-assets/vendors/js/extensions/tether.min.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/extensions/shepherd.min.js')}}"></script>
 @stack('page_vendor_js')
@@ -14,6 +16,7 @@
 <script src="{{asset('app-assets/js/core/app-menu.js')}}"></script>
 <script src="{{asset('app-assets/js/core/app.js')}}"></script>
 <script src="{{asset('app-assets/js/scripts/components.js')}}"></script>
+
 @stack('theme_js')
 <!-- END: Theme JS-->
 

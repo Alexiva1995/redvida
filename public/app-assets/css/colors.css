@@ -3326,8 +3326,8 @@ input:focus ~ .bg-success {
 }
 
 .btn-success {
-  border-color : #00646d!important;
-  background-color : #00646d!important;
+  border-color : #34C900!important;
+  background-color : #34C900!important;
   color : #FFFFFF;
 }
 .btn-success:hover {

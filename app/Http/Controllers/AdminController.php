@@ -71,7 +71,7 @@ class AdminController extends Controller
                 ];
             }
             
-            view()->share('title', 'Balance General');
+            view()->share('title', '');
             return view('dashboard.index', compact('data'));
         } catch (\Throwable $th) {
             dd($th);
