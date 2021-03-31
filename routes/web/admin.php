@@ -24,6 +24,8 @@ Route::get('vistaCorreo', function ()
 Route::prefix('mioficina')->group(function ()
 {
 
+ Route::get('mioficina/tienda', 'TiendaController@tiendaIndex')->name('mioficina.tienda');
+
  Route::get('getcurrency', 'AdminController@getCurrency')->name('get.currency');
   
 Route::group(['prefix' => 'autentication'], function (){

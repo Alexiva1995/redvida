@@ -532,4 +532,31 @@ class TiendaController extends Controller
             ]);
         }        
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function tiendaIndex(){
+
+    view()->share('title', 'Tienda');
+
+    return view('mioficina.tienda.index');
+
+}
+
+
+
 }
