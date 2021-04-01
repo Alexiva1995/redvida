@@ -124,7 +124,7 @@ class IndexController extends Controller
      * @param boolean $allNetwork - si solo se va a traer la informacion de los directos o todos mis hijos
      * @return 
      */
-    public function getChidrens2($parent, $array_tree_user, $nivel, $typeTree, $allNetwork) : array
+    public function getChildrens2($parent, $array_tree_user, $nivel, $typeTree, $allNetwork) : array
     {   
         if (!is_array($array_tree_user))
         $array_tree_user = [];

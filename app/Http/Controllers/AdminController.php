@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,8 +11,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Settings;
 use App\OrdenInversion;
-
-
+use App\Commission;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RangoController;
 use App\Http\Controllers\InversionController;
@@ -43,21 +40,8 @@ class AdminController extends Controller
 
 
 
-    public function index()
-    {
+    public function index(){
         try {
-            // $this->comisionController->bonoBinario();
-            $inversiones = $this->indexController->getInversionesUserDashboard(Auth::user()->ID);
-            $paquete = $this->activacionController->verificarPaquete(Auth::user()->ID);
-
-            $data = [
-                'inversiones' => $inversiones,
-                'paquete' => $paquete,
-                'goldPaquete' => $this->inversionesController->getValorPaqueteGold(Auth::user()->ID),
-                'binario' => $this->indexController->statusBinary(Auth::user()->ID),
-                'img' => ($paquete == 1) ? asset('assets/imgLanding/icono_plan_vip.png') : asset('assets/imgLanding/icono_plan_standar.png')
-            ];
-
             if (Auth::user()->rol_id == 0) {
                 $data = [
                     'InversionesActivas' => $this->indexController->getInversionesActivaAdmin(),
@@ -69,10 +53,61 @@ class AdminController extends Controller
                     'paquete' => 1,
                     'goldPaquete' => 0
                 ];
+
+                view()->share('title', '');
+                return view('dashboard.index', compact('data'));
             }
-            
+
+            $comisionesPagadas = Commission::select(DB::raw("SUM(total) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->where('status', '=', 1)
+                                    ->groupBy("month")
+                                    ->orderBy('month', 'ASC')
+                                    ->get();
+
+            $comisionesTotales = Commission::select(DB::raw("SUM(total) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+                                    ->where('user_id', '=', Auth::user()->ID)
+                                    ->where('date', '>=', '2021-01-01')
+                                    ->where('date', '<=', '2021-12-31')
+                                    ->groupBy("month")
+                                    ->orderBy('month', 'ASC')
+                                    ->get();
+
+            $arrayComisionesPagadas = []; 
+            $arrayComisionesTotales = [];
+            for ($i = 0; $i <= 11; $i++){
+            $arrayComisionesPagadas[$i] = 0;
+                $arrayComisionesTotales[$i] = 0;
+            }
+
+            foreach ($comisionesPagadas as $comisionPagada){
+                $arrayComisionesPagadas[$comisionPagada->month - 1] = $comisionPagada->amount;
+            }
+            foreach ($comisionesTotales as $comisionTotal){
+                $arrayComisionesTotales[$comisionTotal->month - 1] = $comisionTotal->amount;
+            }
+
+            $cantReferidosActivos = DB::table('wp_users')
+                                        ->where('referred_id', '=', Auth::user()->ID)
+                                        ->where('status', '=', 1)
+                                        ->count();
+
+            $cantReferidosInactivos = DB::table('wp_users')
+                                        ->where('referred_id', '=', Auth::user()->ID)
+                                        ->where('status', '=', 0)
+                                        ->count();
+
+            $cantReferidos[0] = $cantReferidosActivos;
+            $cantReferidos[1] = $cantReferidosInactivos;
+
+            $ultRegistrosDirectos = DB::table('wp_users')
+                                        ->select('ID', 'display_name', 'user_email', 'status')
+                                        ->where('referred_id', '=', Auth::user()->ID)
+                                        ->take(12)
+                                        ->get();
+
             view()->share('title', '');
-            return view('dashboard.index', compact('data'));
+            return view('dashboard.index')->with(compact('arrayComisionesTotales', 'arrayComisionesPagadas', 'cantReferidos', 'ultRegistrosDirectos')); 
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -87,15 +122,14 @@ class AdminController extends Controller
     public function direct_records(){
 
         // TITLE
-        view()->share('title', 'Usuarios Directos');
+        view()->share('title', 'Mi Negocio - Directos');
         // DO MENU
         view()->share('do', collect(['name' => 'network', 'text' => 'Red de Usuarios']));
         $referidosDirectos = User::where('referred_id', '=', Auth::user()->ID)
-                                ->orderBy('created_at', 'DESC')
+                                ->select('ID', 'user_email', 'created_at', 'status')
+                                ->orderBy('ID', 'DESC')
                                 ->get();
-        foreach ($referidosDirectos as $referido) {
-            $referido->inversion = $this->rangoController->getTotalInvertion($referido->ID);
-        }
+
         return view('dashboard.directRecords')->with(compact('referidosDirectos'));
     }
 
@@ -202,15 +236,14 @@ class AdminController extends Controller
      * @return void
      */
     public function network_records(){
-
         // TITLE
         view()->share('title', 'Usuarios en Red');
         // DO MENU
         view()->share('do', collect(['name' => 'network', 'text' => 'Red de Usuarios']));
-        $allReferido = $this->indexController->getChidrens2(Auth::user()->ID, [], 1, 'position_id', 0);
-        foreach ($allReferido as $referido) {
-            $referido->inversion = $this->rangoController->getTotalInvertion($referido->ID);
-        }
+        $allReferido = $this->indexController->getChildrens2(Auth::user()->ID, [], 1, 'position_id', 0);
+
+        //dd($allReferido);
+
         return view('dashboard.networkRecords')->with(compact('allReferido'));
     }
 

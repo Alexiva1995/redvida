@@ -39,13 +39,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{route('directrecords')}}" class="nav-link" >
+                        <a href="{{ route('directrecords') }}" class="nav-link" >
                             <i class="feather icon-briefcase"></i>
                             <span class="title">Mi Negocio - Directos</span>
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('networkrecords') }}" class="nav-link">
                             <i class="feather icon-briefcase"></i>
                             <span class="title">Mi Negocio - Organización</span>
                         </a>
