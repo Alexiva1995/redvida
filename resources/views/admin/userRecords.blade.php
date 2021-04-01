@@ -13,15 +13,15 @@
 			<div class="table-responsive">
 				<table id="mytable" class="table zero-configuration">
 					<thead>
-						<tr>
+						<tr class="table-success">
 							<th class="text-center">
 								ID
 							</th>
 							<th class="text-center">
-								Usuario
+								Correo
 							</th>
 							<th class="text-center">
-								Correo
+								Nombre
 							</th>
 							<th class="text-center">
 								Estatus
@@ -38,30 +38,54 @@
 								{{ $usuario['ID'] }}
 							</td>
 							<td class="text-center">
-								{{ $usuario['display_name'] }}
+								{{ $usuario['user_email'] }}
 							</td>
 							<td class="text-center">
-								{{ $usuario['user_email'] }}
+								{{ $usuario['display_name'] }}
 							</td>
 							<td class="text-center">
 
 								@if ($usuario['status'] == 1)
-								Activo
+								<div class="chip btn-success">
+									<div class="chip-body">
+										<div class="chip-text">Activo</div>
+									</div>
+								</div>
 								@else
-								Inactivo
+								<div class="chip btn-secondary">
+									<div class="chip-body">
+										<div class="chip-text">Inactivo</div>
+									</div>
+								</div>
 								@endif
 
 							</td>
 							<td class="text-center">
-								<a class="btn btn-info" href="{{ route('admin.useredit', $usuario['ID']) }}">
-									<i class="fa fa-edit"></i></a>
-
 								@if($usuario['ID'] != 1)
-								<button class="btn btn-danger" value="{{$usuario['ID']}}"
+								<div class="row">
+									<div class="col-3">
+
+								<a class="btn" href="{{ route('admin.useredit', $usuario['ID']) }}">
+									<i class="fa fa-edit"></i></a>
+								</div>
+									<div class="col-3">
+									<form action="{{route('impersonate.start',  $usuario['ID'])}}" method="POST" id="formImpersonate">
+										{{ csrf_field() }}
+											<button type="submit" class="btn">
+												<i class="fa fa-eye">
+												</i>
+											</button>
+                                     </form>
+									</div>
+									</div>
+									@endif
+{{-- 
+								@if($usuario['ID'] != 1)
+								<button class="text-danger" value="{{$usuario['ID']}}"
 									onclick="eliminarProducto(this.value)">
 									<i class="fa fa-trash"></i>
 								</button>
-								@endif
+								@endif --}}
 
 							</td>
 						</tr>

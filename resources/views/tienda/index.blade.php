@@ -31,44 +31,66 @@
 <script src="{{asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
 @endpush
 
-<section class="row flexbox-container">
-    <div class="col-12 d-flex justify-content-center">
-        <section id="validation">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Proceso de Inversion</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-body">
-                                <form action="{{route('tienda.inversion')}}" class="steps-validation wizard-circle" method="POST">
-                                    {{ csrf_field() }}
-                                    {{-- paso 1 --}}
-                                    @include('tienda.componentes.inversion')
-                                    {{-- paso 1 fin --}}
+<section id="columns">
+    <div class="row">
 
-                                    {{-- paso 2 --}}
-                                    {{-- @include('tienda.componentes.planes') --}}
-                                    {{-- paso 2 fin --}}
 
-                                    {{-- paso 3 --}}
-                                    {{-- @include('install.component.step3') --}}
-                                    {{-- paso 3 fin --}}
-                                    <input type="hidden" name="idproducto" id="idproducto" value="0000">
-                                    <input type="hidden" id="title2" name="name" value="inversion">
-                                    <input type="hidden" id="price2" name="precio" value="0">
-                                </form>
-                            </div>
+        
+        <div class="col-4">
+                <div class="card">
+                    <div class="card-content">
+                        <img class="" src="https://images-na.ssl-images-amazon.com/images/I/81blwMhVV8L._AC_SL1500_.jpg" height="250" width="300" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title float-right">$562.23</h4>
+                            <h4 class="card-title">⭐⭐⭐⭐⭐</h4>
+                            <br>
+                            <h6 class="card-title small font-weight-medium">Lorem ipsu dolor item</h6>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                         </div>
+                        <a href="#" class="col-12 btn btn-lg btn-success waves-effect waves-light"><i class="feather icon-shopping-cart mr-1"></i> Comprar</a>
                     </div>
                 </div>
-            </div>
-        </section>
+        </div>
+
+
+
+        <div class="col-4">
+                <div class="card">
+                    <div class="card-content">
+                        <img class=" " src="https://phonesdata.com/files/models/Apple--iPhone-11-134.png" height="250" width="250" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title float-right">$365.48</h4>
+                            <h4 class="card-title">⭐⭐⭐⭐⭐</h4>
+                            <br>
+                            <h6 class="card-title small font-weight-medium">Lorem ipsu dolor item</h6>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        </div>
+                        <a href="#" class="col-12 btn btn-lg btn-success waves-effect waves-light"><i class="feather icon-shopping-cart mr-1"></i> Comprar</a>
+                    </div>
+                </div>
+        </div>
+
+
+        <div class="col-4">
+                <div class="card">
+                    <div class="card-content">
+                        <img class=" " src="https://images-eu.ssl-images-amazon.com/images/I/41S3vnwFogL.jpg" height="250" width="300" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title float-right">$135.14</h4>
+                            <h4 class="card-title">⭐⭐⭐⭐⭐</h4>
+                            <br>
+                            <h6 class="card-title small font-weight-medium">Lorem ipsu dolor item</h6>
+                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        </div>
+                        <a href="#" class="col-12 btn btn-lg btn-success waves-effect waves-light"><i class="feather icon-shopping-cart mr-1"></i> Comprar</a>
+                    </div>
+                </div>
+        </div>
+
+
+
     </div>
 </section>
-
-
 {{-- modales --}}
 {{-- @include('tienda.modalCompra') --}}
 {{-- @include('tienda.modalCupon') --}}

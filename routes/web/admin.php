@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 // configuracion inicial
 Route::group(['prefix' => 'installer', 'middleware' => 'licencia'], function (){
   Route::get('/step1', 'InstallController@index')->name('install-step1');
@@ -24,7 +23,7 @@ Route::get('vistaCorreo', function ()
 Route::prefix('mioficina')->group(function ()
 {
 
- Route::get('mioficina/tienda', 'TiendaController@tiendaIndex')->name('mioficina.tienda');
+ Route::get('/tienda/list', 'TiendaController@index')->name('mioficina.tienda');
 
  Route::get('getcurrency', 'AdminController@getCurrency')->name('get.currency');
   
@@ -44,6 +43,14 @@ Route::group(['prefix' => 'autentication'], function (){
   Route::post('/guardarclave', 'RecuperarController@change')->name('autenticacion-new-clave');
   Route::post('/loginnew', 'RecuperarController@nuevoLogin')->name('autenticacion-login');
   Route::get('{token}/validarcorreo', 'RecuperarController@validarCorreo')->name('autenticacion-validar-correo');
+
+  // admin
+  Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
+
+  	// no admin
+	Route::get('/impersonate/stop', 'ImpersonateController@stop')->name('impersonate.stop');
+
+  
 });
 
 
