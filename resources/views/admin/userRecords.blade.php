@@ -69,7 +69,7 @@
 									<i class="fa fa-edit"></i></a>
 								</div>
 									<div class="col-3">
-									<form action="{{route('impersonate.start',  $usuario['ID'])}}" method="POST" id="formImpersonate">
+									<form action="{{route('impersonate.start',  $usuario['ID'])}}" method="POST">
 										{{ csrf_field() }}
 											<button type="submit" class="btn">
 												<i class="fa fa-eye">

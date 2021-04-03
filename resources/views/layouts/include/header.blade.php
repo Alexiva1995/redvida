@@ -43,7 +43,8 @@
                            @endif
                         </span>
                      </div>
-                     <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span>
+                     <span><img class="round" src="{{ asset('img/avatar/avatar.png') }}" alt="avatar" height="40" width="40"></span>
+                     {{-- <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span> --}}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                      <a class="dropdown-item" href="{{ route('admin.user.edit') }}">

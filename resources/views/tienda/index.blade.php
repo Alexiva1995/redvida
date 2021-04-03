@@ -16,7 +16,22 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="d-flex justify-content-center mt-2">
-                        <img class="" src="https://images-na.ssl-images-amazon.com/images/I/81blwMhVV8L._AC_SL1500_.jpg" height="180" width="230" alt="Card">
+                        @if ($item->id == 1)
+                        <img class="" src="{{ asset('img/prod1.png') }}" height="180" width="230" alt="Card">
+                        @elseif($item->id == 2)
+                        <img class="" src="{{ asset('img/prod2.png') }}" height="180" width="230" alt="Card">
+                        @elseif($item->id == 3)
+                        <img class="" src="{{ asset('img/prod3.png') }}" height="180" width="230" alt="Card">
+                        @elseif($item->id == 4)
+                        <img class="" src="{{ asset('img/prod4.png') }}" height="180" width="230" alt="Card">
+                        @elseif($item->id == 5)
+                        <img class="" src="{{ asset('img/paq1.png') }}" height="180" width="230" alt="Card">
+                        @elseif($item->id == 6)
+                        <img class="" src="{{ asset('img/paq2.png') }}" height="180" width="230" alt="Card">
+                        @elseif($item->id == 7)
+                        <img class="" src="{{ asset('img/paq3.png') }}" height="180" width="230" alt="Card">
+                        @endif    
+                        {{-- <img class="" src="https://images-na.ssl-images-amazon.com/images/I/81blwMhVV8L._AC_SL1500_.jpg" height="180" width="230" alt="Card"> --}}
                         </div>
                         <div class="card-body">
                             <h4 class="card-title float-right">{{ $item->valor_publico }} Bs</h4>

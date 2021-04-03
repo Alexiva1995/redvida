@@ -105,7 +105,7 @@ class IndexController extends Controller
             }
 
             $user->avatarTree = $avatarTree;
-            $user->avatar = asset('avatar/'.$user->avatar);
+            $user->avatar = asset('img/avatar/'.$user->avatar);
             $user->nivel = $nivel;
             $user->invertido = $rango->getTotalInvertion($user->ID);
             $user->ladomatriz = $user->ladomatrix;
@@ -159,7 +159,7 @@ class IndexController extends Controller
     {
         $resul = User::where($typeTree, '=', $id)->get();
         foreach ($resul as $user) {
-            $user->avatar = asset('avatar/'.$user->avatar);
+            $user->avatar = asset('img/avatar/'.$user->avatar);
             $user->nivel = $nivel;
         }
         return $resul;

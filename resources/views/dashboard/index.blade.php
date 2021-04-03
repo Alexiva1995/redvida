@@ -140,7 +140,7 @@
 								<div class="row">
 									<div class="col-6">
 										<div class="row">
-											<div class="col-3"><span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="50" width="50"></span></div>
+											<div class="col-3"><span><img class="round" src="{{ asset('img/avatar/'.Auth::user()->avatar) }}" alt="avatar" height="50" width="50"></span></div>
 											<div class="col-9">
 												<div class="user-name text-bold-600" style="color:  #3C3232;">
 					                           		{{ Auth::user()->display_name }}
@@ -176,7 +176,8 @@
 						</div>
 					</div>
 				</div>
-                <div class="col-lg-6 col-md-12 col-sm-12">
+              
+				<div class="col-lg-6 col-md-12 col-sm-12">
 					<div class="card bg-analytics text-white">
 						<div class="card-content">
 							<div class="card-body" style="background: linear-gradient(270.07deg, #E2FFD8 0.08%, #FFFFFF 99.95%);">

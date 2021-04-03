@@ -13,7 +13,7 @@ class ProductosController extends Controller
 	public function index()
     {
         $producto = Producto::all();
-        // $producto = $producto->sortByDesc('estado');
+
 		view()->share('title', 'Tienda');
 
         return view('tienda.index')
@@ -59,7 +59,7 @@ class ProductosController extends Controller
         //        $producto->addMediaFromRequest("photo")->toMediaCollection('photo');
         //    }
 
-        return redirect()->route('mioficina.tienda.list');
+        return redirect()->route('mioficina.tienda.list')->with('message','Se creo el Productoe Exitosamente');
         
     }
 
@@ -95,13 +95,17 @@ class ProductosController extends Controller
         //     $producto->addMediaFromRequest("photo")->toMediaCollection('photo');
         // }
 
-        return redirect()->route('mioficina.tienda.list');
+
+        return redirect()->route('mioficina.tienda.list')->with('message','Se actualizo el Productoe Exitosamente');
     }
 
     public function delete($id)
     {
+
         $producto = Producto::find($id);
+    
         $producto->delete();
-        return redirect()->route('mioficina.tienda.list');
+      
+        return redirect()->route('mioficina.tienda.list')->with('message','Se elimino el Productoe'.' '.$producto->producto.' '.'Exitosamente');
     }
 }
