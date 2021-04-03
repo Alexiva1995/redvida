@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('mioficina.tienda')}}" class="nav-link nav-toggle">
+                <a href="{{route('mioficina.tienda.index')}}" class="nav-link nav-toggle">
                     <i class="fas fa-store-alt"></i>
                     <span class="title">Tienda</span>
                 </a>

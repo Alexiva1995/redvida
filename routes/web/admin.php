@@ -23,7 +23,14 @@ Route::get('vistaCorreo', function ()
 Route::prefix('mioficina')->group(function ()
 {
 
- Route::get('/tienda/list', 'TiendaController@index')->name('mioficina.tienda');
+  // TIENDA
+ Route::get('/tienda/index', 'ProductosController@index')->name('mioficina.tienda.index');
+ Route::get('/tienda/list', 'ProductosController@list')->name('mioficina.tienda.list');
+ Route::get('/tienda/create', 'ProductosController@create')->name('mioficina.tienda.create');
+ Route::get('/tienda/edit/{id}', 'ProductosController@edit')->name('mioficina.tienda.edit');
+ Route::post('/tienda/store', 'ProductosController@store')->name('mioficina.tienda.store');
+ Route::post('/tienda/update/{id}', 'ProductosController@update')->name('mioficina.tienda.update');
+ Route::delete('/tienda/delete/{id}', 'ProductosController@delete')->name('mioficina.tienda.delete');
 
  Route::get('getcurrency', 'AdminController@getCurrency')->name('get.currency');
   
@@ -49,7 +56,6 @@ Route::group(['prefix' => 'autentication'], function (){
 
   	// no admin
 	Route::get('/impersonate/stop', 'ImpersonateController@stop')->name('impersonate.stop');
-
   
 });
 

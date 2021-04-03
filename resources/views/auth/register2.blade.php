@@ -39,7 +39,7 @@
                                         {{ csrf_field() }}
                                         <div class="form-group">
                                             <label class="mb-1" for="user_email">Email</label>
-                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group"  autocomplete="off" name="user_email" id="user_email" required/>
+                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group"  autocomplete="on" name="user_email" id="user_email" required/>
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1" for="password">Contraseña</label>
