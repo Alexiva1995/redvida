@@ -8,7 +8,7 @@
 
     <div class="media">
         <a class="media-left align-self-center" href="#">
-            <img src="{{asset('/avatar/'.$data['principal']->avatar)}}" alt="" height="64" width="64" style="border-radius: 50%;"/>
+            <img src="{{asset('/img/avatar/'.$data['principal']->avatar)}}" alt="" height="64" width="64" style="border-radius: 50%;"/>
         </a>
         <div class="media-body ml-2">
             {{-- <h5 class="media-heading">Middle Aligned Media</h5> --}}

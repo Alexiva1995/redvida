@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/tether-theme-arrows.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/tether.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/shepherd-theme-default.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
 @stack('vendor_css')
 <!-- END: Vendor CSS-->
 
@@ -39,7 +39,7 @@
 
 <!-- BEGIN: Custom CSS-->
 
-<link rel="stylesheet" type="text/css" href="{{('assets/css/style.css')}}">
+{{-- <link rel="stylesheet" type="text/css" href="{{('assets/css/style.css')}}"> --}}
 
 <style>
 

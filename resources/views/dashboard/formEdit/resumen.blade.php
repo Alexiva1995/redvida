@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-2">
                     <div class="card">
                         <div class="card-content">
-                            <img src="{{asset('/avatar/'.$data['principal']->avatar)}}" alt=""
+                            <img src="{{asset('/img/avatar/'.$data['principal']->avatar)}}" alt=""
                                 class="card-img-top img-fluid" >
                                 <div class="card-footer text-center">
                                     <button class="btn btn-primary" data-target="#myModal" data-toggle="modal">Cambiar</button>

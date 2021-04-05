@@ -1,0 +1,7 @@
+// $(document).ready(function() {
+//       @if(!$client->getMedia('photo')->isEmpty())
+//           @if(in_array($client->getMedia('photo')->first()->mime_type,array("image/png", "image/gif", "image/jpeg")))
+//             previewPersistedFile("{{ $client->getMedia('photo')->first()->file }}", 'photo_preview');
+//           @endif
+//         @endif
+//     });

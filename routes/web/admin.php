@@ -2,29 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-// configuracion inicial
-Route::group(['prefix' => 'installer', 'middleware' => 'licencia'], function (){
-  Route::get('/step1', 'InstallController@index')->name('install-step1');
-  Route::post('/savestep1', 'InstallController@saveStep1')->name('install-save-step1');
-  Route::get('/step2', 'InstallController@step2')->name('install-step2');
-  Route::post('/savestep2', 'InstallController@saveStep2')->name('install-save-step2');
-  Route::get('/end', 'InstallController@end')->name('install-end');
-
-});
-
-
-Route::get('vistaCorreo', function ()
-{
-  return view('emails.plantilla');
-});
-
 // Route::get('/', 'HomeController@home');
 
 Route::prefix('mioficina')->group(function ()
 {
-
- Route::get('mioficina/tienda', 'TiendaController@tiendaIndex')->name('mioficina.tienda');
 
  Route::get('getcurrency', 'AdminController@getCurrency')->name('get.currency');
   
@@ -44,7 +25,87 @@ Route::group(['prefix' => 'autentication'], function (){
   Route::post('/guardarclave', 'RecuperarController@change')->name('autenticacion-new-clave');
   Route::post('/loginnew', 'RecuperarController@nuevoLogin')->name('autenticacion-login');
   Route::get('{token}/validarcorreo', 'RecuperarController@validarCorreo')->name('autenticacion-validar-correo');
+
+  // TIENDA
+ Route::get('/tienda/index', 'ProductosController@index')->name('mioficina.tienda.index');
+ Route::get('/tienda/list', 'ProductosController@list')->name('mioficina.tienda.list');
+ Route::get('/tienda/create', 'ProductosController@create')->name('mioficina.tienda.create');
+ Route::get('/tienda/edit/{id}', 'ProductosController@edit')->name('mioficina.tienda.edit');
+ Route::post('/tienda/store', 'ProductosController@store')->name('mioficina.tienda.store');
+ Route::post('/tienda/update/{id}', 'ProductosController@update')->name('mioficina.tienda.update');
+ Route::delete('/tienda/delete/{id}', 'ProductosController@delete')->name('mioficina.tienda.delete');
+
+   // RANGO
+   Route::get('/rango/index', 'RangosController@index')->name('mioficina.rango.index');
+   Route::get('/rango/list', 'RangosController@list')->name('mioficina.rango.list');
+   Route::get('/rango/create', 'RangosController@create')->name('mioficina.rango.create');
+   Route::get('/rango/edit/{id}', 'RangosController@edit')->name('mioficina.rango.edit');
+   Route::post('/rango/store', 'RangosController@store')->name('mioficina.rango.store');
+   Route::post('/rango/update/{id}', 'RangosController@update')->name('mioficina.rango.update');
+   Route::delete('/rango/delete/{id}', 'RangosController@delete')->name('mioficina.rango.delete');
+
+ // BILLETERA
+ Route::get('/billetera/index', 'BilleterasController@index')->name('mioficina.billetera.index');
+
+ // admin
+ Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
+   // no admin
+ Route::get('/impersonate/stop', 'ImpersonateController@stop')->name('impersonate.stop');
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// configuracion inicial
+Route::group(['prefix' => 'installer', 'middleware' => 'licencia'], function (){
+  Route::get('/step1', 'InstallController@index')->name('install-step1');
+  Route::post('/savestep1', 'InstallController@saveStep1')->name('install-save-step1');
+  Route::get('/step2', 'InstallController@step2')->name('install-step2');
+  Route::post('/savestep2', 'InstallController@saveStep2')->name('install-save-step2');
+  Route::get('/end', 'InstallController@end')->name('install-end');
+
+});
+
+
+Route::get('vistaCorreo', function ()
+{
+  return view('emails.plantilla');
+});
+
 
 
 

@@ -1,8 +1,12 @@
 <?php
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 Route::prefix('mioficina')->group(function ()
 {
 	
 	Auth::routes();
+
 
 });
 Route::get('login/{driver}', 

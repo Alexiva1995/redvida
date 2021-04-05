@@ -20,14 +20,20 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{route('mioficina.billetera.index')}}">
+                    <i class="feather icon-credit-card"></i>
+                    <span class="title">Billetera</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{route('referraltree', ['tree'])}}" class="nav-link nav-toggle">
-                    <i class="fas fa-code-branch"></i>
+                    <i class="feather icon-git-merge"></i>
                     <span class="title">Árbol</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('mioficina.tienda')}}" class="nav-link nav-toggle">
-                    <i class="fas fa-store-alt"></i>
+                <a href="{{route('mioficina.tienda.index')}}" class="nav-link nav-toggle">
+                    <i class="feather icon-shopping-bag"></i>
                     <span class="title">Tienda</span>
                 </a>
             </li>
@@ -53,9 +59,15 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link nav-toggle">
+                <a href="{{ route('admin.userrecords') }}" class="nav-link nav-toggle">
                     <i class="feather icon-user"></i>
                     <span class="title">Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('mioficina.rango.index') }}" class="nav-link nav-toggle">
+                    <i class="feather icon-award"></i>
+                    <span class="title">Rangos</span>
                 </a>
             </li>
             <li class="nav-item">

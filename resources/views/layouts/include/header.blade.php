@@ -43,13 +43,19 @@
                            @endif
                         </span>
                      </div>
-                     <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span>
+                     <span><img class="round" src="{{ asset('img/avatar/avatar.png') }}" alt="avatar" height="40" width="40"></span>
+                     {{-- <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span> --}}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                      <a class="dropdown-item" href="{{ route('admin.user.edit') }}">
                         <i class="feather icon-user"></i>
                         Editar Perfil
                      </a>
+                     @if (session('impersonated_by'))
+                            <a class="dropdown-item" href="{{ route('impersonate.stop') }}">
+                                <i class="feather icon-log-in"></i> Volver a mi Usuario
+                            </a> 
+                     @endif
                      <div class="dropdown-divider"></div>
                      <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         <i class="feather icon-power"></i> Salir 
