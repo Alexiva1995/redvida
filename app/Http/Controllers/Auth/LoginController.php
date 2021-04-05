@@ -4,54 +4,54 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\User;
+use App\Sesion;
 use Socialite;
 use Google_Client;
 use Google_Service_People;
+use Auth;
 
-class LoginController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
+class LoginController extends Controller{
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToProvider($provider)
-    {
+    public function post_login(Request $request){
+        $data = ['user_email' => $request->user_email,
+                 'password' => $request->password];
+
+        if (Auth::attempt($data)) {
+            $hoy=date('Y-m-d');
+            $ip = $request->ip();
+            $actividad = new Sesion();
+            $actividad->user_id= Auth::user()->ID;
+            $actividad->fecha= $hoy;
+            $actividad->ip= $ip;
+            $actividad->actividad= 'Inicio Sesion';
+            $actividad->save();
+
+            return redirect()->action('HomeController@index');
+        }else{
+            $user = User::where('user_email', $request->user_email)->first();
+            
+            if (is_null($user)) {
+                return redirect('mioficina/login')->with('msj3', 'El correo ingresado no se encuentra registrado');
+            }else{
+                return redirect('mioficina/login')->with('msj3', 'La contraseña ingresada es incorrecta');
+            }
+        } 
+    }
+
+    public function redirectToProvider($provider){
         return Socialite::driver($provider)->redirect();
     }
 
-   /**
-     * Obtain the user information from provider and log in the user.
-     *
-     * @return Response
-     */
-    public function handleProviderCallback($provider)
-    {
+    public function handleProviderCallback($provider){
         try{
             $user = Socialite::driver($provider)->user();
         } catch (\GuzzleHttp\Exception\ClientException $e) {
@@ -77,6 +77,5 @@ class LoginController extends Controller
 
         $this->guard()->login($user);
         return redirect()->to($this->redirectTo);
-
     }        
 }

@@ -25,7 +25,7 @@
                                         <h6 class="mt-2 mb-3" style="color: #6B6B6B; font-size: 12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Euismod ac amet, ut mauris vitae.</h6>
                                     </div>
                                     {{-- registro --}}
-                                    <form class="login-form inicio" method="POST" action="{{ route('autenticacion-login') }}">
+                                    <form class="login-form inicio" method="POST" action="{{ route('autentication.post-login') }}">
                                         {{ csrf_field() }}
 
                                         <div class="form-group">
@@ -60,11 +60,10 @@
 
                                         <button type="submit" class="btn" style="display: block; background-color: #34C900 !important; color: white; font-weight: bold; width: 100%;">Ingresar</button>
 
-                                        <div style="padding: 30px 0 0 0; font-size: 12px;" class="text-center">¿Aún no tienes una cuenta? <a href="{{route('autenticacion.new-register')}}" style=" color: #6B6B6B;; font-weight: bold;"><u>Regístrate</u></a></div>
+                                        <div style="padding: 30px 0 0 0; font-size: 12px;" class="text-center">¿Aún no tienes una cuenta? <a href="{{route('autentication.register')}}" style=" color: #6B6B6B;; font-weight: bold;"><u>Regístrate</u></a></div>
                                     </form>
                                     {{-- reset password --}}
-                                    <form class="forget-form recuperar" action="{{route('autenticacion.clave')}}"
-                                        method="post" style="display:none;">
+                                    <form class="forget-form recuperar" action="{{ route('autentication.send-password-mail') }}" method="post" style="display: none;">
                                         {{ csrf_field() }}
                                         <div class="form-group">
                                             <label class="mb-1" for="user_email">Ingresa tu correo</label>
