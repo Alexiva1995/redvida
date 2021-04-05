@@ -43,7 +43,7 @@ $(document).ready(function() {
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('range.update', $rango->id) }}" method="POST"
+                    <form class="form form-vertical" action="{{ route('range.update', $range->id) }}" method="POST"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
@@ -52,7 +52,7 @@ $(document).ready(function() {
                                     <div class="form-group">
                                         <label class="h5" for="name">Nombre</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" name="name" value="{{ $rango->name }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $range->name }}">
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@ $(document).ready(function() {
                                     <div class="form-group">
                                         <label class="h5" for="act_direct">Activos Directos</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="act_direct" value="{{ $rango->act_direct }}"/>
+                                            <input type="number" class="form-control" name="act_direct" value="{{ $range->act_direct }}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@ $(document).ready(function() {
                                     <div class="form-group">
                                         <label class="h5" for="diamond_directors">Directores Diamante</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="diamond_directors" value="{{ $rango->diamond_directors }}">
+                                            <input type="number" class="form-control" name="diamond_directors" value="{{ $range->diamond_directors }}">
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@ $(document).ready(function() {
                                     <div class="form-group">
                                         <label class="h5" for="level">Nivel</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="level" value="{{ $rango->level }}">
+                                            <input type="number" class="form-control" name="level" value="{{ $range->level }}">
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@ $(document).ready(function() {
                                     <div class="form-group">
                                         <label class="h5" for="group_vol">Volumen Grupal</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="group_vol" value="{{ $rango->group_vol }}">
+                                            <input type="number" class="form-control" name="group_vol" value="{{ $range->group_vol }}">
                                         </div>
                                     </div>
                                 </div>
@@ -94,8 +94,8 @@ $(document).ready(function() {
                                         <div class="position-relative ">
                                             <select name="status" id="status"
                                             class="custom-select data-toggle="select">
-                                            <option value="0" @if($rango->status == '0') selected  @endif>Inactivo</option>
-                                            <option value="1" @if($rango->status == '1') selected  @endif>Activo</option>
+                                            <option value="0" @if($range->status == '0') selected  @endif>Inactivo</option>
+                                            <option value="1" @if($range->status == '1') selected  @endif>Activo</option>
                                             </select>
                                         </div>
                                     </div>

@@ -16,7 +16,7 @@ class ProductsController extends Controller
 
 		view()->share('title', 'Tienda');
 
-        return view('tienda.index')
+        return view('shop.index')
         ->with('product', $product);
  
     }
@@ -26,7 +26,7 @@ class ProductsController extends Controller
         $product = Product::all();
 
 		view()->share('title', 'Lista de Products');
-        return view('tienda.list')
+        return view('shop.list')
         ->with('product', $product); 
  
     }
@@ -34,7 +34,7 @@ class ProductsController extends Controller
     public function create()
     {
 		view()->share('title', 'Crear Producto');
-        return view('tienda.create');
+        return view('shop.create');
     }
 
     public function store(Request $request)
@@ -71,7 +71,7 @@ class ProductsController extends Controller
         //        $product->addMediaFromRequest("photo")->toMediaCollection('photo');
         //    }
 
-        return redirect()->route('tienda.list')->with('message','Se creo el Producto Exitosamente');
+        return redirect()->route('shop.list')->with('message','Se creo el Producto Exitosamente');
         
     }
 
@@ -80,7 +80,7 @@ class ProductsController extends Controller
         $product = Product::find($id);
 		view()->share('title', 'Editar Producto');
 		
-           return view('tienda.edit')
+           return view('shop.edit')
            ->with('product', $product); 
         
     }
@@ -111,7 +111,7 @@ class ProductsController extends Controller
                 $product->save(); 
     
 
-        return redirect()->route('tienda.list')->with('message','Se actualizo el Producto Exitosamente');
+        return redirect()->route('shop.list')->with('message','Se actualizo el Producto Exitosamente');
     }
 
     public function delete($id)
@@ -121,6 +121,6 @@ class ProductsController extends Controller
     
         $product->delete();
       
-        return redirect()->route('tienda.list')->with('message','Se elimino el Producto'.' '.$product->product.' '.'Exitosamente');
+        return redirect()->route('shop.list')->with('message','Se elimino el Producto'.' '.$product->product.' '.'Exitosamente');
     }
 }

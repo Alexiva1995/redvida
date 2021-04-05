@@ -30,16 +30,11 @@ class HomeController extends Controller
         return view('index');
     }
 
-    /**
-     * Lleva a la vista de blackbox
-     *
-     * @return void
-     */
-    public function blackbox()
-    {
+    /*
+    public function blackbox(){
         view()->share('title', 'BlackBox');
         return view('dashboard.blackbox');
-    }
+    }*/
 
     public function index()
     {
@@ -189,7 +184,7 @@ class HomeController extends Controller
         return view('setting.porcent');
     }
 
-    public function changeSide(Request $request)
+    /*public function changeSide(Request $request)
     {
         $validate = $request->validate([
             'ladoregistrar' => ['required']
@@ -206,8 +201,7 @@ class HomeController extends Controller
         }else{
             return 0;
         }
-
-    }
+    }*/
 
     /**
      * Permite borrar a un usuario en especifico

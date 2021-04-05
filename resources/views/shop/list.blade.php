@@ -8,7 +8,7 @@
 	<div class="card-content">
        
 		<div class="card-body">
-            <a href="{{ route('tienda.create') }}" class="btn btn-secondary mb-2 waves-effect waves-light"><i class="feather icon-plus"></i>&nbsp; Añadir Producto</a>
+            <a href="{{ route('shop.create') }}" class="btn btn-secondary mb-2 waves-effect waves-light"><i class="feather icon-plus"></i>&nbsp; Añadir Producto</a>
 			<div class="table-responsive">
 				<table id="mytable" class="table zero-configuration">
 					<thead>
@@ -54,11 +54,11 @@
                            <td>
                             <div class="row">
                                 <div class="col-3">   
-                            <a href="{{ route('tienda.edit',$item->id) }}" class="btn btn-sm btn-secondary text-bold-600">Editar</a>
+                            <a href="{{ route('shop.edit',$item->id) }}" class="btn btn-sm btn-secondary text-bold-600">Editar</a>
                                 </div>
                             <div class="col-3 ml-3">   
 
-                           <form action="{{ route('tienda.delete', $item->id) }}" method="POST">
+                           <form action="{{ route('shop.delete', $item->id) }}" method="POST">
                             {{ csrf_field() }} {{ method_field('DELETE') }}
                            <button type="submit" class="btn btn-sm btn-danger"><i class="feather icon-trash"></i>Eliminar</button>
                         </form>

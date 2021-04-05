@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('mioficina.billetera.index')}}">
+                <a href="#">
                     <i class="feather icon-credit-card"></i>
                     <span class="title">Billetera</span>
                 </a>
@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('tienda.index')}}" class="nav-link nav-toggle">
+                <a href="{{route('shop.index')}}" class="nav-link nav-toggle">
                     <i class="feather icon-shopping-bag"></i>
                     <span class="title">Tienda</span>
                 </a>
@@ -59,7 +59,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.userrecords') }}" class="nav-link nav-toggle">
+                <a href="#" class="nav-link nav-toggle">
                     <i class="feather icon-user"></i>
                     <span class="title">Usuarios</span>
                 </a>
@@ -71,7 +71,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('liquidacion.user.comision')}}" class="nav-link nav-toggle">
+                <a href="#" class="nav-link nav-toggle">
                     <i class="feather icon-activity"></i>
                     <span class="title">Liquidaciones</span>
                 </a>

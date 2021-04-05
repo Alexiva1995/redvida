@@ -120,7 +120,7 @@
                                         <div class="col-12">
                                             <button type="submit"
                                                 class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Añadir</button>
-                                            <a href="{{ route('tienda.list') }}"
+                                            <a href="{{ route('range.list') }}"
                                                 class="btn btn-outline-danger mr-1 mb-1 waves-effect waves-light">Cancelar</a>
                                         </div>
                                     </div>

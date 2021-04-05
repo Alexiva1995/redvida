@@ -42,7 +42,7 @@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('tienda.update', $product->id) }}" method="POST"
+                    <form class="form form-vertical" action="{{ route('shop.update', $product->id) }}" method="POST"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
@@ -181,7 +181,7 @@
                                 <div class="col-12">
                                     <button type="submit"
                                         class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Editar</button>
-                                    <a href="{{ route('tienda.list') }}"
+                                    <a href="{{ route('shop.list') }}"
                                         class="btn btn-outline-danger mr-1 mb-1 waves-effect waves-light">Cancelar</a>
                                 </div>
                             </div>

@@ -12,7 +12,7 @@
       <h3>Cambiar Password {{$settings->name}}</h3>
       <br><br>
       <p>Por favor siga el siguiente link para el cambio de clave</p>
-      <a href="{{route('autenticacion-codigo', [$data['codigo']])}}">Nueva Clave</a>
+      <a href="{{route('autentication.reset-password', [$data['codigo']])}}">Recuperar Clave</a>
     </div>
   </body>
 </html>

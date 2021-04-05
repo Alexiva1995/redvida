@@ -439,12 +439,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Permite obtener las monedas
-     *
-     * @return void
-     */
-    public function getCurrency()
-    {
+    public function getCurrency(){
         // $access_key = "vfBg9wlm2uoOVXnBrLMHKukYs"; // Your API access key, Signup to get API KEY 
         // $symbol = "all_forex"; // FX Pairs 
         // $period = "5m";
@@ -464,7 +459,7 @@ class AdminController extends Controller
         // $response = json_decode($json, true); // convert JSON into Array 
         
         return json_encode([]);
-    }
+    }*/
 
 
     // /**
