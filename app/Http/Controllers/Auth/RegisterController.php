@@ -91,11 +91,12 @@ class RegisterController extends Controller
 
             $messages = [
                 'user_email.unique' => 'El correo ingresado ya se encuentra registrado.',
-                'password.min' => 'Las contraseña ingresadas no coinciden.',
+                'user_email.confirmed' => 'Los correos ingresados no coinciden.',
+                'password.confirmed' => 'Las contraseña ingresadas no coinciden.',
             ];
 
             $validator = Validator::make($data->all(), [
-                'user_email' => 'max:100|unique:'.$settings->prefijo_wp.'users',
+                'user_email' => 'max:100|unique:'.$settings->prefijo_wp.'users|confirmed',
                 'password' => 'confirmed',
             ], $messages);
 

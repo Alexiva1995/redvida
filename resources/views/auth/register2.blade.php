@@ -11,9 +11,9 @@
         @endphp
     @endif
 
-    <section class="row flexbox-container" style="background: url(http://localhost:8000/assets/imgLanding/fondo-redvida.png) no-repeat fixed center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; ">
+    <section class="row " style="background: url(http://localhost:8000/assets/imgLanding/fondo-redvida.png) no-repeat fixed center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; ">
         <!--<img height="100" class="m-2" src="{{asset('assets/imgLanding/foto-logo.png')}}" alt="branding logo">-->
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center mt-4 mb-4">
             <div class="card bg-authentication rounded-2 mb-0">
                 <div class="row m-0" style="background-color: white;">
                     <div class="col-12 p-0">
@@ -38,8 +38,12 @@
                                     <form method="POST" action="{{ route('autenticacion.save-register') }}">
                                         {{ csrf_field() }}
                                         <div class="form-group">
-                                            <label class="mb-1" for="user_email">Email</label>
-                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group"  autocomplete="on" name="user_email" id="user_email" required/>
+                                            <label class="mb-1" for="user_email">Correo</label>
+                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group" autocomplete="on" name="user_email" id="user_email" required/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="mb-1" for="user_email">Repetir Correo</label>
+                                            <input type="email" class="form-control form-control-solid placeholder-no-fix form-label-group" autocomplete="on" name="user_email_confirmation" id="user_email_confirmation" required/>
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1" for="password">Contraseña</label>
@@ -52,7 +56,22 @@
                                                 autocomplete="off" name="password_confirmation" id="password_confirmation" minlength="8" required/>
                                         </div>
 
-                                        <input type="hidden" name="ladomatrix" value="{{request()->lado}}">
+                                        <div class="form-group">
+                                            <fieldset class="checkbox">
+                                                <div class="vs-checkbox-con vs-checkbox-primary">
+                                                    <input type="checkbox" name="terms" required>
+                                                    <span class="vs-checkbox">
+                                                        <span class="vs-checkbox--check">
+                                                            <i class="vs-icon feather icon-check"></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class="">
+                                                        Acepto los términos y condiciones
+                                                    </span>
+                                                </div>
+                                                <a href="#" target="_blank" style="color: #34C900;"> Ver términos y condiciones</a>
+                                            </fieldset>
+                                        </div>
 
                                         @if (request()->referred_id == null)
                                             <input type="hidden" name="referred_id" value="" />
@@ -60,11 +79,6 @@
                                             <input type="hidden" name="referred_id" value="{{ request()->referred_id }}" />
                                         @endif
 
-                                        @if (empty(request()->tipouser))
-                                            <input type="hidden" name="tipouser" value="Normal" />
-                                        @else
-                                            <input type="hidden" name="tipouser" value="{{ request()->tipouser }}" />
-                                        @endif
                                         <br>
                                         <button type="submit" class="btn btn-success btn-block" style="background-color: #34C900 !important;">Registrarse</button>
 
