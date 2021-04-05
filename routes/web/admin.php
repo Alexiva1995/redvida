@@ -7,8 +7,37 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('mioficina')->group(function ()
 {
 
+    // TIENDA
+ Route::get('/shop/index', 'ProductsController@index')->name('tienda.index');
+ Route::get('/shop/list', 'ProductsController@list')->name('tienda.list');
+ Route::get('/shop/create', 'ProductsController@create')->name('tienda.create');
+ Route::get('/shop/edit/{id}', 'ProductsController@edit')->name('tienda.edit');
+ Route::post('/shop/store', 'ProductsController@store')->name('tienda.store');
+ Route::post('/shop/update/{id}', 'ProductsController@update')->name('tienda.update');
+ Route::delete('/shop/delete/{id}', 'ProductsController@delete')->name('tienda.delete');
+
+   // RANGO
+   Route::get('/range/index', 'RangesController@index')->name('range.index');
+   Route::get('/range/list', 'RangesController@list')->name('range.list');
+   Route::get('/range/create', 'RangesController@create')->name('range.create');
+   Route::get('/range/edit/{id}', 'RangesController@edit')->name('range.edit');
+   Route::post('/range/store', 'RangesController@store')->name('range.store');
+   Route::post('/range/update/{id}', 'RangesController@update')->name('range.update');
+   Route::delete('/range/delete/{id}', 'RangesController@delete')->name('range.delete');
+
+ // BILLETERA
+ Route::get('/billetera/index', 'BilleterasController@index')->name('mioficina.billetera.index');
+
+ // admin
+ Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
+   // no admin
+ Route::get('/impersonate/stop', 'ImpersonateController@stop')->name('impersonate.stop');
+
+
+
  Route::get('getcurrency', 'AdminController@getCurrency')->name('get.currency');
   
+
 Route::group(['prefix' => 'autentication'], function (){
   Route::get('/register', 'Auth\RegisterController@newRegister')->name('autenticacion.new-register');
   Route::post('/saveregister', 'Auth\RegisterController@creater')->name('autenticacion.save-register');
@@ -26,31 +55,7 @@ Route::group(['prefix' => 'autentication'], function (){
   Route::post('/loginnew', 'RecuperarController@nuevoLogin')->name('autenticacion-login');
   Route::get('{token}/validarcorreo', 'RecuperarController@validarCorreo')->name('autenticacion-validar-correo');
 
-  // TIENDA
- Route::get('/tienda/index', 'ProductosController@index')->name('mioficina.tienda.index');
- Route::get('/tienda/list', 'ProductosController@list')->name('mioficina.tienda.list');
- Route::get('/tienda/create', 'ProductosController@create')->name('mioficina.tienda.create');
- Route::get('/tienda/edit/{id}', 'ProductosController@edit')->name('mioficina.tienda.edit');
- Route::post('/tienda/store', 'ProductosController@store')->name('mioficina.tienda.store');
- Route::post('/tienda/update/{id}', 'ProductosController@update')->name('mioficina.tienda.update');
- Route::delete('/tienda/delete/{id}', 'ProductosController@delete')->name('mioficina.tienda.delete');
 
-   // RANGO
-   Route::get('/rango/index', 'RangosController@index')->name('mioficina.rango.index');
-   Route::get('/rango/list', 'RangosController@list')->name('mioficina.rango.list');
-   Route::get('/rango/create', 'RangosController@create')->name('mioficina.rango.create');
-   Route::get('/rango/edit/{id}', 'RangosController@edit')->name('mioficina.rango.edit');
-   Route::post('/rango/store', 'RangosController@store')->name('mioficina.rango.store');
-   Route::post('/rango/update/{id}', 'RangosController@update')->name('mioficina.rango.update');
-   Route::delete('/rango/delete/{id}', 'RangosController@delete')->name('mioficina.rango.delete');
-
- // BILLETERA
- Route::get('/billetera/index', 'BilleterasController@index')->name('mioficina.billetera.index');
-
- // admin
- Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
-   // no admin
- Route::get('/impersonate/stop', 'ImpersonateController@stop')->name('impersonate.stop');
 
 });
 

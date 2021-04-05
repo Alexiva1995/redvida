@@ -36,56 +36,56 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-vertical" action="{{ route('mioficina.rango.store') }}" method="POST"
+                            <form class="form form-vertical" action="{{ route('range.store') }}" method="POST"
                                 enctype="multipart/form-data">
 								{{ csrf_field() }}
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="nombre">Nombre</label>
+                                                <label class="h5" for="name">Nombre</label>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control" name="nombre">
+                                                    <input type="text" class="form-control" name="name">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="act_directos">Activos Directos</label>
+                                                <label class="h5" for="act_direct">Activos Directos</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="act_directos"/>
+                                                    <input type="number" class="form-control" name="act_direct"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="directores_diamante">Directores Diamante</label>
+                                                <label class="h5" for="diamond_directors">Directores Diamante</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="directores_diamante">
+                                                    <input type="number" class="form-control" name="diamond_directors">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="nivel">Nivel</label>
+                                                <label class="h5" for="level">Nivel</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="nivel">
+                                                    <input type="number" class="form-control" name="level">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="vol_grupal">Volumen Grupal</label>
+                                                <label class="h5" for="group_vol">Volumen Grupal</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="vol_grupal">
+                                                    <input type="number" class="form-control" name="group_vol">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="estado">Estado</label>
+                                                <label class="h5" for="status">Estado</label>
                                                 <div class="position-relative ">
-                                                    <select name="estado" id="estado"
+                                                    <select name="status" id="status"
                                                     class="custom-select data-toggle="select">
                                                     <option value="0">Inactivo</option>
                                                     <option value="1">Activo</option>
@@ -120,7 +120,7 @@
                                         <div class="col-12">
                                             <button type="submit"
                                                 class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Añadir</button>
-                                            <a href="{{ route('mioficina.tienda.list') }}"
+                                            <a href="{{ route('tienda.list') }}"
                                                 class="btn btn-outline-danger mr-1 mb-1 waves-effect waves-light">Cancelar</a>
                                         </div>
                                     </div>

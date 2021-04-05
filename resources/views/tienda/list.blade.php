@@ -8,7 +8,7 @@
 	<div class="card-content">
        
 		<div class="card-body">
-            <a href="{{ route('mioficina.tienda.create') }}" class="btn btn-secondary mb-2 waves-effect waves-light"><i class="feather icon-plus"></i>&nbsp; Añadir Producto</a>
+            <a href="{{ route('tienda.create') }}" class="btn btn-secondary mb-2 waves-effect waves-light"><i class="feather icon-plus"></i>&nbsp; Añadir Producto</a>
 			<div class="table-responsive">
 				<table id="mytable" class="table zero-configuration">
 					<thead>
@@ -25,23 +25,27 @@
 						</tr>
 					</thead>
                     <tbody>
-
-                        @foreach ($producto as $item)
+ 
+                        @foreach ($product as $item)
                        <tr class="text-center">
                            <td>{{ $item->id}}</td>
-                           <td>{{ $item->id}}</td>
-                           <td>{{ $item->producto}}</td>
-                           <td>{{ $item->descripcion}}</td>
-                           <td>{{ $item->cantidad}}</td>
-                           <td>{{ $item->valor_publico}}</td>
+                           @if ($item->photoDB != NULL)
+                           <td><img src="{{asset('product/'.$item->photoDB)}}" alt="photo" class="" width="70px" height="65px"></td>
+                           @else
+                           <td>No Tiene Imagen</td>
+                           @endif
+                           <td>{{ $item->product}}</td>
+                           <td>{{ $item->description}}</td>
+                           <td>{{ $item->amount}}</td>
+                           <td>{{ $item->public_value}}</td>
 
-                           @if ($item->estado == '0')
+                           @if ($item->status == '0')
                            <td> <a class=" btn btn-info text-white text-bold-600">Inactivo</a></td>
-                           @elseif($item->estado == '1')
+                           @elseif($item->status == '1')
                            <td> <a class=" btn btn-success text-white text-bold-600">Activo</a></td>
-                           @elseif($item->estado == '2')
+                           @elseif($item->status == '2')
                            <td> <a class=" btn btn-warning text-white text-bold-600">Agotado</a></td>
-                           @elseif($item->estado == '3')
+                           @elseif($item->status == '3')
                            <td> <a class=" btn btn-danger text-white text-bold-600">No disponible</a></td>
                            @endif
 
@@ -50,11 +54,11 @@
                            <td>
                             <div class="row">
                                 <div class="col-3">   
-                            <a href="{{ route('mioficina.tienda.edit',$item->id) }}" class="btn btn-sm btn-secondary text-bold-600">Editar</a>
+                            <a href="{{ route('tienda.edit',$item->id) }}" class="btn btn-sm btn-secondary text-bold-600">Editar</a>
                                 </div>
                             <div class="col-3 ml-3">   
 
-                           <form action="{{ route('mioficina.tienda.delete', $item->id) }}" method="POST">
+                           <form action="{{ route('tienda.delete', $item->id) }}" method="POST">
                             {{ csrf_field() }} {{ method_field('DELETE') }}
                            <button type="submit" class="btn btn-sm btn-danger"><i class="feather icon-trash"></i>Eliminar</button>
                         </form>

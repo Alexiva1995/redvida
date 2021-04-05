@@ -7,27 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 // use Spatie\MediaLibrary\HasMedia\HasMedia;
 // use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Producto extends Model 
+class Product extends Model 
 // implements HasMedia
 {
-    protected $table = "productos";
+    protected $table = "products";
     /** 
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-         'producto',
-         'descripcion',
-         'cantidad',
-         'valor_preferente',
-         'valor_publico',
-         'valor_comisionable_pts',
-         'pts_compra_mensual',
-         'pts_compra_rangos',
-         'pts_compra_premios',
-         'valor_pts_compra',
-         'estado',
+         'product',
+         'description',
+         'amount',
+         'preferred_value',
+         'public_value',
+         'commissionable_pts_value',
+         'pts_buy_monthly',
+         'pts_purchase_ranges',
+         'pts_purchase_prizes',
+         'purchase_pts_value',
+         'status',
 
     ];
     

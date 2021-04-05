@@ -32,36 +32,36 @@
             <div class="col-7">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Añadir Producto</h4>
+                        <h4 class="card-title">Añadir Product</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-vertical" action="{{ route('mioficina.tienda.store') }}" method="POST"
+                            <form class="form form-vertical" action="{{ route('tienda.store') }}" method="POST"
                                 enctype="multipart/form-data">
 								{{ csrf_field() }}
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="producto">Producto</label>
+                                                <label class="h5" for="product">Producto</label>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control" name="producto">
+                                                    <input type="text" class="form-control" name="product">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="descripcion">Descripcion</label>
+                                                <label class="h5" for="description">Descripcion</label>
                                                 <div class="position-relative ">
-                                                    <textarea type="textarea" class="form-control" name="descripcion"></textarea>
+                                                    <textarea type="textarea" class="form-control" name="description"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="cantidad">Cantidad</label>
+                                                <label class="h5" for="amount">Cantidad</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="cantidad">
+                                                    <input type="number" class="form-control" name="amount">
                                                 </div>
                                             </div>
                                         </div>
@@ -69,25 +69,25 @@
 
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="valor_preferente">Valor Preferente</label>
+                                                <label class="h5" for="preferred_value">Valor Preferente</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="valor_preferente">
+                                                    <input type="number" class="form-control" name="preferred_value">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="valor_publico">Valor Publico</label>
+                                                <label class="h5" for="public_value">Valor Publico</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="valor_publico">
+                                                    <input type="number" class="form-control" name="public_value">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="valor_comisionable_pts">Valor Comisionable Puntos</label>
+                                                <label class="h5" for="commissionable_pts_value">Valor Comisionable Puntos</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="valor_comisionable_pts">
+                                                    <input type="number" class="form-control" name="commissionable_pts_value">
                                                 </div>
                                             </div>
                                         </div>
@@ -109,26 +109,26 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="pts_compra_premios">Puntos Compra Premios</label>
+                                                <label class="h5" for="pts_purchase_prizes">Puntos Compra Premios</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="pts_compra_premios">
+                                                    <input type="number" class="form-control" name="pts_purchase_prizes">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="valor_pts_compra">Valor Punto Compra</label>
+                                                <label class="h5" for="purchase_pts_value">Valor Punto Compra</label>
                                                 <div class="position-relative ">
-                                                    <input type="number" class="form-control" name="valor_pts_compra">
+                                                    <input type="number" class="form-control" name="purchase_pts_value">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label class="h5" for="estado">Estado</label>
+                                                <label class="h5" for="status">Estado</label>
                                                 <div class="position-relative ">
-                                                    <select name="estado" id="estado"
+                                                    <select name="status" id="status"
                                                     class="custom-select data-toggle="select">
                                                     <option value="0">Inactivo</option>
                                                     <option value="1">Activo</option>
@@ -142,7 +142,7 @@
                                         
                                         <div class="form-group col-12">
                                             <fieldset>
-                                                <label class="h5" for="due_date">Imagen del Producto</label>
+                                                <label class="h5" for="due_date">Imagen del Product</label>
                                                 <div class="media">
                                                     <div class="custom-file">
                                                         <label class="custom-file-label" for="photo"><b>Seleccione una imagen para el Cliente</b></label>
@@ -166,7 +166,7 @@
                                         <div class="col-12">
                                             <button type="submit"
                                                 class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Añadir</button>
-                                            <a href="{{ route('mioficina.tienda.list') }}"
+                                            <a href="{{ route('tienda.list') }}"
                                                 class="btn btn-outline-danger mr-1 mb-1 waves-effect waves-light">Cancelar</a>
                                         </div>
                                     </div>

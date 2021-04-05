@@ -1,0 +1,5 @@
+ $(document).ready(function() {
+       @if($product->photoDB != NULL)
+             previewPersistedFile("{{asset('product/'.$product->photoDB)}}", 'photo_preview');
+         @endif
+     });

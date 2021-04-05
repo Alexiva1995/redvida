@@ -4,22 +4,22 @@ namespace App;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-class Rango extends Model 
+class Range extends Model 
 // implements HasMedia
 {
-    protected $table = "rangos";
+    protected $table = "ranges";
     /** 
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-         'nombre',
-         'act_directos',
-         'directores_diamante',
-         'nivel',
-         'vol_grupal',
-         'estado',
+         'name',
+         'act_direct',
+         'diamond_directors',
+         'level',
+         'group_vol',
+         'status',
     ];
     
     public function getUser(){

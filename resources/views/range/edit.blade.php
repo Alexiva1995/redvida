@@ -3,6 +3,13 @@
 @push('custom_js')
 <script>
 
+$(document).ready(function() {
+       @if($range->photoDB != NULL)
+             previewPersistedFile("{{asset('photo/'.$range->photoDB)}}", 'photo_preview');
+         @endif
+     });
+
+
   function previewFile(input, preview_id) {
       if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -36,59 +43,59 @@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('mioficina.rango.update', $rango->id) }}" method="POST"
+                    <form class="form form-vertical" action="{{ route('range.update', $rango->id) }}" method="POST"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="nombre">Nombre</label>
+                                        <label class="h5" for="name">Nombre</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" name="nombre" value="{{ $rango->nombre }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $rango->name }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="act_directos">Activos Directos</label>
+                                        <label class="h5" for="act_direct">Activos Directos</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="act_directos" value="{{ $rango->act_directos }}"/>
+                                            <input type="number" class="form-control" name="act_direct" value="{{ $rango->act_direct }}"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="directores_diamante">Directores Diamante</label>
+                                        <label class="h5" for="diamond_directors">Directores Diamante</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="directores_diamante" value="{{ $rango->directores_diamante }}">
+                                            <input type="number" class="form-control" name="diamond_directors" value="{{ $rango->diamond_directors }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="nivel">Nivel</label>
+                                        <label class="h5" for="level">Nivel</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="nivel" value="{{ $rango->nivel }}">
+                                            <input type="number" class="form-control" name="level" value="{{ $rango->level }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="vol_grupal">Volumen Grupal</label>
+                                        <label class="h5" for="group_vol">Volumen Grupal</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="vol_grupal" value="{{ $rango->vol_grupal }}">
+                                            <input type="number" class="form-control" name="group_vol" value="{{ $rango->group_vol }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="estado">Estado</label>
+                                        <label class="h5" for="status">Estado</label>
                                         <div class="position-relative ">
-                                            <select name="estado" id="estado"
+                                            <select name="status" id="status"
                                             class="custom-select data-toggle="select">
-                                            <option value="0" @if($rango->estado == '0') selected  @endif>Inactivo</option>
-                                            <option value="1" @if($rango->estado == '1') selected  @endif>Activo</option>
+                                            <option value="0" @if($rango->status == '0') selected  @endif>Inactivo</option>
+                                            <option value="1" @if($rango->status == '1') selected  @endif>Activo</option>
                                             </select>
                                         </div>
                                     </div>
@@ -121,7 +128,7 @@
                                 <div class="col-12">
                                     <button type="submit"
                                         class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Editar</button>
-                                    <a href="{{ route('mioficina.rango.list') }}"
+                                    <a href="{{ route('range.list') }}"
                                         class="btn btn-outline-danger mr-1 mb-1 waves-effect waves-light">Cancelar</a>
                                 </div>
                             </div>

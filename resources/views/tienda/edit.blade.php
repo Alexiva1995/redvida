@@ -3,6 +3,12 @@
 @push('custom_js')
 <script>
 
+ $(document).ready(function() {
+       @if($product->photoDB != NULL)
+             previewPersistedFile("{{asset('product/'.$product->photoDB)}}", 'photo_preview');
+         @endif
+     });
+
   function previewFile(input, preview_id) {
       if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -36,113 +42,113 @@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="{{ route('mioficina.tienda.update', $producto->id) }}" method="POST"
+                    <form class="form form-vertical" action="{{ route('tienda.update', $product->id) }}" method="POST"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="producto">Producto</label>
+                                        <label class="h5" for="product">Producto</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" name="producto"
-                                            value="{{ $producto->producto }}">
+                                            <input type="text" class="form-control" name="product"
+                                            value="{{ $product->product }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="descripcion">Descripcion</label>
+                                        <label class="h5" for="desdescriptioncripcion">Descripcion</label>
                                         <div class="position-relative ">
-                                            <textarea type="textarea" class="form-control" name="descripcion">{{ $producto->descripcion }}</textarea>
+                                            <textarea type="textarea" class="form-control" name="description">{{ $product->description }}</textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="cantidad">Cantidad</label>
+                                        <label class="h5" for="amount">Cantidad</label>
                                         <div class="position-relative ">
-                                            <input type="number" class="form-control" name="cantidad"
-                                            value="{{ $producto->cantidad }}">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="valor_preferente">Valor Preferente</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="valor_preferente"
-                                            value="{{ $producto->valor_preferente }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="valor_publico">Valor Publico</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="valor_publico"
-                                            value="{{ $producto->valor_publico }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="valor_comisionable_pts">Valor Comisionable Puntos</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="valor_comisionable_pts"
-                                            value="{{ $producto->valor_comisionable_pts }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="pts_compra_mensual">Puntos Compra Mensual</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="pts_compra_mensual"
-                                            value="{{ $producto->pts_compra_mensual }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="pts_compra_rangos">Puntos Compra Rangos</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="pts_compra_rangos"
-                                            value="{{ $producto->pts_compra_rangos }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="pts_compra_premios">Puntos Compra Premios</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="pts_compra_premios"
-                                            value="{{ $producto->pts_compra_premios }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="h5" for="valor_pts_compra">Valor Punto Compra</label>
-                                        <div class="position-relative ">
-                                            <input type="number" class="form-control" name="valor_pts_compra" 
-                                            value="{{ $producto->valor_pts_compra }}">
+                                            <input type="number" class="form-control" name="amount"
+                                            value="{{ $product->amount }}">
                                         </div>
                                     </div>
                                 </div>
 
+
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="h5" for="estado">Estado</label>
+                                        <label class="h5" for="preferred_value">Valor Preferente</label>
                                         <div class="position-relative ">
-                                            <select name="estado"
+                                            <input type="number" class="form-control" name="preferred_value"
+                                            value="{{ $product->preferred_value }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="public_value">Valor Publico</label>
+                                        <div class="position-relative ">
+                                            <input type="number" class="form-control" name="public_value"
+                                            value="{{ $product->public_value }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="commissionable_pts_value">Valor Comisionable Puntos</label>
+                                        <div class="position-relative ">
+                                            <input type="number" class="form-control" name="commissionable_pts_value"
+                                            value="{{ $product->commissionable_pts_value }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="pts_buy_monthly">Puntos Compra Mensual</label>
+                                        <div class="position-relative ">
+                                            <input type="number" class="form-control" name="pts_buy_monthly"
+                                            value="{{ $product->pts_buy_monthly }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="pts_purchase_ranges">Puntos Compra Rangos</label>
+                                        <div class="position-relative ">
+                                            <input type="number" class="form-control" name="pts_purchase_ranges"
+                                            value="{{ $product->pts_purchase_ranges }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="pts_purchase_prizes">Puntos Compra Premios</label>
+                                        <div class="position-relative ">
+                                            <input type="number" class="form-control" name="pts_purchase_prizes"
+                                            value="{{ $product->pts_purchase_prizes }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="purchase_pts_value">Valor Punto Compra</label>
+                                        <div class="position-relative ">
+                                            <input type="number" class="form-control" name="purchase_pts_value" 
+                                            value="{{ $product->purchase_pts_value }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="h5" for="status">Estado</label>
+                                        <div class="position-relative ">
+                                            <select name="status"
                                             class="custom-select">
-                                            <option value="0" @if($producto->estado == '0') selected  @endif>Inactivo</option>
-                                            <option value="1" @if($producto->estado == '1') selected  @endif>Activo</option>
-                                            <option value="2" @if($producto->estado == '2') selected  @endif>Agotado</option>
-                                            <option value="3" @if($producto->estado == '3') selected  @endif>No disponible</option>
+                                            <option value="0" @if($product->status == '0') selected  @endif>Inactivo</option>
+                                            <option value="1" @if($product->status == '1') selected  @endif>Activo</option>
+                                            <option value="2" @if($product->status == '2') selected  @endif>Agotado</option>
+                                            <option value="3" @if($product->status == '3') selected  @endif>No disponible</option>
                                             </select>
                                         </div>
                                     </div>
@@ -175,7 +181,7 @@
                                 <div class="col-12">
                                     <button type="submit"
                                         class="btn btn-secondary mr-1 mb-1 waves-effect waves-light">Editar</button>
-                                    <a href="{{ route('mioficina.tienda.list') }}"
+                                    <a href="{{ route('tienda.list') }}"
                                         class="btn btn-outline-danger mr-1 mb-1 waves-effect waves-light">Cancelar</a>
                                 </div>
                             </div>

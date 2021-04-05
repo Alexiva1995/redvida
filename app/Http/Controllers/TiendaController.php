@@ -553,7 +553,7 @@ public function tiendaIndex(){
 
     view()->share('title', 'Tienda');
 
-    return view('mioficina.tienda.index');
+    return view('tienda.index');
 
 }
 

@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('mioficina.tienda.index')}}" class="nav-link nav-toggle">
+                <a href="{{route('tienda.index')}}" class="nav-link nav-toggle">
                     <i class="feather icon-shopping-bag"></i>
                     <span class="title">Tienda</span>
                 </a>
@@ -65,7 +65,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('mioficina.rango.index') }}" class="nav-link nav-toggle">
+                <a href="{{ route('range.index') }}" class="nav-link nav-toggle">
                     <i class="feather icon-award"></i>
                     <span class="title">Rangos</span>
                 </a>
