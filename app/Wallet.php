@@ -1,22 +1,27 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
 
-class Wallet extends Model
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+class Wallet extends Model 
+// implements HasMedia
 {
-    protected $table = "walletlog";
-    /**
+    protected $table = "wallets";
+    /** 
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-         'iduser', 'usuario', 'descripcion', 'debito', 'credito',
-         'balance', 'descuento', 'tipotransacion', 'status', 'correo'
-
+         'iduser',
+         'email',
+         'description',
+         'amount',
+         'status',
     ];
-    public function user(){
-        return $this->belongsTo('App\User');
+    
+    public function getUser(){
+        return $this->belongsTo('App\User','iduser', 'id');
     }
 }

@@ -6,41 +6,41 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Billetera;
+use App\Wallet;
 
 
-class BilleterasController extends Controller
+class WalletsController extends Controller
 {
 	public function index()
     {
-        $billetera = Billetera::where('iduser', Auth::id())->get();
-		view()->share('title', 'Billetera');
+        $wallet = Wallet::where('iduser', Auth::id())->get();
+		view()->share('title', 'Wallet');
 
 
         return view('wallet.index')
-        ->with('billetera', $billetera);
+        ->with('wallet', $wallet);
  
     }
 
 	public function list()
     {
-        $billetera = Billetera::all();
+        $wallet = Wallet::all();
 
 		view()->share('title', 'Lista de Billeteras');
         return view('wallet.list')
-        ->with('billetera', $billetera); 
+        ->with('wallet', $wallet); 
  
     }
 
     public function create()
     {
-		view()->share('title', 'Crear Billetera');
+		view()->share('title', 'Crear Billeteras');
         return view('wallet.create');
     }
 
     public function store(Request $request)
     {
-        $billetera = Billetera::all();
+        $wallet = Wallet::all();
 
         $fields = [   ];
 
@@ -48,8 +48,8 @@ class BilleterasController extends Controller
 
         $this->validate($request, $fields, $msj);
 
-        $billetera = Billetera::create($request->all());
-		$billetera->save();
+        $wallet = Wallet::create($request->all());
+		$wallet->save();
 
         return redirect()->route('mioficina.wallet.list');
         
@@ -57,17 +57,17 @@ class BilleterasController extends Controller
 
     public function edit($id)
     {
-        $billetera = Billetera::find($id);
-		view()->share('title', 'Editar Billetera');
+        $wallet = Wallet::find($id);
+		view()->share('title', 'Editar Billeteras');
 		
            return view('wallet.edit')
-           ->with('billetera', $billetera); 
+           ->with('wallet', $wallet); 
         
     }
 
     public function update(Request $request, $id)
     {
-        $billetera = Billetera::find($id);
+        $wallet = Wallet::find($id);
 
         $fields = [     ];
 
@@ -75,16 +75,16 @@ class BilleterasController extends Controller
 
         $this->validate($request, $fields, $msj);
 
-        $billetera->update($request->all());
-        $billetera->save();
+        $wallet->update($request->all());
+        $wallet->save();
 
         return redirect()->route('mioficina.wallet.list');
     }
 
     public function delete($id)
     {
-        $billetera = Billetera::find($id);
-        $billetera->delete();
+        $wallet = Wallet::find($id);
+        $wallet->delete();
         return redirect()->route('mioficina.wallet.list');
     }
 }

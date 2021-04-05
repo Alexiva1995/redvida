@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                                 <div class="col-7">
-                                    <img src="{{ asset('assets/imgLanding/billetera.webp') }}" width="100%" height="167">
+                                    <img src="{{ asset('assets/imgLanding/billetera.png') }}" width="100%" height="167">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="col-7">
-                                    <img src="{{ asset('assets/imgLanding/billetera.webp') }}" width="100%" height="150">
+                                    <img src="{{ asset('assets/imgLanding/laptop.png') }}" width="100%" height="150">
                                 </div>
                             </div>
                         </div>
@@ -82,16 +82,16 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($billetera as $item)
+                        @foreach ($wallet as $item)
                         <tr class="text-center">
 
                             <td>{{ $item->id}}</td>
                             <td>{{ $item->email}}</td>
-                            <td>{{ $item->descripcion}}</td>
+                            <td>{{ $item->description}}</td>
 
-                            @if ($item->estado == 0)
+                            @if ($item->status == 0)
                             <td class="text-success font-weight-bolder">+ {{ $item->monto}} $</td>
-                            @elseif ($item->estado == 1)
+                            @elseif ($item->status == 1)
                             <td class="text-danger font-weight-bolder">- {{ $item->monto}} $</td>
                             @endif
 

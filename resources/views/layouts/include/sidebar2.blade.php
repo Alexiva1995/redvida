@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#">
+                <a href="{{route('wallet.index')  }}">
                     <i class="feather icon-credit-card"></i>
                     <span class="title">Billetera</span>
                 </a>

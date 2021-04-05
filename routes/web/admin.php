@@ -23,7 +23,7 @@ Route::prefix('mioficina')->group(function (){
      Route::delete('/range/delete/{id}', 'RangesController@delete')->name('range.delete');
 
      // BILLETERA
-     Route::get('/billetera/index', 'BilleterasController@index')->name('mioficina.billetera.index');
+     Route::get('/wallet/index', 'WalletsController@index')->name('wallet.index');
 
      // admin
      Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
