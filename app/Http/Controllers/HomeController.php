@@ -39,28 +39,14 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::guest()){
-            // return redirect('index');
             return redirect('mioficina/login');
         }else{
-            // if (empty(Auth::user()->verificar_correo)) {
-                // return redirect('login')->with('msj3', 'Your Email has not been Validated, check the email that registered in the system');
-            // }else{
-                // if (Auth::user()->check_token_google == 1) {
-                //     return redirect()->route('autenticacion.2fact');
-                // }else{
-                    // }
-                    return redirect('mioficina/admin');
-            // }
-            // $cliente = SettingCliente::find(1);
-            // if ($cliente->permiso == 0 && Auth::user()->tipouser == 'Cliente') {
-            //     return redirect('login')->with('msj3', 'Restringido el Acceso');
-            // } else {
-            //     return redirect('/admin');
-            // }
-            
+            if (Auth::user()->rol_id == 1){
+                return redirect('mioficina/user');
+            }else{
+                return redirect('mioficina/admin');
+            }
         }
-
-        //return view('welcome');
     }
 
     /**

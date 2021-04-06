@@ -3,6 +3,35 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('mioficina')->group(function (){
+   /*RUTAS PARA SISTEMA DE AUTENTICACIÓN */
+   Route::group(['prefix' => 'autentication'], function (){
+      Route::get('register', 'Auth\RegisterController@register')->name('autentication.register');
+      Route::post('register', 'Auth\RegisterController@post_register')->name('autentication.post-register');
+      Route::post('login', 'Auth\LoginController@post_login')->name('autentication.post-login');
+
+      /*RUTAS PARA RECUPERACIÓN DE CONTRASEÑA */
+      Route::post('send-password-mail', 'Auth\ResetPasswordController@send_password_mail')->name('autentication.send-password-mail');
+      Route::get('reset-password/{id}', 'Auth\ResetPasswordController@reset_password')->name('autentication.reset-password');
+      Route::post('save-new-password', 'Auth\ResetPasswordController@save_new_password')->name('autentication.save-new-password');
+      /*FIN DE RUTAS PARA RECUPERACIÓN DE CONTRASEÑA */
+
+      /* ruta para el segundo factor
+      Route::get('2fact', 'Auth\RegisterController@fact2')->name('autenticacion.2fact');
+      Route::post('2fact', 'Auth\RegisterController@validar2fact')->name('autenticacion.2fact');
+      Route::get('{token}/validarcorreo', 'RecuperarController@validarCorreo')->name('autenticacion-validar-correo');*/
+   });
+   /*FIN DE RUTAS PARA SISTEMA DE AUTENTICACIÓN */
+
+   /*RUTAS PARA EL USUARIO */
+   Route::group(['prefix' => 'user', 'middleware' => ['auth', 'guest']], function() {
+      Route::get('/', 'UserController@index')->name('user.dashboard');
+
+      Route::group(['prefix' => 'network'], function(){
+         Route::get('/directs-record', 'NetworkController@directs_record')->name('user.network.directs-record');
+         Route::get('/networks-record', 'NetworkController@networks_record')->name('user.network.networks-record');
+      });
+   });
+   /*FIN DE RUTAS PARA EL USUARIO */
 
      // TIENDA
      Route::get('/shop/index', 'ProductsController@index')->name('shop.index');
@@ -36,27 +65,6 @@ Route::prefix('mioficina')->group(function (){
    Route::get('vistaCorreo', function (){
      return view('emails.plantilla');
    });
-   
-   /*RUTAS PARA SISTEMA DE AUTENTICACIÓN */
-   Route::group(['prefix' => 'autentication'], function (){
-      Route::get('register', 'Auth\RegisterController@register')->name('autentication.register');
-      Route::post('register', 'Auth\RegisterController@post_register')->name('autentication.post-register');
-      Route::post('login', 'Auth\LoginController@post_login')->name('autentication.post-login');
-
-      /*RUTAS PARA RECUPERACIÓN DE CONTRASEÑA */
-      Route::post('send-password-mail', 'Auth\ResetPasswordController@send_password_mail')->name('autentication.send-password-mail');
-      Route::get('reset-password/{id}', 'Auth\ResetPasswordController@reset_password')->name('autentication.reset-password');
-      Route::post('save-new-password', 'Auth\ResetPasswordController@save_new_password')->name('autentication.save-new-password');
-      /*FIN DE RUTAS PARA RECUPERACIÓN DE CONTRASEÑA */
-
-      /* ruta para el segundo factor
-      Route::get('2fact', 'Auth\RegisterController@fact2')->name('autenticacion.2fact');
-      Route::post('2fact', 'Auth\RegisterController@validar2fact')->name('autenticacion.2fact');
-      Route::get('{token}/validarcorreo', 'RecuperarController@validarCorreo')->name('autenticacion-validar-correo');*/
-
-   
-   });
-   /*FIN DE RUTAS PARA SISTEMA DE AUTENTICACIÓN */
 
    // Tienda Online
    /*Route::group(['prefix' => 'tienda', 'middleware' => ['auth', 'licencia', 'guest']], function (){
@@ -355,7 +363,7 @@ Route::prefix('mioficina')->group(function (){
       });*/
 
       Route::group(['prefix' => 'network'], function(){
-         Route::get('/directrecords', 'AdminController@direct_records')->name('directrecords');
+         Route::get('/direct-records', 'NetworkController@direct_records')->name('network.direct-records');
          Route::get('/networkrecords', 'AdminController@network_records')->name('networkrecords');
          Route::post('/buscardirectos','AdminController@buscardirectos')->name('buscardirectos');
          Route::post('/buscarnetwork','AdminController@buscarnetwork')->name('buscarnetwork');

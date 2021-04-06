@@ -9,7 +9,7 @@
         {{-- <meta name="keywords"
             content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app"> --}}
         <meta name="author" content="VALDUSOFT">
-        <title>{{$settings->name}}</title>
+        <title>{{ $settings->name }}</title>
         <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-ic.png">
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -29,7 +29,7 @@
         @if (Auth::user()->rol_id == 0)
             @include('layouts.include.sidebar')
         @else
-            @include('layouts.include.sidebar2')
+            @include('layouts.include.sidebarUser')
         @endauth
 
         {{-- contenido --}}
@@ -41,8 +41,9 @@
                 <div class="content-header row mt-2">
                     <div class="content-header-left col-12 mb-2">
                         <div class="row breadcrumbs-top">
-                            <div class="col-12">
-                                <h2 class="content-header-title float-left mb-0">{{$title}}</h2>
+                            <div class="col-12 content-header-title">
+                                <span class="mr-1">{{ $title }}</span> 
+                                @yield('breadcrumbs')
                             </div>
                         </div>
                     </div>

@@ -42,96 +42,24 @@ class AdminController extends Controller
 
     public function index(){
         try {
-            if (Auth::user()->rol_id == 0) {
-                $data = [
-                    'InversionesActivas' => $this->indexController->getInversionesActivaAdmin(),
-                    'totalInvertido' => $this->indexController->getTotalInvertidoAdmin(),
-                    'totalEntrada' => $this->indexController->getEntradaMesAdmin(),
-                    'divisiones' => $this->indexController->getDivisionPaquete(),
-                    'listadoOrdenes' => $this->indexController->getInversionesAdminDashboard(),
-                    'totalusers' => $this->indexController->getUserRegistrado(),
-                    'paquete' => 1,
-                    'goldPaquete' => 0
-                ];
-
-                view()->share('title', '');
-                return view('dashboard.index', compact('data'));
-            }
-
-            $comisionesPagadas = Commission::select(DB::raw("SUM(total) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
-                                    ->where('user_id', '=', Auth::user()->ID)
-                                    ->where('status', '=', 1)
-                                    ->groupBy("month")
-                                    ->orderBy('month', 'ASC')
-                                    ->get();
-
-            $comisionesTotales = Commission::select(DB::raw("SUM(total) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
-                                    ->where('user_id', '=', Auth::user()->ID)
-                                    ->where('date', '>=', '2021-01-01')
-                                    ->where('date', '<=', '2021-12-31')
-                                    ->groupBy("month")
-                                    ->orderBy('month', 'ASC')
-                                    ->get();
-
-            $arrayComisionesPagadas = []; 
-            $arrayComisionesTotales = [];
-            for ($i = 0; $i <= 11; $i++){
-            $arrayComisionesPagadas[$i] = 0;
-                $arrayComisionesTotales[$i] = 0;
-            }
-
-            foreach ($comisionesPagadas as $comisionPagada){
-                $arrayComisionesPagadas[$comisionPagada->month - 1] = $comisionPagada->amount;
-            }
-            foreach ($comisionesTotales as $comisionTotal){
-                $arrayComisionesTotales[$comisionTotal->month - 1] = $comisionTotal->amount;
-            }
-
-            $cantReferidosActivos = DB::table('wp_users')
-                                        ->where('referred_id', '=', Auth::user()->ID)
-                                        ->where('status', '=', 1)
-                                        ->count();
-
-            $cantReferidosInactivos = DB::table('wp_users')
-                                        ->where('referred_id', '=', Auth::user()->ID)
-                                        ->where('status', '=', 0)
-                                        ->count();
-
-            $cantReferidos[0] = $cantReferidosActivos;
-            $cantReferidos[1] = $cantReferidosInactivos;
-
-            $ultRegistrosDirectos = DB::table('wp_users')
-                                        ->select('ID', 'display_name', 'user_email', 'status')
-                                        ->where('referred_id', '=', Auth::user()->ID)
-                                        ->take(12)
-                                        ->get();
+            $data = [
+                'InversionesActivas' => $this->indexController->getInversionesActivaAdmin(),
+                'totalInvertido' => $this->indexController->getTotalInvertidoAdmin(),
+                'totalEntrada' => $this->indexController->getEntradaMesAdmin(),
+                'divisiones' => $this->indexController->getDivisionPaquete(),
+                'listadoOrdenes' => $this->indexController->getInversionesAdminDashboard(),
+                'totalusers' => $this->indexController->getUserRegistrado(),
+                'paquete' => 1,
+                'goldPaquete' => 0
+            ];
 
             view()->share('title', '');
-            return view('dashboard.index')->with(compact('arrayComisionesTotales', 'arrayComisionesPagadas', 'cantReferidos', 'ultRegistrosDirectos')); 
+            return view('dashboard.index', compact('data'));
         } catch (\Throwable $th) {
             dd($th);
         }
     }
 
-
-    /**
-     * Lleva a la vista de los usuarios directos
-     *
-     * @return void
-     */
-    public function direct_records(){
-
-        // TITLE
-        view()->share('title', 'Mi Negocio - Directos');
-        // DO MENU
-        view()->share('do', collect(['name' => 'network', 'text' => 'Red de Usuarios']));
-        $referidosDirectos = User::where('referred_id', '=', Auth::user()->ID)
-                                ->select('ID', 'user_email', 'created_at', 'status')
-                                ->orderBy('ID', 'DESC')
-                                ->get();
-
-        return view('dashboard.directRecords')->with(compact('referidosDirectos'));
-    }
 
     /**
      * Permite saber los direcctos de un usuario en especifico

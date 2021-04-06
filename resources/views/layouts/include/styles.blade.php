@@ -183,6 +183,13 @@
             background-color: #34C900;
             color:  white;
         }
+    .breadcrumb-disabled{
+        color: #E1E1E1;
+    }
+    .breadcrumb-enabled a{
+        color: #6B6B6B;
+    }
+
 </style>
 
 @stack('custom_css')
