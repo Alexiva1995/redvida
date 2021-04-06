@@ -30,6 +30,11 @@ Route::prefix('mioficina')->group(function (){
          Route::get('/directs-record', 'NetworkController@directs_record')->name('user.network.directs-record');
          Route::get('/networks-record', 'NetworkController@networks_record')->name('user.network.networks-record');
       });
+
+      Route::group(['prefix' => 'liquidations'], function(){
+         Route::get('/pending', 'LiquidationController@pending')->name('user.liquidations.pending');
+         Route::get('completed', 'LiquidationController@completed')->name('user.liquidations.completed');
+      });
    });
    /*FIN DE RUTAS PARA EL USUARIO */
 

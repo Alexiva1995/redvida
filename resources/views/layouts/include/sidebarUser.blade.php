@@ -58,7 +58,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
+            {{--<li class="nav-item">
                 <a href="#" class="nav-link nav-toggle">
                     <i class="feather icon-user"></i>
                     <span class="title">Usuarios</span>
@@ -69,12 +69,27 @@
                     <i class="feather icon-award"></i>
                     <span class="title">Rangos</span>
                 </a>
-            </li>
+            </li>--}}
             <li class="nav-item">
-                <a href="#" class="nav-link nav-toggle">
-                    <i class="feather icon-activity"></i>
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fas fa-dollar-sign"></i>
                     <span class="title">Liquidaciones</span>
+                    <span class="arrow"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{ route('user.liquidations.pending') }}" class="nav-link" >
+                            <i class="feather icon-briefcase"></i>
+                            <span class="title">Liquidaciones Pendientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{ route('user.liquidations.completed') }}" class="nav-link">
+                            <i class="feather icon-briefcase"></i>
+                            <span class="title">Liquidaciones Realizadas</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
