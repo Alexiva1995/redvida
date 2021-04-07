@@ -59,6 +59,18 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a href="#" class="nav-link nav-toggle">
+                    <i class="feather icon-user"></i>
+                    <span class="title">Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('range.index') }}" class="nav-link nav-toggle">
+                    <i class="feather icon-award"></i>
+                    <span class="title">Rangos</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fas fa-dollar-sign"></i>
                     <span class="title">Liquidaciones</span>
@@ -72,9 +84,9 @@
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{ route('user.liquidations.record') }}" class="nav-link">
+                        <a href="{{ route('user.liquidations.completed') }}" class="nav-link">
                             <i class="feather icon-briefcase"></i>
-                            <span class="title">Liquidaciones Historial</span>
+                            <span class="title">Liquidaciones Realizadas</span>
                         </a>
                     </li>
                 </ul>

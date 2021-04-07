@@ -33,7 +33,8 @@ Route::prefix('mioficina')->group(function (){
 
       Route::group(['prefix' => 'liquidations'], function(){
          Route::get('/pending', 'LiquidationController@pending')->name('user.liquidations.pending');
-         Route::get('completed', 'LiquidationController@completed')->name('user.liquidations.completed');
+         Route::get('/record', 'LiquidationController@record')->name('user.liquidations.record');
+         Route::get('show-commissions-list/{liquidation_id}', 'LiquidationController@show_commissions_list')->name('user.liquidations.show-commissions-list');
       });
    });
    /*FIN DE RUTAS PARA EL USUARIO */

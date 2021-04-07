@@ -18,25 +18,45 @@ class LiquidationController extends Controller
 {
     /*Usuario -> Liquidaciones -> Liquidaciones Pendientes */
     public function pending(){
-        $liquidaciones = Liquidation::where('user_id', '=', Auth::user()->ID)
+        $liquidations = Liquidation::where('user_id', '=', Auth::user()->ID)
                             ->where('status', '=', 0)
+                            ->orderBy('id', 'DESC')
                             ->get();
 
         view()->share('title', 'Liquidaciones Pendientes');
 
-        return view('user.liquidations.pending')->with(compact('liquidaciones'));
+        return view('user.liquidations.pending')->with(compact('liquidations'));
     }
 
-    /*Usuario -> Liquidaciones -> Liquidaciones Realizadas */
-    public function completed(){
-        $liquidaciones = Liquidation::where('user_id', '=', Auth::user()->ID)
-                            ->where('status', '=', 1)
+    /*Usuario -> Liquidaciones -> Liquidaciones Historial */
+    public function record(){
+        $liquidations = Liquidation::where('user_id', '=', Auth::user()->ID)
+                            ->where('status', '<>', 0)
+                            ->orderBy('id', 'DESC')
                             ->get();
 
-        view()->share('title', 'Liquidaciones Realizadas');
+        view()->share('title', 'Liquidaciones Historial');
 
-        return view('user.liquidations.completed')->with(compact('liquidaciones'));
+        return view('user.liquidations.record')->with(compact('liquidations'));
     }
+
+    /*Usuario -> Liquidaciones Pendientes -> Ver Comisiones pertenecientes a una liquidación*/
+    /*LLamada AJAX */
+    public function show_commissions_list($liquidation_id){
+        $commissions = Commission::where('liquidation_id', '=', $liquidation_id)
+                        ->select('id', 'amount', 'type')
+                        ->orderBy('id', 'ASC')
+                        ->get();
+
+        return view('user.liquidations.commissionsList')->with(compact('commissions'));
+    }
+
+
+
+
+
+
+
 
     /**
      * LLeva a la vista de las liquidaciones pendientes

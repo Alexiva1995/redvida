@@ -39,8 +39,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     /*RELACIONES ACTUALES */
+    public function commissions(){
+      return $this->hasMany('App\Commission', 'user_id', 'ID');
+    }
+
+    public function commissions_referred(){
+      return $this->hasMany('App\Commission', 'referred_id', 'ID');
+    }
+
     public function liquidations(){
       return $this->hasMany('App\Liquidation', 'user_id', 'ID');
+    }
+
+    public function orders(){
+        return $this->hasMany('App\Order', 'user_id', 'ID');
     }
     /*FIN DE RELACIONES ACTUALES */
 
@@ -57,10 +69,6 @@ class User extends Authenticatable
 
     public function rol(){
         return $this->belongsTo('App\Rol');
-    }
-
-    public function commissions(){
-        return $this->hasMany('App\Commission');
     }
 
     public function transfers(){

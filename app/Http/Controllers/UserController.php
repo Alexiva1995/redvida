@@ -9,14 +9,14 @@ use DB; use Auth;
 class UserController extends Controller{
     public function index(){
         try {
-            $comisionesPagadas = Commission::select(DB::raw("SUM(total) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+            $comisionesPagadas = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
                                     ->where('user_id', '=', Auth::user()->ID)
                                     ->where('status', '=', 1)
                                     ->groupBy("month")
                                     ->orderBy('month', 'ASC')
                                     ->get();
 
-            $comisionesTotales = Commission::select(DB::raw("SUM(total) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+            $comisionesTotales = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
                                     ->where('user_id', '=', Auth::user()->ID)
                                     ->where('date', '>=', '2021-01-01')
                                     ->where('date', '<=', '2021-12-31')

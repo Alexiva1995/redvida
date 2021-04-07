@@ -27,7 +27,7 @@
 
         {{-- menu --}}
         @if (Auth::user()->rol_id == 0)
-            @include('layouts.include.sidebar')
+            @include('layouts.include.sidebarAdmin')
         @else
             @include('layouts.include.sidebarUser')
         @endauth

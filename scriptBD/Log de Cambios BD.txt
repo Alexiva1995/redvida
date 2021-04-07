@@ -1,3 +1,13 @@
-﻿06/04/2021
+﻿05/04/2021
+Dev: William Ache
+*Eliminar tabla users (script users.sql respaldado en carpeta old_db)
+
+06/04/2021
 Dev: Luisana Marín
 *Nueva tabla liquidations (Correr script liquidations.sql)
+
+07/04/2021
+Dev: Luisana Marín
+*Nuevos campos a la tabla commissions (Correr script commissions.sql)
+*Eliminar tabla liquidaciones (script liquidaciones.sql respaldado en carpeta old_db)
+*Nueva tabla orders (Correr script orders.sql)
