@@ -3,7 +3,7 @@
     <!-- Mirrored from www.pchain.org/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 07 May 2020 21:33:00 GMT -->
     <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
     <head>
-        <title>Red Vida</title>
+        <title>RedVida</title>
         <meta charset="utf-8">
         <meta name="viewport"
               content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>

@@ -31,7 +31,7 @@
             <ul class="nav navbar-nav float-right">
                <li class="dropdown dropdown-user nav-item">
                   <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                     <div class="user-nav d-sm-flex d-none">
+                     {{-- <div class="user-nav d-sm-flex d-none">
                         <span class="user-name text-bold-600" style="color: black;">
                            {{ Auth::user()->display_name }}
                         </span>
@@ -39,11 +39,33 @@
                            @if (Auth::user()->rol_id == 0)
                               Administrador
                            @else
-                              Usuario
+                              Usuario 
                            @endif
                         </span>
-                     </div>
-                     <span><img class="round" src="{{ asset('img/avatar/avatar.png') }}" alt="avatar" height="40" width="40"></span>
+                     </div> --}}
+                     <div class="user-nav d-sm-flex d-none">
+                        @if (Auth()->user()->rol_id == 0)
+                        <span class="user-name text-bold-600">{{Auth::user()->display_name}} <span class="text-primary">ADMIN</span></span>
+                        {{-- <span class="user-name text-bold-600 text-primary p">Administrador</span> --}}
+                        <span class="user-name headerBalance">Saldo Disponible: {{Auth::user()->wallet_amount }} $</span>
+
+                        @else
+                        <span class="user-name text-bold-600">{{Auth::user()->display_name}}</span>
+                        
+                        <span class="user-name headerBalance">Saldo Disponible: <b class="text-success">{{ number_format(Auth::user()->wallet_amount, 2, '.', ',') }} $</b></span>
+                        @endif
+                    </div>
+                           @if(!!Auth::user()->photoDB)
+                            <span>
+                                <img class="round" src="{{asset('product/'.Auth::user()->photoDB)}}"
+                                    alt="{{ Auth::user()->display_name }}" height="40" width="40">
+                            </span>
+                            @else
+                            <span>
+                                <img class="round" src="{{asset('img/avatar/avatar.png')}}"
+                                    alt="{{ Auth::user()->display_name }}" height="40" width="40">
+                            </span>
+                            @endif
                      {{-- <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span> --}}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">

@@ -194,7 +194,7 @@
 					                    </div>
 									</div>
 									<div class="col-6">
-										<img src="{{ asset('assets/imgLanding/billetera.webp') }}" width="100%" height="180">
+										<img src="{{ asset('assets/imgLanding/billetera.png') }}" width="100%" height="180">
 									</div>
 								</div>
 							</div>

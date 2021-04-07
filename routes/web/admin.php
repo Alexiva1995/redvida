@@ -228,12 +228,12 @@ Route::prefix('mioficina')->group(function (){
       //Route::get('/ranking', 'Ranking2Controller@ranking')->name('admin.ranking');
 
       // Modificacion del usuario por parte del admin
-      /*Route::get('/userrecords', 'HomeController@user_records')->name('admin.userrecords');
+      Route::get('/userrecords', 'HomeController@user_records')->name('admin.userrecords');
       Route::get('/useredit/{id}', 'ActualizarController@user_edit')->name('admin.useredit');
       Route::post('/userdelete', 'HomeController@deleteProfile')->name('admin.userdelete');
       Route::get('/userinactive', 'HomeController@userActiveManual')->name('admin.userinactive');
       Route::post('/userinactive', 'HomeController@saveActiveManual')->name('admin.userinactive');
-      Route::post('/userdeletetodos/{id}', 'AdminController@deleteTodos')->name('admin.userdeletetodos');*/
+      Route::post('/userdeletetodos/{id}', 'AdminController@deleteTodos')->name('admin.userdeletetodos');
 
       //Route::get('/notifications', 'NotificationController@index')->name('admin.notifications');
 

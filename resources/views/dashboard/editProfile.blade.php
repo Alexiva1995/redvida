@@ -13,7 +13,7 @@
         overflow-y: initial !important;
     }
 </style>
-<script>
+{{-- <script>
     function activarPersonal() {
         $('.personal').attr('disabled', false)
         $('#botom').show('slow')
@@ -72,9 +72,9 @@
         @endforeach
     </ul>
 </div>
-@endif
+@endif --}}
 
-@if (Session::has('msj'))
+{{-- @if (Session::has('msj'))
 <div class="alert alert-success">
     <strong>¡Felicitaciones!</strong> {{Session::get('msj')}}
 </div>
@@ -105,7 +105,7 @@
         {{Session::get('msj3')}}
     </span>
 </div>
-@endif
+@endif --}}
 
 {{-- resumen --}}
 @include('dashboard.formEdit.resumen')
@@ -149,6 +149,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

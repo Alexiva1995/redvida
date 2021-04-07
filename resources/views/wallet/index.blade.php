@@ -90,9 +90,9 @@
                             <td>{{ $item->description}}</td>
 
                             @if ($item->status == 0)
-                            <td class="text-success font-weight-bolder">+ {{ $item->monto}} $</td>
+                            <td class="text-success font-weight-bolder">+ {{ $item->amount}} $</td>
                             @elseif ($item->status == 1)
-                            <td class="text-danger font-weight-bolder">- {{ $item->monto}} $</td>
+                            <td class="text-danger font-weight-bolder">- {{ $item->amount}} $</td>
                             @endif
 
                             {{-- @if ($item->estado == 0)
