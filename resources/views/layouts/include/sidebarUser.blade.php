@@ -14,7 +14,7 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
             style="background-color: #ffffff">
             <li class="nav-item">
-                <a href="{{url('mioficina/admin')}}" class="nav-link nav-toggle">
+                <a href="{{ route('user.dashboard') }}" class="nav-link nav-toggle">
                     <i class="feather icon-home"></i>
                     <span class="title">Inicio</span>
                 </a>
@@ -45,13 +45,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{ route('directrecords') }}" class="nav-link" >
+                        <a href="{{ route('user.network.directs-record') }}" class="nav-link" >
                             <i class="feather icon-briefcase"></i>
                             <span class="title">Mi Negocio - Directos</span>
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{ route('networkrecords') }}" class="nav-link">
+                        <a href="{{ route('user.network.networks-record') }}" class="nav-link">
                             <i class="feather icon-briefcase"></i>
                             <span class="title">Mi Negocio - Organización</span>
                         </a>
@@ -71,22 +71,26 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link nav-toggle">
-                    <i class="feather icon-activity"></i>
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fas fa-dollar-sign"></i>
                     <span class="title">Liquidaciones</span>
+                    <span class="arrow"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{ route('user.liquidations.pending') }}" class="nav-link" >
+                            <i class="feather icon-briefcase"></i>
+                            <span class="title">Liquidaciones Pendientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{ route('user.liquidations.completed') }}" class="nav-link">
+                            <i class="feather icon-briefcase"></i>
+                            <span class="title">Liquidaciones Realizadas</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            {{-- <li class="nav-item">
-                <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link">
-                    <i class="feather icon-log-out"></i>
-                    <span class="title">Cerrar Sesión</span>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            </li>
-            FIN CERRAR SESIÓN --}}
         </ul>
     </div>
 </div>

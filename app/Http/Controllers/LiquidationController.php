@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Commission;
 use App\Liquidacion;
+use App\Liquidation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,13 +16,34 @@ use Illuminate\Support\Facades\Auth;
 
 class LiquidationController extends Controller
 {
+    /*Usuario -> Liquidaciones -> Liquidaciones Pendientes */
+    public function pending(){
+        $liquidaciones = Liquidation::where('user_id', '=', Auth::user()->ID)
+                            ->where('status', '=', 0)
+                            ->get();
+
+        view()->share('title', 'Liquidaciones Pendientes');
+
+        return view('user.liquidations.pending')->with(compact('liquidaciones'));
+    }
+
+    /*Usuario -> Liquidaciones -> Liquidaciones Realizadas */
+    public function completed(){
+        $liquidaciones = Liquidation::where('user_id', '=', Auth::user()->ID)
+                            ->where('status', '=', 1)
+                            ->get();
+
+        view()->share('title', 'Liquidaciones Realizadas');
+
+        return view('user.liquidations.completed')->with(compact('liquidaciones'));
+    }
+
     /**
      * LLeva a la vista de las liquidaciones pendientes
      *
      * @return void
      */
-    public function index()
-    {
+    public function index(){
         // TITLE
         view()->share('title', 'Generar Liquidaciones');
 

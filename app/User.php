@@ -38,11 +38,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
-  public function scopeSearch($query, $user_email){
-         $query->where(DB::raw("CONCAT(ID)"),"LIKE" ,"%$user_email%");
-   
+    /*RELACIONES ACTUALES */
+    public function liquidations(){
+      return $this->hasMany('App\Liquidation', 'user_id', 'ID');
+    }
+    /*FIN DE RELACIONES ACTUALES */
 
+
+    public function scopeSearch($query, $user_email){
+         $query->where(DB::raw("CONCAT(ID)"),"LIKE" ,"%$user_email%");
     }
 
 
