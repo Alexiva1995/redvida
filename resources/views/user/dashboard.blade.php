@@ -82,46 +82,18 @@
 
   			// Create the chart
   			var lineChart = new Chart(lineChartctx, lineChartconfig);
-
-  			// Doughnut Chart
-  			// ---------------------------------------------
-  			//Get the context of the Chart canvas element we want to select
-  			var doughnutChartctx = $("#simple-doughnut-chart");
-
-  			// Chart Options
-  			var doughnutchartOptions = {
-    			responsive: true,
-    			maintainAspectRatio: false,
-    			responsiveAnimationDuration: 500,
-    			legend: {
-		    		display: false,
-		    	},
-    			/*title: {
-      				display: true,
-      				text: 'Predicted world population (millions) in 2050'
-    			}*/
-  			};
-
-			// Chart Data
-			var doughnutchartData = {
-			    labels: ["Activos", "Inactivos"],
-			    datasets: [{
-			      	label: "My First dataset",
-			      	data: <?= json_encode($cantReferidos) ?>,
-			      	backgroundColor: ['#34C900', '#8B8B8B'],
-			    }]
-			};
-
-		  	var doughnutChartconfig = {
-		    	type: 'doughnut',
-		    	// Chart Options
-		    	options: doughnutchartOptions,
-		    	data: doughnutchartData
-		  	};
-
-  			// Create the chart
-  			var doughnutSimpleChart = new Chart(doughnutChartctx, doughnutChartconfig);
 		});
+
+		function copyReferralsLink(){   
+			alert("Aqui");
+            let copyText = $('#referrals_link').attr('data-link');
+            const textArea = document.createElement('textarea');
+            textArea.textContent = copyText;
+            document.body.append(textArea);      
+            textArea.select();      
+            document.execCommand("copy");    
+            textArea.remove();
+        }
 	</script>	
 @endpush
 
@@ -160,7 +132,7 @@
 					                       	</div>
 					                    </div>
 				    	                <div class="col-12 mt-2">
-				                        	<button class="btn btn-success">Copiar link de referido <i class="far fa-copy"></i></button>
+				                        	<button class="btn btn-success" data-link="http://localhost:8000/mioficina/autentication/register?referred_id={{Auth::user()->ID}}" id="referrals_link" onclick="copyReferralsLink();">Copiar link de referido <i class="far fa-copy"></i></button>
 				                        </div>
 									</div>
 								</div>
@@ -199,8 +171,8 @@
 			</div> 
 
 			{{-- Segunda Columna--}}
-			<div class="col-lg-12 col-md-12 col-sm-12">
-				<div class="card">
+			<div class="col-lg-6 col-md-12 col-sm-12">
+				<div class="card" style="min-height: 500px;">
 				 	<div class="card-header">
 					 	<div class="text-left" style="color: #3C3232; font-weight: 600; font-size: 20px;">
 					 		Últimas Comisiones
@@ -212,42 +184,10 @@
                     </div>
                     <div class="card-content">
                        	<div class="card-body pl-0">
-                       		<div class="height-300">
+                       		<div class="height-400">
                        			<canvas id="line-chart"></canvas>
                        		</div>
                        	</div>
-                    </div>
-                </div>
-			</div>
-
-			{{-- Tercera Columna--}}
-			<div class="col-lg-6 col-md-12 col-sm-12">
-				<div class="card" style="min-height: 500px;">
-					<div class="card-header">
-						<div style="color: #3C3232; font-weight: 600; font-size: 20px;">
-					 		Usuarios
-	                    </div>
-	                </div>
-                    <div class="card-content">
-                       	<div class="card-body">
-                       		<div class="height-300">
-                       			<canvas id="simple-doughnut-chart"></canvas>
-                       		</div>
-                       		<div class="row mt-3" style="color: #3C3232; font-weight: 500;">
-                        		<div class="col-6">
-                        			<i class="fa fa-circle font-small-3 mr-50" style="color: #34C900;"></i> Usuarios Activos
-                        		</div>
-                       			<div class="col-6 text-right">
-                       				{{ $cantReferidos[0] }}
-                       			</div>
-                       			<div class="col-6 mt-1">
-				 					<i class="fa fa-circle font-small-3 mr-50" style="color: #8B8B8B;"></i> Usuarios Inactivos
-				 				</div>
-				 				<div class="col-6 mt-1 text-right">
-				 					{{ $cantReferidos[1] }}
-				 				</div>
-                        	</div>
-                        </div>
                     </div>
                 </div>
 			</div>
@@ -284,46 +224,6 @@
 	                                    		</td>
 	                                        </tr>
 	                                    @endforeach
-	                                </tbody>
-	                            </table>
-                            </div>
-                       	</div>
-                    </div>
-                </div>
-			</div>
-
-			{{-- Cuarta Columna --}}
-			<div class="col-lg-12 col-md-12 col-sm-12" >
-				<div class="card">
-					<div class="card-header">
-						<div style="color: #3C3232; font-weight: 600; font-size: 20px;">
-						 	Últimos pedidos
-	                    </div>
-	                </div>
-                    <div class="card-content">
-                        <div class="card-body">
-                        	<div class="table-responsive ">
-                                <table class="table zero-configuration">
-                                    <thead>
-                                    	<tr>
-                                    		<th class="text-center">ID</th>
-                                    		<th class="text-center">NOMBRE</th>
-                                    		<th class="text-center">FECHA</th>
-                                    		<th class="text-center">CANTIDAD</th>
-                                    		<th class="text-center">ACCIÓN</th>
-                                    	</tr>
-                                    </thead>
-                                    <tbody>
-                                    	<tr>
-                                    		<td class="text-center">1</td>
-	                                    	<td class="text-center">Lorem Ipsum</td>
-	                                    	<td class="text-center">01/01/2021</td>
-	                                    	<td class="text-center">6</td>
-	                                    	<td class="text-center">
-	                                    		<a href="" style="color: #3C3232;"><i class="fa fa-eye mr-50"></i></a>
-	                                    		<a href="" style="color: #3C3232;"><i class="fa fa-trash mr-50"></i></a>
-	                                    	</td>
-	                                    </tr>
 	                                </tbody>
 	                            </table>
                             </div>

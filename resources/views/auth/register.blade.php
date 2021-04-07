@@ -21,9 +21,6 @@
                             <div class="pt-50 pb-1 pb-2 text-center">
                                 <img src="{{asset('assets/imgLanding/logo.png')}}" alt="branding logo">
                             </div>
-                            @if ($referred != null)
-                                <p class="px-2">Referido de : <strong>{{ $referred->display_name }}</strong> </p>
-                            @endif
 
                             {{-- alertas --}}
                             <div class="col-12">
@@ -35,6 +32,11 @@
                                 <div class="card-body pt-1">
                                     <h4 class="mb-0" style="color: #6B6B6B; font-size: 16px; font-weight: bold;">Registro</h4>
                                     <h6 class="mt-2 mb-3" style="color: #6B6B6B; font-size: 12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Euismod ac amet, ut mauris vitae.</h6>
+
+                                    @if ($referred != null)
+                                        <p class="px-2 text-center">Referido por:<br> <strong>{{ $referred->display_name }}</strong> </p>
+                                    @endif
+
                                     <form method="POST" action="{{ route('autentication.post-register') }}">
                                         {{ csrf_field() }}
                                         <div class="form-group">

@@ -38,19 +38,6 @@ class UserController extends Controller{
                 $arrayComisionesTotales[$comisionTotal->month - 1] = $comisionTotal->amount;
             }
 
-            $cantReferidosActivos = DB::table('wp_users')
-                                        ->where('referred_id', '=', Auth::user()->ID)
-                                        ->where('status', '=', 1)
-                                        ->count();
-
-            $cantReferidosInactivos = DB::table('wp_users')
-                                        ->where('referred_id', '=', Auth::user()->ID)
-                                        ->where('status', '=', 0)
-                                        ->count();
-
-            $cantReferidos[0] = $cantReferidosActivos;
-            $cantReferidos[1] = $cantReferidosInactivos;
-
             $ultRegistrosDirectos = DB::table('wp_users')
                                         ->select('ID', 'display_name', 'user_email', 'status')
                                         ->where('referred_id', '=', Auth::user()->ID)
@@ -58,7 +45,7 @@ class UserController extends Controller{
                                         ->get();
 
             view()->share('title', '');
-            return view('user.dashboard')->with(compact('arrayComisionesTotales', 'arrayComisionesPagadas', 'cantReferidos', 'ultRegistrosDirectos')); 
+            return view('user.dashboard')->with(compact('arrayComisionesTotales', 'arrayComisionesPagadas', 'ultRegistrosDirectos')); 
         } catch (\Throwable $th) {
             dd($th);
         }

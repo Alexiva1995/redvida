@@ -29,6 +29,10 @@ class RegisterController extends Controller{
         
     }
 
+    public function register(){
+        return view('auth.register');
+    }
+
     public function post_register(Request $data){
         try {
             // Obtenemos las configuraciones por defecto
@@ -83,10 +87,6 @@ class RegisterController extends Controller{
             \Log::info("Error en registro ".$th);
             return redirect()->back()->withInput()->with('msj2', 'El Registro no fue valido, hubo un error en el proceso de registro, contacte con el adminitrador');
         }
-    }
-
-    public function register(){
-        return view('auth.register');
     }
 
     public function VerificarUser($id){
