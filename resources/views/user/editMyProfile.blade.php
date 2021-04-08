@@ -1,11 +1,11 @@
 @extends('layouts.dashboard')
 
 @push('scripts')
-	<script>
-		function sendForm(){
-			$("#avatar-form").submit();
-		}
-	</script>
+    <script>
+        function sendForm(){
+            $("#avatar-form").submit();
+        }
+    </script>
 @endpush
 
 @section('breadcrumbs')
@@ -45,22 +45,22 @@
             				<div class="tab-content">
             					<div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
             						<div class="media">
-            							<a href="javascript: void(0);">
-                            				<img src="{{ asset('img/avatar/'.Auth::user()->avatar) }}" class="rounded mr-75" alt="profile image" height="64" width="64">
+                                        <a href="javascript: void(0);">
+                                            <img src="{{ asset('img/avatar/'.Auth::user()->avatar) }}" class="rounded mr-75" alt="profile image" height="64" width="64">
                                         </a>
                                         <div class="media-body mt-75">
-                                        	<div class="col-12 px-0 d-flex flex-sm-row flex-column justify-content-start">
-                                        		<label class="btn btn-sm btn-primary ml-50 mb-50 mb-sm-0 cursor-pointer" for="avatar">Subir nueva foto</label>
-                                        		<form action="{{ route('admin.update-my-profile') }}" method="POST" enctype="multipart/form-data" id="avatar-form">
-                                        			{{ csrf_field() }}
-                                        			<input type="file" id="avatar" name="avatar" hidden onchange="sendForm();">
-                                        		</form>
-                                        	</div>
-                                        	<p class="text-muted ml-75 mt-50"><small>Formatos permitidos: JPG, JPEG,PNG, WEBPM</small></p>
+                                            <div class="col-12 px-0 d-flex flex-sm-row flex-column justify-content-start">
+                                                <label class="btn btn-sm btn-primary ml-50 mb-50 mb-sm-0 cursor-pointer" for="avatar">Subir nueva foto</label>
+                                                <form action="{{ route('user.update-my-profile') }}" method="POST" enctype="multipart/form-data" id="avatar-form">
+                                                    {{ csrf_field() }}
+                                                    <input type="file" id="avatar" name="avatar" hidden onchange="sendForm();">
+                                                </form>
+                                            </div>
+                                            <p class="text-muted ml-75 mt-50"><small>Formatos permitidos: JPG, JPEG,PNG, WEBPM</small></p>
                                         </div>
                                     </div>
                                     <hr>
-                                    <form action="{{ route('admin.update-my-profile') }}" method="POST">
+                                    <form action="{{ route('user.update-my-profile') }}" method="POST">
                                     	{{ csrf_field() }}
                                     	<div class="row">
                                     		<div class="col-12">
@@ -146,7 +146,7 @@
                                     </form>
                                 </div>
                                 <div class="tab-pane fade " id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
-                                	<form action="{{ route('admin.update-my-profile') }}" method="POST">
+                                	<form action="{{ route('user.update-my-profile') }}" method="POST">
                                 		{{ csrf_field() }}
                                 		<div class="row">
                                 			<div class="col-12">

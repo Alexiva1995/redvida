@@ -103,7 +103,7 @@ Route::prefix('mioficina')->group(function (){
 
       Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('admin.edit-my-profile');
       Route::post('update-my-profile', 'UserController@update_my_profile')->name('admin.update-my-profile');
-
+      
       Route::group(['prefix' => 'user'], function(){
          Route::get('/edit', 'ActualizarController@editProfile')->name('admin.user.edit');
          Route::put('update', 'ActualizarController@updateProfile')->name('admin.user.update');

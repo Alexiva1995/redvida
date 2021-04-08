@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 use App\Commission;
 use App\User;
 use DB; 
 use Auth;
+use Hash;
 
 class UserController extends Controller{
     public function index(){
@@ -64,14 +67,50 @@ class UserController extends Controller{
     }
 
     public function update_my_profile(Request $request){
+        if (isset($request->avatar)){
+            if ($request->file('avatar')) {
+                $user = User::find(Auth::user()->ID);
+
+                $image = $request->file('avatar');
+                $name = 'user_'.Auth::user()->id.'_'.time().'.'.$image->getClientOriginalExtension();
+                $path = public_path() .'/img/avatar';
+                $image->move($path,$name);
+
+                $user->avatar = $name;
+                $user->save();
+                
+                return redirect()->back()->with('message', 'Su imagen de perfil ha sido actualizada con éxito.');
+            }else{
+                return redirect()->back()->with('error', 'Hubo un problema al cargar la imagen. Por favor, intente nuevamente.');
+            }
+        }
+
+        if (isset($request->actual_password)){
+            if (Hash::check($request->actual_password, Auth::user()->password)){
+                $validator = Validator::make($request->all(), [
+                    'password' => 'confirmed',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error', 'Las nuevas contraseñas ingresadas no coinciden.');
+                }
+
+                $user = User::find(Auth::user()->ID);
+                $user->user_pass = md5($request->password);
+                $user->password = bcrypt($request->password);
+                $user->clave = encrypt($request->password);
+                $user->save();
+
+                return redirect()->back()->with('message', 'Su contraseña ha sido actualizada con éxito.');
+            }else{
+                return redirect()->back()->with('error', 'La contraseña actual es incorrecta.');
+            }
+        }
+
         $user = User::find(Auth::user()->ID);
         $user->fill($request->all());
         $user->save();
 
-        if (Auth::user()->rol_id == 0){
-            return redirect()->route('admin.edit-my-profile')->with('message', 'Sus datos han sido actualizados con éxito.');
-        }else{
-            return redirect()->route('user.edit-my-profile')->with('message', 'Sus datos han sido actualizados con éxito.');
-        }
+        return redirect()->back()->with('message', 'Sus datos han sido actualizados con éxito.');
     }
 }
