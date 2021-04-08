@@ -123,6 +123,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="h5" for="discount">Valor de Descuento</label>
+                                                <div class="position-relative ">
+                                                    <input type="number" class="form-control" name="discount">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="col-12">
                                             <div class="form-group">

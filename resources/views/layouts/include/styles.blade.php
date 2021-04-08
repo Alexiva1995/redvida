@@ -23,6 +23,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/dashboard-analytics.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/card-analytics.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/tour/tour.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/toastr.min.css')}}">
 
 <style>
     .dropdown-item:hover{

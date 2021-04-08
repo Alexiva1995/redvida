@@ -7,35 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 // use Spatie\MediaLibrary\HasMedia\HasMedia;
 // use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Product extends Model 
+class OrdenProduct extends Model 
 // implements HasMedia
 {
-    protected $table = "products";
+    protected $table = "orden_products";
     /** 
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-         'id',
+         'iduser',
+         'id_product',
          'product',
-         'description',
          'amount',
-         'preferred_value',
-         'public_value',
-         'commissionable_pts_value',
-         'pts_buy_monthly',
-         'pts_purchase_ranges',
-         'pts_purchase_prizes',
-         'purchase_pts_value',
-         'discount',
+         'price',
          'status',
 
     ];
     
-    public function user(){
-        return $this->belongsTo('App\User');
-    }
+    // public function user(){
+    //     return $this->belongsTo('App\User');
+    // }
 
     public function getPhotoUrlAttribute()
     {
@@ -45,5 +38,13 @@ class Product extends Model
         } else {
             return $this->getMedia('photo')->first()->file;
         }
+    }
+
+    public function getUser(){
+        return $this->belongsTo('App\User','iduser', 'ID');
+    }
+
+    public function getProduct(){
+        return $this->belongsTo('App\Product','id_product', 'id');
     }
 }

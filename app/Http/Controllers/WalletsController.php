@@ -6,16 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Wallet;
+use App\Wallets;
 
 
 class WalletsController extends Controller
 {
 	public function index()
     {
-        $wallet = Wallet::where('iduser', Auth::id())->get();
-		view()->share('title', 'Wallet');
-
+        $wallet = Wallets::where('iduser', '=', Auth::user()->ID)->get();
+		view()->share('title', 'Billetera');
 
         return view('wallet.index')
         ->with('wallet', $wallet);
@@ -24,7 +23,7 @@ class WalletsController extends Controller
 
 	public function list()
     {
-        $wallet = Wallet::all();
+        $wallet = Wallets::all();
 
 		view()->share('title', 'Lista de Billeteras');
         return view('wallet.list')
@@ -40,7 +39,7 @@ class WalletsController extends Controller
 
     public function store(Request $request)
     {
-        $wallet = Wallet::all();
+        $wallet = Wallets::all();
 
         $fields = [   ];
 
@@ -48,7 +47,7 @@ class WalletsController extends Controller
 
         $this->validate($request, $fields, $msj);
 
-        $wallet = Wallet::create($request->all());
+        $wallet = Wallets::create($request->all());
 		$wallet->save();
 
         return redirect()->route('mioficina.wallet.list');
@@ -57,7 +56,7 @@ class WalletsController extends Controller
 
     public function edit($id)
     {
-        $wallet = Wallet::find($id);
+        $wallet = Wallets::find($id);
 		view()->share('title', 'Editar Billeteras');
 		
            return view('wallet.edit')
@@ -67,7 +66,7 @@ class WalletsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $wallet = Wallet::find($id);
+        $wallet = Wallets::find($id);
 
         $fields = [     ];
 
@@ -83,7 +82,7 @@ class WalletsController extends Controller
 
     public function delete($id)
     {
-        $wallet = Wallet::find($id);
+        $wallet = Wallets::find($id);
         $wallet->delete();
         return redirect()->route('mioficina.wallet.list');
     }

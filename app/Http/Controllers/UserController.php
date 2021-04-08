@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Commission;
-use DB; use Auth;
+use DB; 
+use Auth;
 
 class UserController extends Controller{
     public function index(){

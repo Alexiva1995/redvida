@@ -11,3 +11,10 @@ Dev: Luisana Marín
 *Nuevos campos a la tabla commissions (Correr script commissions.sql)
 *Eliminar tabla liquidaciones (script liquidaciones.sql respaldado en carpeta old_db)
 *Nueva tabla orders (Correr script orders.sql)
+
+
+﻿08/04/2021
+Dev: William Ache
+*Modificaciones en la tabla de products (Correr script products.sql)
+*Nueva tabla orden_products (Correr script orden_products.sql)
+
