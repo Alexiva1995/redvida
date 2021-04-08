@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\View;
 use App\Product;
+use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\OrdenProduct;
 
 
 class ProductsController extends Controller
@@ -13,22 +17,47 @@ class ProductsController extends Controller
 	public function index()
     {
         $product = Product::all();
-
+        $total = DB::table('orden_products')->where('iduser', Auth::ID())->count();
+        
 		view()->share('title', 'Tienda');
 
         return view('shop.index')
-        ->with('product', $product);
+        ->with('product', $product)
+        ->with('total', $total);
  
     }
 
-	public function list()
+	public function listUser()
+    {
+        $product = OrdenProduct::all()->where('iduser', Auth::ID());
+
+
+		view()->share('title', 'Historial de Ordenes');
+        return view('shop.list-user')
+        ->with('product', $product);
+
+ 
+    }
+
+    public function list()
     {
         $product = Product::all();
 
-		view()->share('title', 'Lista de Products');
+		view()->share('title', 'Lista de Productos');
         return view('shop.list')
         ->with('product', $product); 
  
+    }
+
+    public function show($id)
+    {
+        $product = OrdenProduct::find($id);
+
+		view()->share('title', 'Editar Producto');
+		
+           return view('shop.show')
+           ->with('product', $product);
+        
     }
 
     public function create()
@@ -123,4 +152,31 @@ class ProductsController extends Controller
       
         return redirect()->route('shop.list')->with('message','Se elimino el Producto'.' '.$product->product.' '.'Exitosamente');
     }
+
+    public function saveOrden(Request $request)
+    {
+            $user = Auth::user();
+
+            if($user->wallet_amount >= '20'){
+            $orden = OrdenProduct::create([
+                'iduser' => Auth::ID(),
+                'id_product' => $request->id,
+                'product' => $request->product,
+                'amount' => '1',
+                'price' => $request->public_value,
+            ]);
+            $saldoAcumulado = ($orden->getUser->wallet_amount - $request->public_value);
+            $orden->getUser->update(['wallet_amount' => $saldoAcumulado]);
+            return redirect()->back()->with('message', 'Producto Comprado');
+        }else{
+
+            return redirect()->back()->with('error', 'Saldo Insuficiente');
+        }
+    }
+
+
+
+
+
+
 }

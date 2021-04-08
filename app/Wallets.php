@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-class Wallet extends Model 
+class Wallets extends Model 
 // implements HasMedia
 {
     protected $table = "wallets";
@@ -22,6 +22,6 @@ class Wallet extends Model
     ];
     
     public function getUser(){
-        return $this->belongsTo('App\User','iduser', 'id');
+        return $this->belongsTo('App\User','iduser', 'ID');
     }
 }

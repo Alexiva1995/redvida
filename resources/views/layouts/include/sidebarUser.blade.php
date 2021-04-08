@@ -32,10 +32,25 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('shop.index')}}" class="nav-link nav-toggle">
+                <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="feather icon-shopping-bag"></i>
                     <span class="title">Tienda</span>
+                    <span class="arrow"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{route('shop.index')}}" class="nav-link" >
+                            <i class="feather icon-list"></i>
+                            <span class="title">Lista de Productos</span>
+                        </a> 
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{route('shop.list-user')}}" class="nav-link">
+                            <i class="feather icon-shopping-cart"></i>
+                            <span class="title">Mis Compras</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
@@ -72,7 +87,7 @@
             </li>
             <li class="nav-item">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="fas fa-dollar-sign"></i>
+                    <i class="feather icon-dollar-sign"></i>
                     <span class="title">Liquidaciones</span>
                     <span class="arrow"></span>
                 </a>

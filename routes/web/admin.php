@@ -41,6 +41,9 @@ Route::prefix('mioficina')->group(function (){
      // TIENDA
      Route::get('/shop/index', 'ProductsController@index')->name('shop.index');
      Route::get('/shop/list', 'ProductsController@list')->name('shop.list');
+     Route::get('/shop/list-user', 'ProductsController@listUser')->name('shop.list-user');
+     Route::get('/shop/show/{id}', 'ProductsController@show')->name('shop.show');
+     Route::post('/shop/save', 'ProductsController@saveOrden')->name('shop.save');
      Route::get('/shop/create', 'ProductsController@create')->name('shop.create');
      Route::get('/shop/edit/{id}', 'ProductsController@edit')->name('shop.edit');
      Route::post('/shop/store', 'ProductsController@store')->name('shop.store');

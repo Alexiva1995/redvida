@@ -9,7 +9,7 @@
         {{-- <meta name="keywords"
             content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app"> --}}
         <meta name="author" content="VALDUSOFT">
-        <title>{{ $settings->name }}</title>
+        <title>RedVida</title>
         <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-ic.png">
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -60,4 +60,42 @@
     @include('layouts.include.scripts')
 
     @stack('scripts')
+
+    <script>
+        @if(Session::has('message'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.success("{{ session('message') }}");
+        @endif
+      
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.error("{{ session('error') }}");
+        @endif
+      
+        @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.info("{{ session('info') }}");
+        @endif
+      
+        @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+                toastr.warning("{{ session('warning') }}");
+        @endif
+      </script>
 </html>
