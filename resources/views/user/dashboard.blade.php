@@ -54,8 +54,8 @@
 		  	};
 
 		  	// Chart Data
-		  	var comisionesTotales = <?= json_encode($arrayComisionesTotales) ?>;
-		  	var comisionesPagadas = <?= json_encode($arrayComisionesPagadas) ?>;
+		  	var comisionesTotales = <?= json_encode($arrayCommissionsTotal) ?>;
+		  	var comisionesPagadas = <?= json_encode($arrayCommissionsPaid) ?>;
 		  	var linechartData = {
 		    	labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
 		    	datasets: [
@@ -85,7 +85,6 @@
 		});
 
 		function copyReferralsLink(){   
-			alert("Aqui");
             let copyText = $('#referrals_link').attr('data-link');
             const textArea = document.createElement('textarea');
             textArea.textContent = copyText;
@@ -108,7 +107,15 @@
 							<div class="row">
 								<div class="col-6">
 									<div class="row">
-										<div class="col-3"><span><img class="round" src="{{ asset('img/avatar/'.Auth::user()->avatar) }}" alt="avatar" height="50" width="50"></span></div>
+										<div class="col-3">
+											<span>
+												@if(!!Auth::user()->photoDB)
+													<img class="round" src="{{ asset('product/'.Auth::user()->photoDB) }}" alt="avatar" height="50" width="50">
+												@else
+													<img class="round" src="{{ asset('img/avatar/avatar.png') }}" alt="avatar" height="50" width="50">
+												@endif
+											</span>
+										</div>
 										<div class="col-9">
 											<div class="user-name text-bold-600" style="color:  #3C3232;">
 				                           		{{ Auth::user()->display_name }}
@@ -171,8 +178,8 @@
 			</div> 
 
 			{{-- Segunda Columna--}}
-			<div class="col-lg-6 col-md-12 col-sm-12">
-				<div class="card" style="min-height: 500px;">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="card">
 				 	<div class="card-header">
 					 	<div class="text-left" style="color: #3C3232; font-weight: 600; font-size: 20px;">
 					 		Últimas Comisiones
@@ -184,7 +191,7 @@
                     </div>
                     <div class="card-content">
                        	<div class="card-body pl-0">
-                       		<div class="height-400">
+                       		<div class="height-300">
                        			<canvas id="line-chart"></canvas>
                        		</div>
                        	</div>
@@ -192,8 +199,9 @@
                 </div>
 			</div>
 
-			<div class="col-lg-6 col-md-12 col-sm-12" >
-				<div class="card" style="min-height: 500px;">
+			{{-- Tercera Columna--}}
+			<div class="col-lg-12 col-md-12 col-sm-12" >
+				<div class="card">
 					<div class="card-header">
 					 	<div style="color: #3C3232; font-weight: 600; font-size: 20px;">
 					 		Últimos registros directos
@@ -211,12 +219,12 @@
                                    		</tr>
                                    	</thead>
                                   	<tbody>
-                                    	@foreach ($ultRegistrosDirectos as $registroDirecto)
+                                    	@foreach ($lastDirectRecords as $lastRecord)
 	                                    	<tr>
-	                                    		<td class="text-center">{{ $registroDirecto->ID }}</td>
-	                                    		<td class="text-center">{{ (!empty($registroDirecto->display_name)) ? $registroDirecto->display_name : $registroDirecto->user_email }}</td>
+	                                    		<td class="text-center">{{ $lastRecord->ID }}</td>
+	                                    		<td class="text-center">{{ (!empty($lastRecord->display_name)) ? $lastRecord->display_name : $lastRecord->user_email }}</td>
 	                                    		<td class="text-center">
-	                                    			@if ($registroDirecto->status == 1)
+	                                    			@if ($lastRecord->status == 1)
 						                        		<i class="fa fa-circle font-small-3 text-success mr-50"></i> Activo
 	                                    			@else
 						                        		<i class="fa fa-circle font-small-3 text-danger mr-50"></i> Inactivo

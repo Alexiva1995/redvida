@@ -14,7 +14,7 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
             style="background-color: #ffffff">
             <li class="nav-item">
-                <a href="{{ route('user.dashboard') }}" class="nav-link nav-toggle">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link nav-toggle">
                     <i class="feather icon-home"></i>
                     <span class="title">Inicio</span>
                 </a>
@@ -84,7 +84,7 @@
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{ route('user.liquidations.completed') }}" class="nav-link">
+                        <a href="{{ route('user.liquidations.record') }}" class="nav-link">
                             <i class="feather icon-briefcase"></i>
                             <span class="title">Liquidaciones Realizadas</span>
                         </a>

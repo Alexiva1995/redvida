@@ -25,6 +25,8 @@ Route::prefix('mioficina')->group(function (){
    /*RUTAS PARA EL USUARIO */
    Route::group(['prefix' => 'user', 'middleware' => ['auth', 'guest']], function() {
       Route::get('/', 'UserController@index')->name('user.dashboard');
+      Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('user.edit-my-profile');
+      Route::post('update-my-profile', 'UserController@update_my_profile')->name('user.update-my-profile');
 
       Route::group(['prefix' => 'network'], function(){
          Route::get('/directs-record', 'NetworkController@directs_record')->name('user.network.directs-record');
@@ -97,7 +99,16 @@ Route::prefix('mioficina')->group(function (){
 
 
    Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'guest']], function() {
-      Route::get('/', 'AdminController@index')->name('admin.index');
+      Route::get('/', 'AdminController@index')->name('admin.dashboard');
+
+      Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('admin.edit-my-profile');
+      Route::post('update-my-profile', 'UserController@update_my_profile')->name('admin.update-my-profile');
+
+      Route::group(['prefix' => 'user'], function(){
+         Route::get('/edit', 'ActualizarController@editProfile')->name('admin.user.edit');
+         Route::put('update', 'ActualizarController@updateProfile')->name('admin.user.update');
+         Route::put('actualizar/{id}', 'ActualizarController@actualizar')->name('admin.user.actualizar');
+      });
       //Route::resource('bonosetting', 'BonoSettingAdminController');
       //Route::get('blackbox', 'HomeController@blackbox')->name('blackbox');
 
@@ -360,11 +371,6 @@ Route::prefix('mioficina')->group(function (){
 		   Route::put('/{id}/modificar', 'ArchivoController@modificar')->name('archivo.modificar');
       });*/
 
-      Route::group(['prefix' => 'user'], function(){
-         Route::get('/edit', 'ActualizarController@editProfile')->name('admin.user.edit');
-         Route::put('update', 'ActualizarController@updateProfile')->name('admin.user.update');
-         Route::put('actualizar/{id}', 'ActualizarController@actualizar')->name('admin.user.actualizar');
-      });
 
       //Historial de actividades
       /*Route::group(['prefix' => 'actividad'], function(){

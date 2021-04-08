@@ -8,63 +8,54 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Hexters\CoinPayment\Entities\CoinPaymentuserRelation;
 
-class User extends Authenticatable
-{
-    use Notifiable, HasRoles;
+class User extends Authenticatable{
+   use Notifiable, HasRoles;
 
-    protected $table = "wp_users";
-    protected $primaryKey = 'ID';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'birthdate', 'gender', 'user_login', 'user_pass', 'user_nicename',
-        'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status',
-        'display_name', 'password', 'avatar', 'access_token', 'referred_id',
-        'sponsor_id', 'position_id', 'status', 'rol_id', 'wallet_amount',
-        'clave', 'activacion', 'token_correo', 'verificar_correo', 'toke_google',
-        'tipouser', 'puntos', 'paquete', 'puntosP', 'puntosizq',
-        'puntosder', 'ladomatrix', 'ladoregistrar', 'icono_paquete', 'clave_maestra',
-        'fecha_activacion', 'rentabilidad', 'porc_rentabilidad', 'check_token_google'
-    ];
+   protected $table = "wp_users";
+   protected $primaryKey = 'ID';
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-    /*RELACIONES ACTUALES */
-    public function commissions(){
+   protected $fillable = [
+      'name', 'phone', 'country', 'birthdate', 'gender', 'address', 'user_login', 'user_pass', 
+      'user_nicename', 'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status',
+      'display_name', 'password', 'avatar', 'referred_id', 'sponsor_id', 'position_id', 'status', 
+      'rol_id', 'wallet_amount', 'rentabilidad', 'porc_rentabilidad', 'clave', 'activacion', 
+      'token_correo', 'verificar_correo', 'toke_google', 'tipouser', 'check_token_google', 'puntos', 
+      'paquete', 'puntosP', 'puntosizq', 'puntosder', 'ladomatrix', 'ladoregistrar', 'icono_paquete', 
+      'clave_maestra', 'fecha_activacion',  
+   ];
+
+   protected $hidden = [
+      'password', 'remember_token',
+   ];
+
+   /*RELACIONES ACTUALES */
+   public function referred(){
+      return $this->belongsTo(User::class, 'referred_id');
+   }
+
+   public function commissions(){
       return $this->hasMany('App\Commission', 'user_id', 'ID');
-    }
+   }
 
-    public function commissions_referred(){
+   public function commissions_referred(){
       return $this->hasMany('App\Commission', 'referred_id', 'ID');
-    }
+   }
 
-    public function liquidations(){
+   public function liquidations(){
       return $this->hasMany('App\Liquidation', 'user_id', 'ID');
-    }
+   }
 
-    public function orders(){
-        return $this->hasMany('App\Order', 'user_id', 'ID');
-    }
-    /*FIN DE RELACIONES ACTUALES */
+   public function orders(){
+      return $this->hasMany('App\Order');
+   }
+   /*FIN DE RELACIONES ACTUALES */
+
+
+
 
 
     public function scopeSearch($query, $user_email){
          $query->where(DB::raw("CONCAT(ID)"),"LIKE" ,"%$user_email%");
-    }
-
-
-    public function referrals()
-    {
-        return $this->belongsTo(User::class, 'referred_id');
     }
 
     public function rol(){

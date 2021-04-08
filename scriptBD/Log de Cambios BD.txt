@@ -12,9 +12,15 @@ Dev: Luisana Marín
 *Eliminar tabla liquidaciones (script liquidaciones.sql respaldado en carpeta old_db)
 *Nueva tabla orders (Correr script orders.sql)
 
-
 ﻿08/04/2021
 Dev: William Ache
 *Modificaciones en la tabla de products (Correr script products.sql)
 *Nueva tabla orden_products (Correr script orden_products.sql)
+
+08/04/2021
+Dev: Luisana Marín
+*Nuevos campos a la tabla wp_userss (Correr script wp_users.sql)
+*Eliminar tabla user_campo (script user_campo.sql respaldado en carpeta old_db)
+*Eliminar tabla wp_usermeta (script wp_usermeta.sql respaldado en carpeta old_db)
+
 

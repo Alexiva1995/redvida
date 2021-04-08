@@ -69,7 +69,7 @@
                      {{-- <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span> --}}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
-                     <a class="dropdown-item" href="{{ route('admin.user.edit') }}">
+                      <a class="dropdown-item" @if (Auth::user()->rol_id == 0) href="{{ route('admin.edit-my-profile') }}" @else href="{{ route('user.edit-my-profile') }}" @endif>
                         <i class="feather icon-user"></i>
                         Editar Perfil
                      </a>

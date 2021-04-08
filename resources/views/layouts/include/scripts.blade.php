@@ -17,6 +17,7 @@
 <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
 @stack('page_vendor_js')
 <!-- END: Page Vendor JS-->
 
