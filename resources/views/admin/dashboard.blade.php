@@ -149,6 +149,24 @@
         	}
         	$("#userDetails").modal("show");
         }
+
+         function showOrderDetail($order){
+        	var date = new Date($order.date);
+        	$("#order-id").html($order.id);
+        	$("#order-user").html($order.user.user_email);
+        	$("#order-amount").html('$'+$order.amount);
+        	$("#order-payment-method").html($order.payment_method);
+        	$("#order-payment-ref").html($order.payment_ref);
+        	$("#order-date").html(date.getDate() + "/"+ (date.getMonth()+1)+ "/" +date.getFullYear());
+        	if ($order.status == 0){
+        		$("#order-status").html('<span class="badge badge badge-warning badge-pill">>Pendiente</span>');
+        	}else if ($order.status == 1){
+        		$("#order-status").html('<span class="badge badge badge-success badge-pill" style="background-color: #34C900;">Completada</span>');
+        	}else{
+        		$("#order-status").html('<span class="badge badge badge-success badge-pill" style="background-color: #D50B21;">Recahzada</span>');
+        	}
+        	$("#orderDetails").modal("show");
+        }
 	</script>	
 @endpush
 
@@ -360,7 +378,7 @@
 													@endif
 		                                    	</td>
 		                                    	<td class="text-center">
-		                                    		<a href="" style="color: #3C3232;"><i class="fa fa-eye mr-50"></i></a>
+		                                    		<a href="javascript:;" style="color: #3C3232;" onclick="showOrderDetail({{$lastOrder}});"><i class="fa fa-eye mr-50"></i></a>
 		                                    	</td>
 		                                    </tr>
 		                                @endforeach
@@ -417,6 +435,53 @@
 	            			<tr>
 	            				<td>Estado</td>
 	            				<td class="text-bold-600" id="user-status"></td>
+	            			</tr>
+	            		</tbody>
+	            	</table>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="modal fade" id="orderDetails" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Detalles de Orden</h5>
+					<button type="button" class="close btn btn-icon rounded-circle" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true" class="text-white">&times;</span>
+	                </button>
+	            </div>
+	            <div class="modal-body">
+	            	<table class="table table-bordered">
+	            		<tbody>
+	            			<tr>
+	            				<td>#</td>
+	            				<td class="text-bold-600" id="order-id"></td>
+	            			</tr>
+	            			<tr>
+	            				<td>Usuario</td>
+	            				<td class="text-bold-600" id="order-user"></td>
+	            			</tr>
+	            			<tr>
+	            				<td>Monto</td>
+	            				<td class="text-bold-600" id="order-amount"></td>
+	            			</tr>
+	            			<tr>
+	            				<td>Método de Pago</td>
+	            				<td class="text-bold-600" id="order-payment-method"></td>
+	            			</tr>
+	            			<tr>
+	            				<td>Referencia de Pago</td>
+	            				<td class="text-bold-600" id="order-payment-ref"></td>
+	            			</tr>
+	            			<tr>
+	            				<td>Fecha</td>
+	            				<td class="text-bold-600" id="order-date"></td>
+	            			</tr>
+	            			<tr>
+	            				<td>Estado</td>
+	            				<td class="text-bold-600" id="order-status"></td>
 	            			</tr>
 	            		</tbody>
 	            	</table>
