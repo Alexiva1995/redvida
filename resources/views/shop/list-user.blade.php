@@ -27,9 +27,9 @@
                         @foreach ($product as $item)
                         <tr class="text-center">
                             <td>{{ $item->id}}</td>
-                            <td>{{ $item->product}}</td>
+                            <td>{{ $item->getProduct->product}}</td>
                             <td>{{ $item->amount}}</td>
-                            <td>{{ $item->price}}</td>
+                            <td>{{ $item->getProduct->public_value}}</td>
                             <td>{{ $item->created_at}}</td>
                             <td>
                                 <div class="row">

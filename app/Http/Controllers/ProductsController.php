@@ -9,7 +9,7 @@ use App\Product;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\OrdenProduct;
+use App\Order;
 
 
 class ProductsController extends Controller
@@ -17,19 +17,21 @@ class ProductsController extends Controller
 	public function index()
     {
         $product = Product::all();
-        $total = DB::table('orden_products')->where('iduser', Auth::ID())->count();
+        $total = DB::table('orders')->where('user_id', Auth::ID())->count();
+        $user = Auth::user();
         
 		view()->share('title', 'Tienda');
 
         return view('shop.index')
         ->with('product', $product)
-        ->with('total', $total);
+        ->with('total', $total)
+        ->with('user', $user);
  
     }
 
 	public function listUser()
     {
-        $product = OrdenProduct::all()->where('iduser', Auth::ID());
+        $product = Order::all()->where('user_id', Auth::ID());
 
 
 		view()->share('title', 'Historial de Ordenes');
@@ -51,9 +53,9 @@ class ProductsController extends Controller
 
     public function show($id)
     {
-        $product = OrdenProduct::find($id);
+        $product = Order::find($id);
 
-		view()->share('title', 'Editar Producto');
+		view()->share('title', 'Revisar Producto');
 		
            return view('shop.show')
            ->with('product', $product);
@@ -157,13 +159,12 @@ class ProductsController extends Controller
     {
             $user = Auth::user();
 
-            if($user->wallet_amount >= '20'){
-            $orden = OrdenProduct::create([
-                'iduser' => Auth::ID(),
-                'id_product' => $request->id,
-                'product' => $request->product,
+
+            if($user->wallet_amount >= $request->public_value){
+            $orden = Order::create([
+                'user_id' => Auth::ID(),
+                'product_id' => $request->id,
                 'amount' => '1',
-                'price' => $request->public_value,
             ]);
             $saldoAcumulado = ($orden->getUser->wallet_amount - $request->public_value);
             $orden->getUser->update(['wallet_amount' => $saldoAcumulado]);

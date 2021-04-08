@@ -9,10 +9,15 @@ class Order extends Model{
     protected $table = "orders";
 
     protected $fillable = [
-        'user_id', 'amount', 'payment_method', 'payment_ref', 'date', 'status'
+        'user_id','product_id', 'amount', 'payment_method', 'payment_ref', 'date', 'status'
     ];
 
-    public function user(){
-        return $this->belongsTo('App\User', 'user_id');
+  
+    public function getUser(){
+        return $this->belongsTo('App\User','user_id', 'ID');
+    }
+
+    public function getProduct(){
+        return $this->belongsTo('App\Product','product_id', 'id');
     }
 }

@@ -29,21 +29,23 @@
                             <h4 class="card-title float-right">{{ $item->public_value }} $</h4>
                             <input type="text" value="{{ $item->public_value }}" class=" d-none" name="public_value">
                             @endif
-                           
                             <h4 class="card-title">⭐⭐⭐⭐⭐</h4>
                             <br>
                             <h6 class="card-title small font-weight-medium">{{ $item->product }}</h6>
                             <input type="text" value="{{ $item->product }}" class=" d-none" name="product">
                             <p class="card-text">{{ $item->description }}</p>
                         </div>
-                        @if ($item->status == 1)
-                      
+                        @if ($user->wallet_amount >= $item->public_value)
+                        {{-- @if ($item->status == 1) --}}
                         <button type="submit" class="col-12 btn btn-lg btn-success waves-effect waves-light"><i class="feather icon-shopping-cart    mr-1"></i> Comprar</button>    
-                        @elseif($item->status == 2)
+                        @else
+                        <button type="submit" class="col-12 btn btn-lg btn-danger waves-effect waves-light"><i class="feather icon-alert-circle    mr-1"></i> Saldo Insuficiente</button> 
+                        @endif
+                        {{-- @elseif($item->status == 2)
                         <a href="#" class="col-12 btn btn-lg btn-warning waves-effect waves-light"><i class="feather icon-alert-triangle mr-1"></i> Agotado</a> 
                         @elseif($item->status == 3)
                         <a href="#" class="col-12 btn btn-lg btn-danger waves-effect waves-light"><i class="feather icon-alert-triangle mr-1"></i> No Disponible</a> 
-                        @endif
+                        @endif --}}
                         
                     </div>
                 </div>

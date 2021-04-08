@@ -38,7 +38,7 @@ $(document).ready(function() {
     <div class="col-7">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Editar Producto</h4>
+                <h4 class="card-title">Revisando la Orden {{ $product->id }}</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -49,7 +49,7 @@ $(document).ready(function() {
                                         <label class="h5" for="product">Producto</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" name="product"
-                                            readonly value="{{ $product->product }}">
+                                            readonly value="{{ $product->getProduct->product }}">
                                         </div>
                                     </div>
                                 </div>
@@ -70,8 +70,6 @@ $(document).ready(function() {
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="h5" for="preferred_value">Valor Preferente</label>
