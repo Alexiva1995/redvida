@@ -4,21 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use App\User; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon; 
-use App\Wallet;
-use App\MetodoPago;
-use App\SettingsComision;
-use App\Botbrainbow;
-use App\Pagos;
-use App\Monedas;
+use App\User; 
+use App\WalletTransaction;
 use App\Http\Controllers\ComisionesController;
-use PragmaRX\Google2FA\Google2FA;
 use App\Http\Controllers\IndexController;
-use App\OrdenInversion;
 use App\Http\Controllers\LiquidationController;
+use PragmaRX\Google2FA\Google2FA;
+use Carbon\Carbon; 
 use PhpParser\Node\Expr\Cast\Object_;
 use stdClass;
 
@@ -30,39 +24,23 @@ class WalletController extends Controller
 		view()->share('title', 'Wallet');
 	}
 	
-	/**
-	 *  Va a la vista principal de la billetera cash
-	 * 
-	 * @access public
-	 * @return view
-	 */
 	public function index(){
-	   
-		$moneda = Monedas::where('principal', 1)->get()->first();
-		$metodopagos = MetodoPago::all();
-		$comisiones = SettingsComision::select('comisionretiro', 'comisiontransf')->where('id', 1)->get();
-		$cuentawallet = '';
-		$pagosPendientes = false;
-		$validarPagos = Pagos::where([
-			['iduser', '=', Auth::user()->ID],
-			['estado', '=', 0]
-		])->first();
-		if (!empty($validarPagos)) {
-			$pagosPendientes = true;
-		}
-		$wallets = Wallet::where([
-			['iduser', '=', Auth::user()->ID], 
-			['debito', '>', 0],
-		])->orWhere([
-			['iduser', '=', Auth::user()->ID], 
-			['credito', '>', 0]
-			])->get();
-		$cuentawallet = DB::table('user_campo')->where('ID', Auth::user()->ID)->select('paypal')->get()[0];
-		$cuentawallet = $cuentawallet->paypal;
-		$correoUser = DB::table('wp_users')->where('ID', Auth::user()->ID)->select('user_email')->first();
-		
-	   	return view('wallet.indexwallet')->with(compact('metodopagos', 'comisiones', 'wallets', 'moneda', 'cuentawallet', 'pagosPendientes', 'correoUser'));
-	}
+        $wallet = WalletTransaction::where('user_id', '=', Auth::user()->ID)->get();
+
+        $lastRecord = $wallet->last();
+		view()->share('title', 'Billetera');
+
+        return view('user.wallet.index')->with(compact('wallet', 'lastRecord'));
+
+    }
+
+
+
+
+
+
+
+
 	
 	/**
 	 * Realizar Transferencia de un usuario a otro
@@ -131,17 +109,6 @@ class WalletController extends Controller
 	   }
 	}
 	
-	/**
-	 * Guarda la informacion o los registro del la billetera
-	 * 
-	 * @access public
-	 * @param array $datos - arreglo con los datos necesarios
-	 */
-	public function saveWallet($datos)
-	{
-		Wallet::create($datos);
-	}
-    
     /**
      * Solicita el proceso de retiro de un usuario
      * 

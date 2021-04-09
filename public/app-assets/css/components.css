@@ -7065,7 +7065,7 @@ input[type='date'].form-control, input[type='time'].form-control, input[type='da
 
 table.dataTable {
 
-  border : 2px solid #F8F8F8;
+  /*border : 2px solid #F8F8F8;*/
 
 }
 
@@ -7192,11 +7192,9 @@ div.dataTables_wrapper div.dataTables_filter select, div.dataTables_wrapper div.
 
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-
-  margin-top : 1rem;
-
-  padding-bottom : 7px;
-
+  margin-top: 20px;
+  padding-bottom: 20px;
+  margin-right: 20px;
 }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination li a {

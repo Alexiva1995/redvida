@@ -9,7 +9,7 @@ class Liquidation extends Model{
     protected $table = "liquidations";
 
     protected $fillable = [
-        'user_id', 'amount', 'wallet', 'comment', 'payment_ref', 'date', 'process_date', 'comment_reverse', 'status'
+        'user_id', 'amount', 'wallet', 'comment', 'payment_ref', 'date', 'process_date', 'reverse_comment', 'status'
     ];
 
     public function user(){
@@ -20,5 +20,7 @@ class Liquidation extends Model{
       return $this->hasMany('App\Commission', 'liquidation_id', 'id');
     }
 
-
+    public function wallet_transaction(){
+        return $this->hasOne('App\WalletTransaction');
+    }
 }

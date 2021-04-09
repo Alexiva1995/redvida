@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Commission;
-use App\Liquidacion;
 use App\Liquidation;
 use App\User;
+use App\WalletTransaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,16 +16,59 @@ use Illuminate\Support\Facades\Auth;
 
 class LiquidationController extends Controller
 {
+    /*Usuario -> Billetera -> Solicitar Retiro */
+    public function store(){
+        $liquidation = new Liquidation();
+        $liquidation->user_id = Auth::user()->ID;
+        $liquidation->amount = Auth::user()->wallet_amount;
+        $liquidation->wallet = Auth::user()->wallet;
+        $liquidation->date = date('Y-m-d');
+        $liquidation->save();
+
+        $transaction = new WalletTransaction();
+        $transaction->user_id = Auth::user()->ID;
+        $transaction->wallet_used = Auth::user()->wallet;
+        $transaction->operation_type = 'Débito';
+        $transaction->description = 'Solicitud de Retiro';
+        $transaction->amount = Auth::user()->wallet_amount;
+        $transaction->liquidation_id = $liquidation->id;
+        $transaction->save();
+
+        $commissions = Commission::where('user_id', '=', Auth::user()->ID)
+                            ->where('status', '=', 0)
+                            ->get();
+        foreach ($commissions as $commission){
+            $commission->liquidation_id = $liquidation->id;
+            $commission->status = 1;
+            $commission->save();
+        }
+
+        $user = User::find(Auth::user()->ID);
+        $user->wallet_amount = 0;
+        $user->save();
+
+        return redirect()->route('user.wallet.index')->with('message', 'Su solicitud de retiro ha sido creada con éxito');
+    }
+
     /*Usuario -> Liquidaciones -> Liquidaciones Pendientes */
+    /*Admin -> Liquidaciones -> Liquidaciones Pendientes */
     public function pending(){
-        $liquidations = Liquidation::where('user_id', '=', Auth::user()->ID)
+        view()->share('title', 'Liquidaciones');
+
+        if (Auth::user()->rol_id == 1){
+            $liquidations = Liquidation::where('user_id', '=', Auth::user()->ID)
                             ->where('status', '=', 0)
                             ->orderBy('id', 'DESC')
                             ->get();
-
-        view()->share('title', 'Liquidaciones Pendientes');
-
-        return view('user.liquidations.pending')->with(compact('liquidations'));
+        
+            return view('user.liquidations.pending')->with(compact('liquidations'));
+        }else{
+            $liquidations = Liquidation::where('status', '=', 0)
+                            ->orderBy('id', 'DESC')
+                            ->get();
+        
+            return view('admin.liquidations.pending')->with(compact('liquidations'));
+        }
     }
 
     /*Usuario -> Liquidaciones -> Liquidaciones Historial */
@@ -51,26 +94,67 @@ class LiquidationController extends Controller
         return view('user.liquidations.commissionsList')->with(compact('commissions'));
     }
 
-
-
-
-
-
-
-
-    /**
-     * LLeva a la vista de las liquidaciones pendientes
-     *
-     * @return void
-     */
-    public function index(){
+    /*Admin -> Liquidaciones -> Liquidaciones Realizadas */
+    public function completed(){
         // TITLE
-        view()->share('title', 'Generar Liquidaciones');
+        view()->share('title', 'Liquidaciones');
 
-        $comisiones = $this->getComisionesTotalIndex([], Auth::user()->ID);
-        $filtro = false;
-        return view('liquidation.index', compact('comisiones', 'filtro'));
+        $liquidations = Liquidation::with('user')
+                            ->where('status', '=', 1)
+                            ->get();
+
+        return view('admin.liquidations.completed')->with(compact('liquidations'));
     }
+
+    /*Admin -> Liquidaciones -> Aprobar o Reversar Liquidación */
+    public function update(Request $request){
+        $liquidation = Liquidation::find($request->liquidation_id);
+        $liquidation->fill($request->all());
+        $liquidation->process_date = date('Y-m-d');
+        $liquidation->save();
+
+        $commissions = Commission::where('liquidation_id', '=', $liquidation->id)
+                        ->get();
+
+        if ($liquidation->status == 1){
+            foreach ($commissions as $commission){
+                $commission->status = 2;
+                $commission->save();
+            }
+
+            $transaction = WalletTransaction::where('liquidation_id', '=', $liquidation->id)
+                                ->first();
+            $transaction->status = 1;      
+            $transaction->save();        
+
+        }else{
+            foreach ($commissions as $commission){
+                $commission->status = 0;
+                $commission->liquidation_id = NULL;
+                $commission->save();
+            }
+            
+            $user = User::find($liquidation->user_id);
+            $user->wallet_amount = ($user->wallet_amount + $liquidation->amount);
+            $user->save();
+
+            $transaction = WalletTransaction::where('liquidation_id', '=', $liquidation->id)
+                                ->first();
+            $transaction->status = 2;      
+            $transaction->save();  
+        }
+        
+        return redirect()->back()->with('message', 'La operación se ha realizado con éxito.');
+    }
+
+
+
+
+
+
+
+
+
 
     public function indexUserComision()
     {
@@ -387,228 +471,7 @@ class LiquidationController extends Controller
 
         return $liquidacion->id;
     }
-
-    /**
-     * Permite guardar en la billetera
-     *
-     * @param array $data
-     * @return void
-     */
-    public function saveWallet(array $data)
-    {
-        $funciones = new WalletController;
-        $funciones->saveWallet($data);
-    }
-
-    /**
-     * Permite llevar a las liquidaciones pendientes
-     *
-     * @return void
-     */
-    public function liquidacionPendientes()
-    {
-        // TITLE
-        view()->share('title', 'Liquidaciones Pendientes');
-        $liquidaciones = Liquidacion::where('status', '=', 0)->get();
-
-        foreach ($liquidaciones as $liquidacion) {
-            $user = User::find($liquidacion->iduser);
-            $liquidacion->usuario = 'Usuario No Disponible';
-            $liquidacion->email = 'Correo no disponible';
-            if (!empty($user)) {
-                $liquidacion->usuario = $user['display_name'];
-                $liquidacion->email = $user['user_email'];
-            }
-        }
-
-        return view('liquidation.liquidacionPendiente', compact('liquidaciones'));
-    }
-
-    /**
-     * Permite llevar a las liquidaciones Realizadas
-     *
-     * @return void
-     */
-    public function liquidacionesRealizada()
-    {
-        // TITLE
-        view()->share('title', 'Liquidaciones Realizadas');
-        $liquidaciones = Liquidacion::where('status', '=', 1)->get();
-
-        foreach ($liquidaciones as $liquidacion) {
-            $user = User::find($liquidacion->iduser)->only('display_name', 'user_email');
-            $liquidacion->usuario = 'Usuario No Disponible';
-            $liquidacion->email = 'Correo no disponible';
-            if (!empty($user)) {
-                $liquidacion->usuario = $user['display_name'];
-                $liquidacion->email = $user['user_email'];
-            }
-        }
-
-        return view('liquidation.liquidacionRealizadas', compact('liquidaciones'));
-    }
     
-    /**
-     * Permite procesar las liquidaciones ya una vez en estado de pendiente
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function updateLiquidation(Request $request)
-    {
-        if ($request->action == 'reversar') {
-            $validate = $request->validate([
-                'comentario' => 'required'
-            ]);
-        }else{
-            $validate = true;
-        }
-
-        if ($validate) {
-            $accion = '';
-            if ($request->action == 'reversar') {
-                $accion = 'Se reverso con exito la liquidacion '.$request->liquidacion;
-                $this->reversarLiquidaciones($request->iduser, $request->liquidacion, $request->comentario);
-            }else{
-                $accion = $this->aprobarLiquidacion($request);
-            }
-            return redirect()->back()->with('msj', $accion);
-        }
-    }
-
-    /**
-     * Permite aprobar las liquidaciones
-     *
-     * @param object $data
-     * @return string
-     */
-    public function aprobarLiquidacion(object $data): string
-    {
-        try {
-            $estado = '';
-            $liquidacion = Liquidacion::find($data->liquidacion);
-            $liquidacion->comment = $data->comentario;
-            $liquidacion->status = 1;
-            // $valor = $this->getRateBtc();
-            // if ($valor != 0) {
-            //     $cmd = 'create_withdrawal';
-            //     $dataPago = [
-            //         'amount' => ($liquidacion->total * $valor),
-            //         'currency' => 'BTC',
-            //         'address' => $liquidacion->wallet_used,
-            //     ];
-            //     // llamo la a la funcion que va a ser la transacion
-            //     $result = $this->coinpayments_api_call($cmd, $dataPago);
-            //     if (!empty($result['result'])) {
-                    $estado = 'Se aprobo con exito la liquidacion '.$liquidacion->id;
-                    $liquidacion->hash = $data->hash;
-                    $this->bonoRetiro($liquidacion->iduser, $liquidacion->total);
-                    $liquidacion->save();
-            //     }else{
-            //         $estado = "Hubo un error al momento de procesar el retiro";
-            //     }
-            // }else{
-            //     $estado = "Hubo un error al momento de obtener el valor del btc";
-            // }
-            return $estado;
-        } catch (\Throwable $th) {
-            dd($th);
-        }
-    }
-
-    /**
-     * Permite pagar el bono de retiro
-     *
-     * @param integer $iduser - usuario que pagara
-     * @param float $monto - monto a pagar
-     * @return void
-     */
-    public function bonoRetiro($iduser, $monto)
-    {
-        $comisiones = new ComisionesController();
-        $referido = User::find($iduser);
-        $sponsor = User::where('ID', $referido->referred_id)->first();
-        if (!empty($sponsor)) {
-            $paquete = null;
-            if ($sponsor->paquete) {
-                $paquete = json_decode($sponsor->paquete);
-            }
-            if ($paquete != null) {
-                if ($paquete->code == 1) {
-                    $pagar = ($monto * 0.02);
-                    $idcompra = $iduser.Carbon::now()->format('Ymds');
-                    $concepto = 'Bono de Retiro por usuario '.$referido->Display_name;
-                    $comisiones->saveComision($sponsor->ID, $idcompra, $pagar, $iduser, 1, $concepto, 'Bono Retiro');
-                }
-            }
-        }
-    }
-
-    /**
-     * Permite reversar todas las liquidaciones procesadas
-     *
-     * @param integer $iduser
-     * @param integer $idliquidacion
-     * @param string $comentario
-     * @return void
-     */
-    public function reversarLiquidaciones(int $iduser, int $idliquidacion, string $comentario)
-    {
-        try {
-            $liquidacion = Liquidacion::find($idliquidacion);
-            $user = User::find($iduser);
-            if ($liquidacion->type_liquidation != 'Comisiones') {
-                $rentabilidad = DB::table('log_rentabilidad')->where('id', $liquidacion->idinversion)->first();
-                $comisiones = new ComisionesController();
-                $total = ($rentabilidad->retirado - $liquidacion->monto_bruto);
-                $balance = ($rentabilidad->ganado - $total);
-                $dataRent = [
-                    'retirado' => $total,
-                    'balance' => $balance
-                ];
-
-                $concepto = 'Reverso de la  liquidacion de '.$liquidacion->monto_bruto.' de la inversion: '.$rentabilidad->id;
-
-                $dataPay = [
-                    'iduser' => Auth::user()->ID,
-                    'id_log_renta' => $rentabilidad->id,
-                    'porcentaje' => 0,
-                    'debito' => $total,
-                    'credito' => 0,
-                    'balance' => $balance,
-                    'fecha_pago' => Carbon::now(),
-                    'concepto' => $concepto,
-                ];
-        
-                $comisiones->savePayRentabilidad($dataPay, $rentabilidad->id, $dataRent);
-
-
-            }elseif($liquidacion->type_liquidation == 'Comisiones'){
-
-                $concepto = 'Reverso de la liquidacion con un monto de '.$liquidacion->monto_bruto;
-                $user->wallet_amount = ($user->wallet_amount + $liquidacion->monto_bruto);
-                $dataWallet = [
-                    'iduser' => $iduser,
-                    'usuario' => $user->display_name,
-                    'descripcion' => $concepto,
-                    'descuento' => 0,
-                    'debito' => $liquidacion->monto_bruto,
-                    'credito' => 0,
-                    'balance' => $user->wallet_amount,
-                    'tipotransacion' => 3,
-                    'status' => 0
-                ];
-                $user->save();
-                $this->saveWallet($dataWallet);
-                Commission::where('id_liquidacion', '=', $liquidacion->id)->update(['status' => 0, 'id_liquidacion' => '']);
-            }
-            $liquidacion->comment_reverse = $comentario;
-            $liquidacion->status = 2;
-            $liquidacion->save();
-        } catch (\Throwable $th) {
-            dd($th);
-        }
-    }
 
     /**
      * Permite obtener la informacion del valor de la moneda

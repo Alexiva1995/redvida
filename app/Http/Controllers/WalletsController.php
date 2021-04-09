@@ -11,15 +11,6 @@ use App\Wallets;
 
 class WalletsController extends Controller
 {
-	public function index()
-    {
-        $wallet = Wallets::where('iduser', '=', Auth::user()->ID)->get();
-		view()->share('title', 'Billetera');
-
-        return view('wallet.index')
-        ->with('wallet', $wallet);
- 
-    }
 
 	public function list()
     {

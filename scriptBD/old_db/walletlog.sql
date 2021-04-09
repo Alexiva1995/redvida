@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2021 a las 16:36:16
+-- Tiempo de generación: 09-04-2021 a las 17:55:27
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -24,32 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `liquidations`
+-- Estructura de tabla para la tabla `walletlog`
 --
 
-CREATE TABLE `liquidations` (
+CREATE TABLE `walletlog` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `amount` double NOT NULL,
-  `wallet` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `payment_ref` varchar(255) DEFAULT NULL,
-  `date` date NOT NULL,
-  `process_date` date DEFAULT NULL,
-  `reverse_comment` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = Pendiente. 1 = Liquidada. 2 = Reversada',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `iduser` int(11) NOT NULL,
+  `usuario` varchar(200) NOT NULL,
+  `correo` varchar(200) DEFAULT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `debito` float NOT NULL,
+  `credito` float NOT NULL,
+  `balance` decimal(40,2) NOT NULL,
+  `descuento` float NOT NULL,
+  `tipotransacion` tinyint(4) NOT NULL COMMENT '0 - transferencia, 1 - retiros, 2 - comisiones,  3 - liquidaciones',
+  `status` tinyint(4) DEFAULT NULL COMMENT '0 - asiganada, 1 - pre-liquidada, 2 - liquidada',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `liquidations`
+-- Indices de la tabla `walletlog`
 --
-ALTER TABLE `liquidations`
+ALTER TABLE `walletlog`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -57,9 +58,9 @@ ALTER TABLE `liquidations`
 --
 
 --
--- AUTO_INCREMENT de la tabla `liquidations`
+-- AUTO_INCREMENT de la tabla `walletlog`
 --
-ALTER TABLE `liquidations`
+ALTER TABLE `walletlog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

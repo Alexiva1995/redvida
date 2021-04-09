@@ -28,15 +28,19 @@ Route::prefix('mioficina')->group(function (){
       Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('user.edit-my-profile');
       Route::post('update-my-profile', 'UserController@update_my_profile')->name('user.update-my-profile');
 
+      // BILLETERA
+     Route::get('/wallet', 'WalletController@index')->name('user.wallet.index');
+
       Route::group(['prefix' => 'network'], function(){
          Route::get('/directs-record', 'NetworkController@directs_record')->name('user.network.directs-record');
          Route::get('/networks-record', 'NetworkController@networks_record')->name('user.network.networks-record');
       });
 
       Route::group(['prefix' => 'liquidations'], function(){
-         Route::get('/pending', 'LiquidationController@pending')->name('user.liquidations.pending');
-         Route::get('/record', 'LiquidationController@record')->name('user.liquidations.record');
-         Route::get('show-commissions-list/{liquidation_id}', 'LiquidationController@show_commissions_list')->name('user.liquidations.show-commissions-list');
+        Route::get('store', 'LiquidationController@store')->name('user.liquidations.store');
+        Route::get('/pending', 'LiquidationController@pending')->name('user.liquidations.pending');
+        Route::get('/record', 'LiquidationController@record')->name('user.liquidations.record');
+        Route::get('show-commissions-list/{liquidation_id}', 'LiquidationController@show_commissions_list')->name('user.liquidations.show-commissions-list');
       });
    });
    /*FIN DE RUTAS PARA EL USUARIO */
@@ -61,9 +65,6 @@ Route::prefix('mioficina')->group(function (){
      Route::post('/range/store', 'RangesController@store')->name('range.store');
      Route::post('/range/update/{id}', 'RangesController@update')->name('range.update');
      Route::delete('/range/delete/{id}', 'RangesController@delete')->name('range.delete');
-
-     // BILLETERA
-     Route::get('/wallet/index', 'WalletsController@index')->name('wallet.index');
 
      // admin
      Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
@@ -103,12 +104,26 @@ Route::prefix('mioficina')->group(function (){
 
       Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('admin.edit-my-profile');
       Route::post('update-my-profile', 'UserController@update_my_profile')->name('admin.update-my-profile');
-      
-      Route::group(['prefix' => 'user'], function(){
-         Route::get('/edit', 'ActualizarController@editProfile')->name('admin.user.edit');
-         Route::put('update', 'ActualizarController@updateProfile')->name('admin.user.update');
-         Route::put('actualizar/{id}', 'ActualizarController@actualizar')->name('admin.user.actualizar');
+
+      Route::group(['prefix' => 'liquidations'], function (){
+        Route::get('pending', 'LiquidationController@pending')->name('admin.liquidations.pending');
+        Route::get('completed', 'LiquidationController@completed')->name('admin.liquidations.completed');
+        Route::post('update', 'LiquidationController@update')->name('admin.liquidations.update');
       });
+      /*Route::group(['prefix' => 'liquidacion'], function (){
+         // Liquidaciones Pendientes
+         Route::get('/', 'LiquidationController@index')->name('liquidacion');
+         Route::get('/{iduser}/detalles', 'LiquidationController@detalles')->name('liquidacion.detalles');
+         Route::get('/user_liquidar', 'LiquidationController@indexUserComision')->name('liquidacion.user.comision');
+         Route::post('liquidationFiltro', 'LiquidationController@indexFiltro')->name('liquidation.filtro');
+         Route::post('generarliquidacion', 'LiquidationController@liduidarUser')->name('liquidacion.generar');
+         Route::post('procesarcomisiones', 'LiquidationController@procesarComisiones')->name('liquidacion.procesar.comision');
+         Route::get('/liquidacioninversion', 'LiquidationController@liquidacionesInversion')->name('liquidacion.inversion');
+         Route::post('/liquidarinversiones', 'LiquidationController@liquidarInversiones')->name('liquidacion.liquidacion.inversiones');
+         Route::get('rentabilidad', 'ComisionesController@getRentabilidad')->name('prueba.rentabilidad');
+      });*/
+      
+      
       //Route::resource('bonosetting', 'BonoSettingAdminController');
       //Route::get('blackbox', 'HomeController@blackbox')->name('blackbox');
 
@@ -123,22 +138,6 @@ Route::prefix('mioficina')->group(function (){
       });*/
 
       //Route::post('changeside', 'HomeController@changeSide')->name('change.side');
-
-      /*Route::group(['prefix' => 'liquidacion'], function (){
-         // Liquidaciones Pendientes
-         Route::get('/', 'LiquidationController@index')->name('liquidacion');
-         Route::get('/{iduser}/detalles', 'LiquidationController@detalles')->name('liquidacion.detalles');
-         Route::get('/user_liquidar', 'LiquidationController@indexUserComision')->name('liquidacion.user.comision');
-         Route::post('liquidationFiltro', 'LiquidationController@indexFiltro')->name('liquidation.filtro');
-         Route::post('generarliquidacion', 'LiquidationController@liduidarUser')->name('liquidacion.generar');
-         Route::post('procesarcomisiones', 'LiquidationController@procesarComisiones')->name('liquidacion.procesar.comision');
-         Route::get('/liquidacionPendientes', 'LiquidationController@liquidacionPendientes')->name('liquidacion.pendientes');
-         Route::get('/liquidacioninversion', 'LiquidationController@liquidacionesInversion')->name('liquidacion.inversion');
-         Route::post('/liquidarinversiones', 'LiquidationController@liquidarInversiones')->name('liquidacion.liquidacion.inversiones');
-         Route::get('/liquidacionrealizadas', 'LiquidationController@liquidacionesRealizada')->name('liquidacion.realizadas');
-         Route::post('/updateLiquidacion', 'LiquidationController@updateLiquidation')->name('liquidacion.update');
-         Route::get('rentabilidad', 'ComisionesController@getRentabilidad')->name('prueba.rentabilidad');
-      });*/
 
       // publicidad
       /*Route::group(['prefix' => 'publicidad'], function (){
@@ -255,6 +254,11 @@ Route::prefix('mioficina')->group(function (){
 
       //Route::get('/ranking', 'Ranking2Controller@ranking')->name('admin.ranking');
 
+      Route::group(['prefix' => 'user'], function(){
+         Route::get('/edit', 'ActualizarController@editProfile')->name('admin.user.edit');
+         Route::put('update', 'ActualizarController@updateProfile')->name('admin.user.update');
+         Route::put('actualizar/{id}', 'ActualizarController@actualizar')->name('admin.user.actualizar');
+      });
       // Modificacion del usuario por parte del admin
       Route::get('/userrecords', 'HomeController@user_records')->name('admin.userrecords');
       Route::get('/useredit/{id}', 'ActualizarController@user_edit')->name('admin.useredit');

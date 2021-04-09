@@ -10,7 +10,7 @@ class NetworkController extends Controller{
 
     public function directs_record(){
         // TITLE
-        view()->share('title', 'Mi Negocio - Directos');
+        view()->share('title', 'Mi Negocio');
         // DO MENU
         view()->share('do', collect(['name' => 'network', 'text' => 'Red de Usuarios']));
 
@@ -24,7 +24,7 @@ class NetworkController extends Controller{
 
     public function networks_record(){
         // TITLE
-        view()->share('title', 'Mi Negocio - Organización');
+        view()->share('title', 'Mi Negocio');
         
         $referidos = $this->getReferrals(Auth::user()->ID, [], 1);
 

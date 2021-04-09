@@ -244,12 +244,12 @@ class ComisionesController extends Controller
      * @param array $dataRent
      * @return void
      */
-    public function savePayRentabilidad($data, $idrentabilidad, $dataRent)
+    /*public function savePayRentabilidad($data, $idrentabilidad, $dataRent)
     {
         DB::table('log_rentabilidad')->where('id', $idrentabilidad)->update($dataRent);
 
         DB::table('log_rentabilidad_pay')->insert($data);
-    }
+    }*/
 
     /**
      * Permite saber si la rentabilidad existe sino la agrega 

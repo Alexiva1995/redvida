@@ -54,47 +54,41 @@
 @endsection
 
 @section('content')
-	<div class="card">
-		<div class="card-content">
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table zero-configuration">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Monto (USD)</th>
-								<th>Fecha de Solicitud</th>
-								<th>Fecha de Proceso</th>
-								<th>Referencia</th>
-								<th>Estado</th>
-								<th>Acción</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($liquidations as $liquidation)
-								<tr>
-									<td>{{ $liquidation->id }}</td>
-									<td>USD {{ $liquidation->amount }}</td>
-									<td>{{ date('Y/m/d', strtotime($liquidation->date)) }}</td>
-									<td>{{ date('Y/m/d', strtotime($liquidation->process_date)) }}</td>
-									<td>{{ $liquidation->payment_ref }}</td>
-									<td>
-										@if ($liquidation->status == 1)
-											<span class="badge badge badge-success badge-pill" style="background-color: #34C900;">Completada</span>
-										@else
-											<span class="badge badge badge-success badge-pill" style="background-color: #D50B21;">Reversada</span>
-										@endif
-									</td>
-									<td>
-										<a class="show" href="javascript:;" style="color: #3C3232;" data-route="{{ route('user.liquidations.show-commissions-list', $liquidation->id) }}"><i class="fa fa-eye mr-50" aria-hidden="true"></i></a>
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+	<div class="redvida-div-table">
+		<table class="table zero-configuration">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Monto (USD)</th>
+					<th>Fecha de Solicitud</th>
+					<th>Fecha de Proceso</th>
+					<th>Referencia</th>
+					<th>Estado</th>
+					<th>Acción</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($liquidations as $liquidation)
+					<tr>
+						<td>{{ $liquidation->id }}</td>
+						<td>USD {{ $liquidation->amount }}</td>
+						<td>{{ date('Y/m/d', strtotime($liquidation->date)) }}</td>
+						<td>{{ date('Y/m/d', strtotime($liquidation->process_date)) }}</td>
+						<td>{{ $liquidation->payment_ref }}</td>
+						<td>
+							@if ($liquidation->status == 1)
+								<span class="badge badge badge-success badge-pill" style="background-color: #34C900;">Completada</span>
+							@else
+								<span class="badge badge badge-success badge-pill" style="background-color: #D50B21;">Reversada</span>
+							@endif
+						</td>
+						<td>
+							<a class="show" href="javascript:;" style="color: #3C3232;" data-route="{{ route('user.liquidations.show-commissions-list', $liquidation->id) }}"><i class="fa fa-eye mr-50" aria-hidden="true"></i></a>
+						</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 
 	@include('user.liquidations.commissionsListModal')

@@ -19,8 +19,17 @@ Dev: William Ache
 
 08/04/2021
 Dev: Luisana Marín
-*Nuevos campos a la tabla wp_userss (Correr script wp_users.sql)
+*Nuevos campos a la tabla wp_users (Correr script wp_users.sql)
 *Eliminar tabla user_campo (script user_campo.sql respaldado en carpeta old_db)
 *Eliminar tabla wp_usermeta (script wp_usermeta.sql respaldado en carpeta old_db)
+
+09/04/2021
+Dev: Luisana Marín
+*Modificar tabla liquidations (Correr script liquidations.sql)
+*Modificar tabla wallets (cambié el nombre a wallet_transactions) (Correr script wallet_transactions)
+*Eliminar tabla log_rentabilidad (script log_rentabilidad.sql respaldado en carpeta old_db)
+*Eliminar tabla walletlog (script walletlog.sql respaldado en carpeta old_db)
+*Eliminar tabla walletlog_rentabilidad (script walletlog_rentabilidad.sql respaldado en carpeta old_db)
+*Agregar campo wallet a la tabla wp_users (Correr script wp_users.sql)
 
 
