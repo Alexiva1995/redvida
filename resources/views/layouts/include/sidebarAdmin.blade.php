@@ -14,19 +14,19 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
             style="background-color: #ffffff">
             <li class="nav-item">
-                <a href="{{ route('user.dashboard') }}" class="nav-link nav-toggle">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link nav-toggle">
                     <i class="feather icon-home"></i>
                     <span class="title">Inicio</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('wallet.index')  }}">
+                <a href="#">
                     <i class="feather icon-credit-card"></i>
                     <span class="title">Billetera</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{route('referraltree', ['tree'])}}" class="nav-link nav-toggle">
+                <a href="#" class="nav-link nav-toggle">
                     <i class="feather icon-git-merge"></i>
                     <span class="title">Árbol</span>
                 </a>
@@ -93,14 +93,20 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{ route('user.liquidations.pending') }}" class="nav-link" >
-                            <i class="feather icon-briefcase"></i>
+                        <a href="" class="nav-link" >
+                            <i class="fas fa-dollar-sign"></i>
+                            <span class="title">Liquidaciones - General</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a href="{{ route('admin.liquidations.pending') }}" class="nav-link" >
+                            <i class="fas fa-dollar-sign"></i>
                             <span class="title">Liquidaciones Pendientes</span>
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a href="{{ route('user.liquidations.completed') }}" class="nav-link">
-                            <i class="feather icon-briefcase"></i>
+                        <a href="{{ route('admin.liquidations.completed') }}" class="nav-link">
+                            <i class="fas fa-dollar-sign"></i>
                             <span class="title">Liquidaciones Realizadas</span>
                         </a>
                     </li>

@@ -78,9 +78,6 @@ class RegisterController extends Controller{
                 'status' => '0'
             ]);
 
-            // inserta en usermeta
-            $this->insertUserMeta($user);
-
             Auth::guard()->login($user);
             return redirect()->action('HomeController@index')->with('msj', 'Se Registrado Exitosamente');
         } catch (\Throwable $th) {
@@ -97,39 +94,6 @@ class RegisterController extends Controller{
         }
 
         return $resul;
-    }
-
-    private function insertarCampoUser($userid, $data){
-        $formulario = Formulario::where('estado', 1)->get();
-        $arraytpm [] = ['ID' => $userid];
-        $arrayuser = [];
-
-        foreach ($formulario as $campo) {
-            $arraytpm [] = [
-                ''.$campo->nameinput.'' => $data[$campo->nameinput]
-            ];
-        }
-
-        $arrayuser = $arraytpm[0];
-        for ($i= 1 ; $i < count($arraytpm); $i++) { 
-            $arrayuser = array_merge($arrayuser,$arraytpm[$i]);
-        }
-
-        DB::table('user_campo')->insert($arrayuser);
-    }
-
-    private function insertUserMeta($data){
-        $settings = Settings::first();
-        DB::table($settings->prefijo_wp.'usermeta')->insert([
-            ['user_id' => $data->ID, 'meta_key' => 'nickname', 'meta_value' => $data->user_email],
-            ['user_id' => $data->ID, 'meta_key' => 'first_name', 'meta_value' => $data->display_name],
-            ['user_id' => $data->ID, 'meta_key' => 'last_name', 'meta_value' => $data->display_name],
-            ['user_id' => $data->ID, 'meta_key' => $settings->prefijo_wp.'capabilities', 'meta_value' => 'a:1:{s:10:"subscriber";b:1;}'],
-            ['user_id' => $data->ID, 'meta_key' => 'billing_first_name', 'meta_value' => $data->display_name],
-            ['user_id' => $data->ID, 'meta_key' => 'billing_last_name', 'meta_value' => $data->display_name],
-            ['user_id' => $data->ID, 'meta_key' => 'billing_email', 'meta_value' => $data->user_email],
-            ['user_id' => $data->ID, 'meta_key' => 'billing_phone', 'meta_value' => $data->phone],
-        ]);
     }
 
     /*public function fact2(){

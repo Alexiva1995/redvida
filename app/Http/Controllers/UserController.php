@@ -3,52 +3,114 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 use App\Commission;
+use App\User;
 use DB; 
 use Auth;
+use Hash;
 
 class UserController extends Controller{
     public function index(){
         try {
-            $comisionesPagadas = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+            $commissionsPaid = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
                                     ->where('user_id', '=', Auth::user()->ID)
                                     ->where('status', '=', 1)
                                     ->groupBy("month")
                                     ->orderBy('month', 'ASC')
                                     ->get();
 
-            $comisionesTotales = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+            $commissionsTotal = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
                                     ->where('user_id', '=', Auth::user()->ID)
-                                    ->where('date', '>=', '2021-01-01')
-                                    ->where('date', '<=', '2021-12-31')
                                     ->groupBy("month")
                                     ->orderBy('month', 'ASC')
                                     ->get();
 
-            $arrayComisionesPagadas = []; 
-            $arrayComisionesTotales = [];
+            $arrayCommissionsPaid = []; 
+            $arrayCommissionsTotal = [];
             for ($i = 0; $i <= 11; $i++){
-            $arrayComisionesPagadas[$i] = 0;
-                $arrayComisionesTotales[$i] = 0;
+                $arrayCommissionsPaid[$i] = 0;
+                $arrayCommissionsTotal[$i] = 0;
             }
 
-            foreach ($comisionesPagadas as $comisionPagada){
-                $arrayComisionesPagadas[$comisionPagada->month - 1] = $comisionPagada->amount;
+            foreach ($commissionsPaid as $commissionPaid){
+                $arrayCommissionsPaid[$commissionPaid->month - 1] = $commissionPaid->amount;
             }
-            foreach ($comisionesTotales as $comisionTotal){
-                $arrayComisionesTotales[$comisionTotal->month - 1] = $comisionTotal->amount;
+            foreach ($commissionsTotal as $commissionTotal){
+                $arrayCommissionsTotal[$commissionTotal->month - 1] = $commissionTotal->amount;
             }
 
-            $ultRegistrosDirectos = DB::table('wp_users')
-                                        ->select('ID', 'display_name', 'user_email', 'status')
-                                        ->where('referred_id', '=', Auth::user()->ID)
-                                        ->take(12)
-                                        ->get();
+            $lastDirectRecords = DB::table('wp_users')
+                                    ->select('ID', 'display_name', 'user_email', 'status')
+                                    ->where('referred_id', '=', Auth::user()->ID)
+                                    ->take(12)
+                                    ->get();
 
             view()->share('title', '');
-            return view('user.dashboard')->with(compact('arrayComisionesTotales', 'arrayComisionesPagadas', 'ultRegistrosDirectos')); 
+            return view('user.dashboard')->with(compact('arrayCommissionsTotal', 'arrayCommissionsPaid', 'lastDirectRecords')); 
         } catch (\Throwable $th) {
             dd($th);
         }
+    }
+
+    public function edit_my_profile(){
+        // TITLE
+        view()->share('title', 'Editar Mi Perfil');
+
+        if (Auth::user()->rol_id == 0){
+            return view('admin.editMyProfile');  
+        }else{
+            return view('user.editMyProfile');
+        }
+        
+    }
+
+    public function update_my_profile(Request $request){
+        if (isset($request->avatar)){
+            if ($request->file('avatar')) {
+                $user = User::find(Auth::user()->ID);
+
+                $image = $request->file('avatar');
+                $name = 'user_'.Auth::user()->id.'_'.time().'.'.$image->getClientOriginalExtension();
+                $path = public_path() .'/img/avatar';
+                $image->move($path,$name);
+
+                $user->avatar = $name;
+                $user->save();
+                
+                return redirect()->back()->with('message', 'Su imagen de perfil ha sido actualizada con éxito.');
+            }else{
+                return redirect()->back()->with('error', 'Hubo un problema al cargar la imagen. Por favor, intente nuevamente.');
+            }
+        }
+
+        if (isset($request->actual_password)){
+            if (Hash::check($request->actual_password, Auth::user()->password)){
+                $validator = Validator::make($request->all(), [
+                    'password' => 'confirmed',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect()->back()->with('error', 'Las nuevas contraseñas ingresadas no coinciden.');
+                }
+
+                $user = User::find(Auth::user()->ID);
+                $user->user_pass = md5($request->password);
+                $user->password = bcrypt($request->password);
+                $user->clave = encrypt($request->password);
+                $user->save();
+
+                return redirect()->back()->with('message', 'Su contraseña ha sido actualizada con éxito.');
+            }else{
+                return redirect()->back()->with('error', 'La contraseña actual es incorrecta.');
+            }
+        }
+
+        $user = User::find(Auth::user()->ID);
+        $user->fill($request->all());
+        $user->save();
+
+        return redirect()->back()->with('message', 'Sus datos han sido actualizados con éxito.');
     }
 }

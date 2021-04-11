@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2021 a las 16:36:16
+-- Tiempo de generación: 09-04-2021 a las 17:26:08
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -24,22 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `liquidations`
+-- Estructura de tabla para la tabla `log_rentabilidad`
 --
 
-CREATE TABLE `liquidations` (
+CREATE TABLE `log_rentabilidad` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `amount` double NOT NULL,
-  `wallet` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `payment_ref` varchar(255) DEFAULT NULL,
-  `date` date NOT NULL,
-  `process_date` date DEFAULT NULL,
-  `reverse_comment` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = Pendiente. 1 = Liquidada. 2 = Reversada',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `iduser` int(11) NOT NULL,
+  `idcompra` int(11) NOT NULL,
+  `idproducto` int(11) NOT NULL,
+  `detalles_producto` text NOT NULL,
+  `precio` double NOT NULL,
+  `limite` double NOT NULL,
+  `ganado` double NOT NULL,
+  `retirado` double DEFAULT 0,
+  `balance` double DEFAULT 0,
+  `progreso` double NOT NULL,
+  `nivel_minimo_cobro` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -47,9 +49,9 @@ CREATE TABLE `liquidations` (
 --
 
 --
--- Indices de la tabla `liquidations`
+-- Indices de la tabla `log_rentabilidad`
 --
-ALTER TABLE `liquidations`
+ALTER TABLE `log_rentabilidad`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -57,9 +59,9 @@ ALTER TABLE `liquidations`
 --
 
 --
--- AUTO_INCREMENT de la tabla `liquidations`
+-- AUTO_INCREMENT de la tabla `log_rentabilidad`
 --
-ALTER TABLE `liquidations`
+ALTER TABLE `log_rentabilidad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

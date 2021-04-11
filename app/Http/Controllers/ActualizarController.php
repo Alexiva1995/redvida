@@ -23,7 +23,7 @@ class ActualizarController extends Controller
      *
      * @return void
      */
-    public function editProfile(){
+    /*public function editProfile(){
         // TITLE
         view()->share('title', 'Editar Perfil');
 
@@ -33,7 +33,7 @@ class ActualizarController extends Controller
         $data = $this->infoUsuario(Auth::user()->ID);
 
         return view('dashboard.editProfile')->with(compact('data'));
-    }
+    }*/
 
     /**
      * permite llenar la informacion del usuario en cuestion
@@ -41,7 +41,7 @@ class ActualizarController extends Controller
      * @param int $id - id de usuario
      * @return void
      */
-    public function infoUsuario($id)
+    /*public function infoUsuario($id)
     {
         $user = User::find($id);
         if ($user->check_token_google == 0) {
@@ -60,7 +60,6 @@ class ActualizarController extends Controller
         return $data;
     }
 
-
     public function createUserUrlQR($user)
     {
         
@@ -77,7 +76,7 @@ class ActualizarController extends Controller
             ), 'utf-8');
     
         return 'data:image/png;base64,' . base64_encode($data);
-    }
+    }*/
 
     /**
      * Lleva a la vista donde el admin Actualiza el perfil de un usuario

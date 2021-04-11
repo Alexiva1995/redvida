@@ -7,16 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\User;
-use App\Settings;
-use App\OrdenInversion;
 use App\Commission;
+use App\Order;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RangoController;
 use App\Http\Controllers\InversionController;
 use App\Http\Controllers\ComisionesController;
 use App\Http\Controllers\ActivacionController;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -38,23 +37,55 @@ class AdminController extends Controller
 		view()->share('title', 'Balance General');
 	}
 
-
-
     public function index(){
         try {
-            $data = [
-                'InversionesActivas' => $this->indexController->getInversionesActivaAdmin(),
-                'totalInvertido' => $this->indexController->getTotalInvertidoAdmin(),
-                'totalEntrada' => $this->indexController->getEntradaMesAdmin(),
-                'divisiones' => $this->indexController->getDivisionPaquete(),
-                'listadoOrdenes' => $this->indexController->getInversionesAdminDashboard(),
-                'totalusers' => $this->indexController->getUserRegistrado(),
-                'paquete' => 1,
-                'goldPaquete' => 0
-            ];
+            $commissionsPaid = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+                                    ->where('status', '=', 1)
+                                    ->groupBy("month")
+                                    ->orderBy('month', 'ASC')
+                                    ->get();
+
+            $commissionsTotal = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
+                                    ->groupBy("month")
+                                    ->orderBy('month', 'ASC')
+                                    ->get();
+
+            $arrayCommissionsPaid = []; 
+            $arrayCommissionsTotal = [];
+            for ($i = 0; $i <= 11; $i++){
+                $arrayCommissionsPaid[$i] = 0;
+                $arrayCommissionsTotal[$i] = 0;
+            }
+
+            foreach ($commissionsPaid as $commissionPaid){
+                $arrayCommissionsPaid[$commissionPaid->month - 1] = $commissionPaid->amount;
+            }
+            foreach ($commissionsTotal as $commissionTotal){
+                $arrayCommissionsTotal[$commissionTotal->month - 1] = $commissionTotal->amount;
+            }
+
+            $activeUsers = DB::table('wp_users')
+                                ->where('status', '=', 1)
+                                ->count();
+
+            $inactiveUsers = DB::table('wp_users')
+                                ->where('status', '=', 0)
+                                ->count();
+            $users[0] = $activeUsers;
+            $users[1] = $inactiveUsers;
+
+            $lastRecords = User::with('referred:ID,user_email')
+                                ->orderBy('id', 'DESC')
+                                ->take(12)
+                                ->get();
+
+            $lastOrders = Order::with('user:ID,user_email,display_name')
+                            ->orderBy('id', 'DESC')
+                            ->take(12)
+                            ->get();
 
             view()->share('title', '');
-            return view('dashboard.index', compact('data'));
+            return view('admin.dashboard')->with(compact('arrayCommissionsTotal', 'arrayCommissionsPaid', 'users', 'lastRecords', 'lastOrders'));
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -365,47 +396,5 @@ class AdminController extends Controller
        $user=User::search($request->get('user_email'))->orderBy('id','ASC')->paginate(1);
         return view('admin.vista')->with('user',$user);
     }
-
-    /**
-    public function getCurrency(){
-        // $access_key = "vfBg9wlm2uoOVXnBrLMHKukYs"; // Your API access key, Signup to get API KEY 
-        // $symbol = "all_forex"; // FX Pairs 
-        // $period = "5m";
-
-        // // Enter your API URL below 
-        // $api_url = "https://fcsapi.com/api-v3/forex/latest"; 
-        // $post = "symbol=".$symbol."&period=".$period."&access_key=".$access_key; 
-
-        // // Initialize CURL: 
-        // $ch = curl_init($api_url); 
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-        // curl_setopt($ch, CURLOPT_POST, true); 
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $post); 
-        // $json = curl_exec($ch); // Store the data 
-        // curl_close($ch); 
-
-        // $response = json_decode($json, true); // convert JSON into Array 
-        
-        return json_encode([]);
-    }*/
-
-
-    // /**
-    //  * Permite eliminar las ordenes del postmetas
-    //  *
-    //  * @return void
-    //  */
-    // public function eliminarOrdenPostmetas()
-    // {
-    //     $sql = "SELECT * FROM `wp_postmeta` WHERE meta_value like 'wc_order%' ";
-    //     $postmetas = DB::select($sql);
-    //     foreach ($postmetas as $post) {
-    //         if ($post->post_id < 5505) {
-    //             DB::statement("DELETE FROM `wp_postmeta` WHERE post_id =".$post->post_id);
-    //         }
-            
-    //     }
-    // }
-
 }
 

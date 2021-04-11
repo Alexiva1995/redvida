@@ -1,0 +1,5 @@
+09/04/2021
+Dev: Luisana Marín
+*Cambié de lugar la vista de Billetera, la coloqué en la carpeta user -> wallet -> index.blade.php
+*Agregué funcionalidad a la tabla y al botón de solicitar retiro
+*También cambié su ruta y la coloqué dentro del prefijo de user para mantener el orden en las urls; el método lo cambié al controlador WalletController para tratar de eliminar el otro controlador y dejar solo uno.

@@ -54,37 +54,31 @@
 @endsection
 
 @section('content')
-	<div class="card">
-		<div class="card-content">
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table zero-configuration">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Monto (USD)</th>
-								<th>Billetera</th>
-								<th>Fecha de Solicitud</th>
-								<th>Acción</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($liquidations as $liquidation)
-								<tr>
-									<td>{{ $liquidation->id }}</td>
-									<td>{{ $liquidation->amount }}$</td>
-									<td>{{ $liquidation->wallet }}</td>
-									<td>{{ date('Y/m/d', strtotime($liquidation->date)) }}</td>
-									<td>
-										<a class="show" href="javascript:;" style="color: #3C3232;" data-route="{{ route('user.liquidations.show-commissions-list', $liquidation->id) }}"><i class="fa fa-eye mr-50" aria-hidden="true"></i></a>
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+	<div class="redvida-div-table">
+		<table class="table zero-configuration">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Monto (USD)</th>
+					<th>Billetera</th>
+					<th>Fecha de Solicitud</th>
+					<th>Acción</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($liquidations as $liquidation)
+					<tr>
+						<td>{{ $liquidation->id }}</td>
+						<td>{{ $liquidation->amount }}</td>
+						<td>{{ $liquidation->wallet }}</td>
+						<td>{{ date('Y/m/d', strtotime($liquidation->date)) }}</td>
+						<td>
+							<a class="show" href="javascript:;" style="color: #3C3232;" data-route="{{ route('user.liquidations.show-commissions-list', $liquidation->id) }}"><i class="fa fa-eye mr-50" aria-hidden="true"></i></a>
+						</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 
 	@include('user.liquidations.commissionsListModal')

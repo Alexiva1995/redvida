@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2021 a las 16:36:16
+-- Tiempo de generación: 09-04-2021 a las 17:55:41
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -24,22 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `liquidations`
+-- Estructura de tabla para la tabla `walletlog_rentabilidad`
 --
 
-CREATE TABLE `liquidations` (
+CREATE TABLE `walletlog_rentabilidad` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `amount` double NOT NULL,
-  `wallet` varchar(255) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `payment_ref` varchar(255) DEFAULT NULL,
-  `date` date NOT NULL,
-  `process_date` date DEFAULT NULL,
-  `reverse_comment` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = Pendiente. 1 = Liquidada. 2 = Reversada',
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `iduser` int(11) NOT NULL,
+  `idinversion` int(11) DEFAULT NULL,
+  `concepto` varchar(200) NOT NULL,
+  `debito` double NOT NULL,
+  `credito` double NOT NULL,
+  `balance` double NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `semana` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `fecha_pago` timestamp NULL DEFAULT NULL,
+  `fecha_retiro` timestamp NULL DEFAULT NULL,
+  `descuento` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -47,9 +49,9 @@ CREATE TABLE `liquidations` (
 --
 
 --
--- Indices de la tabla `liquidations`
+-- Indices de la tabla `walletlog_rentabilidad`
 --
-ALTER TABLE `liquidations`
+ALTER TABLE `walletlog_rentabilidad`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -57,9 +59,9 @@ ALTER TABLE `liquidations`
 --
 
 --
--- AUTO_INCREMENT de la tabla `liquidations`
+-- AUTO_INCREMENT de la tabla `walletlog_rentabilidad`
 --
-ALTER TABLE `liquidations`
+ALTER TABLE `walletlog_rentabilidad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

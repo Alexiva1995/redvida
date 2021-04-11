@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/tether.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/shepherd-theme-default.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 @stack('vendor_css')
 <!-- END: Vendor CSS-->
 
@@ -24,7 +25,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/card-analytics.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/tour/tour.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/toastr.min.css')}}">
-
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/toastr.css') }}">
 <style>
     .dropdown-item:hover{
         background: #C8AD77 !important;
@@ -181,16 +183,35 @@
         background: #34C900;
     }
     .table:not(.table-dark):not(.table-light) thead:not(.thead-dark) th, .table:not(.table-dark):not(.table-light) tfoot:not(.thead-dark) th {
-            background-color: #34C900;
-            color:  white;
-        }
+        background-color: #34C900;
+        color:  white;
+    }
+    thead th:first-child{
+        border-top-left-radius: 10px;
+    }
+    thead th:last-child{
+        border-top-right-radius: 10px;
+    }
     .breadcrumb-disabled{
         color: #E1E1E1;
     }
     .breadcrumb-enabled a{
         color: #6B6B6B;
     }
-
+    .redvida-div-table{
+        background-color: white; 
+        border-radius: 10px; 
+        box-shadow: 0px 0px 20px 0px rgba(177, 177, 177, 0.25);
+    }
+    .icon-green{
+        font-size: 18px !important;
+        color: #34C900 !important;
+        margin-right: 15px;
+    }
+    .icon-red{
+        font-size: 18px !important;
+        color: #D50B21 !important;
+    }
 </style>
 
 @stack('custom_css')

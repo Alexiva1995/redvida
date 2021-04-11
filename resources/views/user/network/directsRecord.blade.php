@@ -29,38 +29,32 @@
 @endsection
 
 @section('content')
-	<div class="card">
-		<div class="card-content">
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table zero-configuration">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Correo</th>
-								<th>Fecha de Ingreso</th>
-								<th>Estado</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($referidosDirectos as $referido)
-								<tr>
-									<td>{{ $referido->ID }}</td>
-									<td>{{ $referido->user_email }}</td>
-									<td>{{ date('Y/m/d', strtotime($referido->created_at)) }}</td>
-									<td>
-										@if ($referido->status == 1)
-											<span class="badge badge badge-success badge-pill" style="background-color: #34C900;">Activo</span>
-										@else
-											<span class="badge badge badge-success badge-pill" style="background-color: #B1B1B1;">Inactivo</span>
-										@endif
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+	<div class="redvida-div-table">
+		<table class="table zero-configuration">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Correo</th>
+					<th>Fecha de Ingreso</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($referidosDirectos as $referido)
+					<tr>
+						<td>{{ $referido->ID }}</td>
+						<td>{{ $referido->user_email }}</td>
+						<td>{{ date('Y/m/d', strtotime($referido->created_at)) }}</td>
+						<td>
+							@if ($referido->status == 1)
+								<span class="badge badge badge-success badge-pill" style="background-color: #34C900;">Activo</span>
+							@else
+								<span class="badge badge badge-success badge-pill" style="background-color: #B1B1B1;">Inactivo</span>
+							@endif
+						</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
 	</div>
 @endsection

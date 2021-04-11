@@ -1361,7 +1361,7 @@ input:focus ~ .bg-primary {
 }
 
 .badge.badge-primary {
-  background-color : #00646d;
+  background-color : #34C900;
 }
 
 .overlay-primary {
@@ -1371,8 +1371,8 @@ input:focus ~ .bg-primary {
 }
 
 .btn-primary {
-  border-color : #02E9FE !important;
-  background-color : #02E9FE!important;
+  border-color : #34C900 !important;
+  background-color : #34C900!important;
   color : #FFFFFF;
 }
 .btn-primary:hover {
