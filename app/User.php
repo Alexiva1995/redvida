@@ -8,7 +8,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Hexters\CoinPayment\Entities\CoinPaymentuserRelation;
 
-class User extends Authenticatable{
+class User extends Authenticatable
+
+{
    use Notifiable, HasRoles;
 
    protected $table = "wp_users";
@@ -18,7 +20,7 @@ class User extends Authenticatable{
       'name', 'phone', 'country', 'birthdate', 'gender', 'address', 'user_login', 'user_pass', 
       'user_nicename', 'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status',
       'display_name', 'password', 'avatar', 'referred_id', 'sponsor_id', 'position_id', 'status', 
-      'rol_id', 'wallet', 'wallet_amount', 'rentabilidad', 'porc_rentabilidad', 'clave', 'activacion', 
+      'rol_id', 'wallet', 'amount', 'rentabilidad', 'porc_rentabilidad', 'clave', 'activacion', 
       'token_correo', 'verificar_correo', 'toke_google', 'tipouser', 'check_token_google', 'puntos', 
       'paquete', 'puntosP', 'puntosizq', 'puntosder', 'ladomatrix', 'ladoregistrar', 'icono_paquete', 
       'clave_maestra', 'fecha_activacion',  
