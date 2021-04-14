@@ -16,7 +16,7 @@ class ImpersonateController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('admin.userrecords');
+        return redirect()->route('admin.index');
 
     }
 

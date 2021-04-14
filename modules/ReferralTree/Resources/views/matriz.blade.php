@@ -222,14 +222,14 @@ right connector from last child*/
 </div>
 <hr>
 
-@endif
+@endif 
 
 <div class="col-12 text-center">
 	<div class="card mt-5">
-		<div class="card-header">
+		{{-- <div class="card-header">
 			<span class="border border-dark p-1 float-left">Puntos Izquierdos: <strong>{{$base->puntosizq}}</strong></span>
 			<span class="border border-dark p-1 float-right">Puntos Derechos: <strong>{{$base->puntosder}}</strong></span>
-		</div>
+		</div> --}}
 		<div class="card-body">
 			<div class="padre tree">
 				<ul>
@@ -253,7 +253,7 @@ right connector from last child*/
 										@include('referraltree::infouser', ['data' => $child2])
 										{{-- nivel 3 --}}
 										@if (!empty($child2->children))
-										<ul>
+										{{-- <ul> --}}
 											@foreach ($child2->children as $child3)
 											{{-- lado Derecho --}}
 											@include('referraltree::sideempty', ['side' => 'D', 'cant' => count($child2->children),'ladouser' => $child3->ladomatriz])
@@ -294,13 +294,24 @@ right connector from last child*/
 											{{-- lado Izquierdo --}}
 											@include('referraltree::sideempty', ['side' => 'I', 'cant' => count($child2->children), 'ladouser' => $child3->ladomatriz])
 											@endforeach
-										</ul>
+										{{-- </ul> --}}
 										@endif
 										{{-- fin nivel 3 --}}
 									</li>
 									{{-- lado Izquierdo --}}
 									@include('referraltree::sideempty', ['side' => 'I', 'cant' => count($child->children), 'ladouser' => $child2->ladomatriz])
 									@endforeach
+									
+									<li>
+										<img title="" src="http://localhost:8000/img/plus.png" style="width:64px">
+									</li>
+									<li>
+										<img title="" src="http://localhost:8000/img/plus.png" style="width:64px">
+									</li>
+									<li>
+										<img title="" src="http://localhost:8000/img/plus.png" style="width:64px">
+									</li>
+
 								</ul>
 								@endif
 								{{-- fin nivel 2 --}}
@@ -308,22 +319,27 @@ right connector from last child*/
 							{{-- lado Izquierdo --}}
 							@include('referraltree::sideempty', ['side' => 'I', 'cant' => count($base->children), 'ladouser' => $child->ladomatriz])
 							@endforeach
+						
+							
 						</ul>
 						{{-- fin nivel 1 --}}
 					</li>
 				</ul>
 			</div>
-			@if (Auth::id() != $base->ID)
+			{{-- @if (Auth::id() != $base->ID)
 			<div class="col-12 text-center">
 				<a class="btn btn-info" href="{{route('referraltree', strtolower($type))}}">Regresar a mi arbol</a>
 			</div>
-			@endif
+			@endif --}}
 		</div>
 	</div>
 </div>
 
 <script>
-	function nuevoreferido(id, type) {
+	if (Auth::user()->rol_id === 0) {
+		
+		
+		function nuevoreferido(id, type) {
 		let ruta = "{{url('mioficina/referraltree')}}/" + type + '/' + id
 		window.location.href = ruta
 	}
@@ -335,6 +351,7 @@ right connector from last child*/
 		}else{
 			alert('Rellene el campo de id de usuario')
 		}
+	}
 	}
 </script>
 @endsection

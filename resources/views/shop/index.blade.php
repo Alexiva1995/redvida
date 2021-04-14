@@ -22,8 +22,8 @@
                         <img class="" src="{{asset('product/'.$item->photoDB)}}" height="180" width="230" alt="Card">
                         </div>
                         <div class="card-body">
-                            @if ($total == 2 && $item->discount != NULL )
-                            <h4 class="card-title float-right"><small><strike>{{ $item->public_value }}</strike></small> <sup>{{ $item->discount }}%</sup> > {{ $item->public_value - $item->discount / 100 * $item->public_value }} $</h4>
+                            @if ($total == 1 && $item->discount != NULL )
+                            <h4 class="card-title float-right"><small><strike>{{ $item->public_value }} $</strike></small> <sup>{{ $item->discount }}%</sup><br> {{ $item->public_value - $item->discount / 100 * $item->public_value }} $</h4>
                             <input type="text" value="{{ $item->public_value - $item->discount / 100 * $item->public_value }}" class=" d-none" name="public_value">
                             @else
                             <h4 class="card-title float-right">{{ $item->public_value }} $</h4>

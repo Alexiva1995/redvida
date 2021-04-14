@@ -15,7 +15,9 @@ use App\Http\Controllers\RangoController;
 use App\Http\Controllers\InversionController;
 use App\Http\Controllers\ComisionesController;
 use App\Http\Controllers\ActivacionController;
+use App\OrdenInversion;
 use Carbon\Carbon;
+use App\Settings;
 
 class AdminController extends Controller
 {
@@ -38,7 +40,7 @@ class AdminController extends Controller
 	}
 
     public function index(){
-        try {
+        // try {
             $commissionsPaid = Commission::select(DB::raw("SUM(amount) as amount"),  DB::raw("DATE_FORMAT(date,'%c') as month"))
                                     ->where('status', '=', 1)
                                     ->groupBy("month")
@@ -64,11 +66,11 @@ class AdminController extends Controller
                 $arrayCommissionsTotal[$commissionTotal->month - 1] = $commissionTotal->amount;
             }
 
-            $activeUsers = DB::table('wp_users')
+            $activeUsers = DB::table('users')
                                 ->where('status', '=', 1)
                                 ->count();
 
-            $inactiveUsers = DB::table('wp_users')
+            $inactiveUsers = DB::table('users')
                                 ->where('status', '=', 0)
                                 ->count();
             $users[0] = $activeUsers;
@@ -86,9 +88,9 @@ class AdminController extends Controller
 
             view()->share('title', '');
             return view('admin.dashboard')->with(compact('arrayCommissionsTotal', 'arrayCommissionsPaid', 'users', 'lastRecords', 'lastOrders'));
-        } catch (\Throwable $th) {
-            dd($th);
-        }
+        // } catch (\Throwable $th) {
+        //     dd($th);
+        // }
     }
 
 

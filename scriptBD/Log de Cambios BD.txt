@@ -32,4 +32,11 @@ Dev: Luisana Marín
 *Eliminar tabla walletlog_rentabilidad (script walletlog_rentabilidad.sql respaldado en carpeta old_db)
 *Agregar campo wallet a la tabla wp_users (Correr script wp_users.sql)
 
+12/04/2021
+Dev: William Ache
+*Agregue 2 nuevas carpetas a scriptBD, database(dentro de ellas estan todas las BD que usamos) y old_db_change (ahi estan las tablas que hemos modificado)
+*depure la BD Main para tenerla solo con nuestros registros nada mas y los que necesita el proyecto
+ (redvida_main) de todos modos pondre la primera db que me pasastes para tenerla de respaldo por si acaso lleguemos a necesitar algo de ella
+
+
 

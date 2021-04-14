@@ -15,6 +15,9 @@ use PragmaRX\Google2FA\Google2FA;
 use Carbon\Carbon; 
 use PhpParser\Node\Expr\Cast\Object_;
 use stdClass;
+use App\MetodoPago;
+use App\OrdenInversion;
+use App\Pagos;
 
 class WalletController extends Controller
 {
@@ -30,12 +33,9 @@ class WalletController extends Controller
         $lastRecord = $wallet->last();
 		view()->share('title', 'Billetera');
 
-        return view('user.wallet.index')->with(compact('wallet', 'lastRecord'));
+		return view('user.wallet.index')->with(compact('wallet', 'lastRecord'));
 
     }
-
-
-
 
 
 
@@ -307,12 +307,12 @@ class WalletController extends Controller
 	 * @param integer $id
 	 * @return void
 	 */
-	public function indexInversionDetalle($id)
-	{
-		$detalles = DB::table('log_rentabilidad_pay')->where('id_log_renta', $id)->get();
+	// public function indexInversionDetalle($id)
+	// {
+	// 	$detalles = DB::table('log_rentabilidad_pay')->where('id_log_renta', $id)->get();
 
-		return view('wallet.indexInversionesDetalles', compact('detalles')); 
-	}
+	// 	return view('wallet.indexInversionesDetalles', compact('detalles')); 
+	// }
 
 	/**
 	 * Permite procesar el proceso de la liquidacion de la inversiones

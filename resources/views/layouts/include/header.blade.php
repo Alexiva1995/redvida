@@ -55,15 +55,15 @@
                         <span class="user-name headerBalance">Saldo Disponible: <b class="text-success">{{ number_format(Auth::user()->wallet_amount, 2, '.', ',') }} $</b></span>
                         @endif
                     </div>
-                           @if(!!Auth::user()->photoDB)
+                           @if(Auth::user()->avatar != 'avatar.png')
                             <span>
-                                <img class="round" src="{{asset('product/'.Auth::user()->photoDB)}}"
-                                    alt="{{ Auth::user()->display_name }}" height="40" width="40">
+                                <img class="rounded-circle" src="{{ asset('img/avatar/'.Auth::user()->avatar) }}"
+                                    alt="{{ Auth::user()->display_name }}" height="60" width="60">
                             </span>
                             @else
                             <span>
-                                <img class="round" src="{{asset('img/avatar/avatar.png')}}"
-                                    alt="{{ Auth::user()->display_name }}" height="40" width="40">
+                                <img class="rounded-circle" src="{{asset('img/avatar/avatar.png')}}"
+                                    alt="{{ Auth::user()->display_name }}" height="60" width="60">
                             </span>
                             @endif
                      {{-- <span><img class="round" src="{{ asset('avatar/'.Auth::user()->avatar) }}" alt="avatar" height="40" width="40"></span> --}}

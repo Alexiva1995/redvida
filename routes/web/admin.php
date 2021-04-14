@@ -19,6 +19,8 @@ Route::prefix('mioficina')->group(function (){
       Route::get('2fact', 'Auth\RegisterController@fact2')->name('autenticacion.2fact');
       Route::post('2fact', 'Auth\RegisterController@validar2fact')->name('autenticacion.2fact');
       Route::get('{token}/validarcorreo', 'RecuperarController@validarCorreo')->name('autenticacion-validar-correo');*/
+
+      Route::get('403', 'HomeController@error_auth')->name('403');
    });
    /*FIN DE RUTAS PARA SISTEMA DE AUTENTICACIÓN */
 
@@ -29,7 +31,7 @@ Route::prefix('mioficina')->group(function (){
       Route::post('update-my-profile', 'UserController@update_my_profile')->name('user.update-my-profile');
 
       // BILLETERA
-     Route::get('/wallet', 'WalletController@index')->name('user.wallet.index');
+      Route::get('/wallet', 'WalletController@index')->name('user.wallet.index');
 
       Route::group(['prefix' => 'network'], function(){
          Route::get('/directs-record', 'NetworkController@directs_record')->name('user.network.directs-record');
@@ -99,7 +101,7 @@ Route::prefix('mioficina')->group(function (){
    });*/
 
 
-   Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'guest']], function() {
+   Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'guest', 'checkrole:1']], function() {
       Route::get('/', 'AdminController@index')->name('admin.dashboard');
 
       Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('admin.edit-my-profile');

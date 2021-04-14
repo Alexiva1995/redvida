@@ -159,18 +159,31 @@ class ProductsController extends Controller
     {
             $user = Auth::user();
 
-
             if($user->wallet_amount >= $request->public_value){
             $orden = Order::create([
                 'user_id' => Auth::ID(),
                 'product_id' => $request->id,
                 'amount' => '1',
             ]);
-            $saldoAcumulado = ($orden->getUser->wallet_amount - $request->public_value);
-            $orden->getUser->update(['wallet_amount' => $saldoAcumulado]);
+
+            $wallet = $user->wallet_amount - $request->public_value;
+            $orden->getUser->update(['wallet_amount' => $wallet]);
+
+            $referred_id = $orden->getUser->referred_id;
+            $referred = User::find($referred_id);
+
+            $product = Product::find($request->id);
+
+            if($user->referred_id != NULL){
+            $referred->update([
+                'pts_buy_monthly' => $product->pts_buy_monthly + $referred->pts_buy_monthly,
+                'pts_purchase_ranges' => $product->pts_purchase_ranges + $referred->pts_purchase_ranges,
+                'pts_purchase_prizes' => $product->pts_purchase_prizes + $referred->pts_purchase_prizes
+                ]);
+            }
+
             return redirect()->back()->with('message', 'Producto Comprado');
         }else{
-
             return redirect()->back()->with('error', 'Saldo Insuficiente');
         }
     }

@@ -96,13 +96,13 @@ class IndexController extends Controller
         foreach ($resul as $user) {
             $patrocinado = User::find($user->referred_id);
             $paquete = json_decode($user->paquete);
-            $avatarTree = ($paquete->code == 1) ? asset('assets/imgLanding/icono_plan_vip.png') : asset('assets/imgLanding/icono_plan_standar.png');
+            $avatarTree = ($paquete->code == 1) ? asset('img/bgr.jpeg') : asset('assets/imgLanding/icono_plan_standar.png');
             
-            $userTemp = DB::table('user_campo')->where('ID', '=', $user->ID)->first();
-            $user->fullname = $user->display_name;
-            if (!empty($userTemp)) {
-                $user->fullname = $userTemp->firstname.' '.$user->lastname;
-            }
+            // $userTemp = DB::table('user_campo')->where('ID', '=', $user->ID)->first();
+            // $user->fullname = $user->display_name;
+            // if (!empty($userTemp)) {
+            //     $user->fullname = $userTemp->firstname.' '.$user->lastname;
+            // }
 
             $user->avatarTree = $avatarTree;
             $user->avatar = asset('img/avatar/'.$user->avatar);
@@ -420,7 +420,7 @@ class IndexController extends Controller
      */
     public function getUserRegistrado()
     {
-        $sql = "SELECT COUNT(ID) as users, MONTH(created_at) as mes FROM wp_users WHERE YEAR(created_at) = ? GROUP BY MONTH(created_at)";
+        $sql = "SELECT COUNT(ID) as users, MONTH(created_at) as mes FROM users WHERE YEAR(created_at) = ? GROUP BY MONTH(created_at)";
         $users = DB::select($sql, [date('Y')]);
         $totalMes = [];
         $totalRegistrado = 0;

@@ -82,11 +82,10 @@
                                     </div>
                                     <div style="color: #34C900; font-size: 25px; font-weight: 700;">
                                         @if (!is_null($lastRecord))
-                                            {{ number_format($lastRecord->amount, 2, '.', ',') }}$ <span style="font-size: 15px; font-weight: 400; color: #3C3232;">{{ date('d M', strtotime($lastRecord->created_at)) }}</span>
+                                            {{ number_format($lastRecord->amount, 2, '.', ',') }}$ <span style="font-size: 15px; font-weight: 400; color: #3C3232;"><br>{{ date('d M', strtotime($lastRecord->created_at)) }}</span>
                                         @else
                                             0.00$
                                         @endif
-                                        <br>
                                         @if (!is_null(Auth::user()->wallet))
                                             @if (Auth::user()->wallet_amount > 0)
                                                 <button type="button" class="btn btn-success btn-sm" data-route="{{ route('user.liquidations.store') }}" id="confirm-text">Solicitar Retiro</button>

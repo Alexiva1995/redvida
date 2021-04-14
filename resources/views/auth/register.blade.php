@@ -4,7 +4,7 @@
     @php $referred = null; @endphp
     @if ( request()->referred_id != null )
         @php
-            $referred = DB::table($settings->prefijo_wp.'users')
+            $referred = DB::table('users')
                 ->select('display_name')
                 ->where('ID', '=', request()->referred_id)
                 ->first();

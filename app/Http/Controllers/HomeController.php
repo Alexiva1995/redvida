@@ -224,4 +224,10 @@ class HomeController extends Controller
         }
     }
 
+
+
+    public function error_auth(){
+       return view('landing.403');
+   }
+
 }

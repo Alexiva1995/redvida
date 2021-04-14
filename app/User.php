@@ -13,17 +13,17 @@ class User extends Authenticatable
 {
    use Notifiable, HasRoles;
 
-   protected $table = "wp_users";
+   protected $table = "users";
    protected $primaryKey = 'ID';
 
    protected $fillable = [
       'name', 'phone', 'country', 'birthdate', 'gender', 'address', 'user_login', 'user_pass', 
       'user_nicename', 'user_email', 'user_url', 'user_registered', 'user_activation_key', 'user_status',
       'display_name', 'password', 'avatar', 'referred_id', 'sponsor_id', 'position_id', 'status', 
-      'rol_id', 'wallet', 'amount', 'rentabilidad', 'porc_rentabilidad', 'clave', 'activacion', 
+      'rol_id', 'wallet', 'wallet_amount', 'rentabilidad', 'porc_rentabilidad', 'clave', 'activacion', 
       'token_correo', 'verificar_correo', 'toke_google', 'tipouser', 'check_token_google', 'puntos', 
       'paquete', 'puntosP', 'puntosizq', 'puntosder', 'ladomatrix', 'ladoregistrar', 'icono_paquete', 
-      'clave_maestra', 'fecha_activacion',  
+      'clave_maestra', 'fecha_activacion', 'pts_buy_monthly', 'pts_purchase_ranges', 'pts_purchase_prizes'  
    ];
 
    protected $hidden = [
@@ -60,27 +60,27 @@ class User extends Authenticatable
 
 
 
-    public function scopeSearch($query, $user_email){
-         $query->where(DB::raw("CONCAT(ID)"),"LIKE" ,"%$user_email%");
-    }
+   //  public function scopeSearch($query, $user_email){
+   //       $query->where(DB::raw("CONCAT(ID)"),"LIKE" ,"%$user_email%");
+   //  }
 
-    public function rol(){
-        return $this->belongsTo('App\Rol');
-    }
+   //  public function rol(){
+   //      return $this->belongsTo('App\Rol');
+   //  }
 
-    public function transfers(){
-        return $this->hasMany('App\Transfer');
-    }
+   //  public function transfers(){
+   //      return $this->hasMany('App\Transfer');
+   //  }
     
-    public function tickets(){
-        return $this->hasMany('App\Ticket');
+   //  public function tickets(){
+   //      return $this->hasMany('App\Ticket');
         
-    }
+   //  }
 
-    public function comentarios(){
-        return $this->hasMany('App\Comentario');
+   //  public function comentarios(){
+   //      return $this->hasMany('App\Comentario');
         
-    }
+   //  }
 
 
 }

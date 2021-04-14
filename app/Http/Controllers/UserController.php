@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use App\Commission;
 use App\User;
-use DB; 
-use Auth;
-use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller{
     public function index(){
@@ -41,7 +41,7 @@ class UserController extends Controller{
                 $arrayCommissionsTotal[$commissionTotal->month - 1] = $commissionTotal->amount;
             }
 
-            $lastDirectRecords = DB::table('wp_users')
+            $lastDirectRecords = DB::table('users')
                                     ->select('ID', 'display_name', 'user_email', 'status')
                                     ->where('referred_id', '=', Auth::user()->ID)
                                     ->take(12)
