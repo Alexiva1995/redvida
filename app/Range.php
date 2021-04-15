@@ -22,7 +22,11 @@ class Range extends Model
          'status',
     ];
     
-    public function getUser(){
-        return $this->belongsTo('App\User','iduser', 'id');
+    // public function getUser(){
+    //     return $this->belongsTo('App\User','iduser', 'id');
+    // }
+
+    public function users(){
+        return $this->hasMany('App\User');
     }
 }

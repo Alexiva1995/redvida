@@ -326,17 +326,19 @@ right connector from last child*/
 					</li>
 				</ul>
 			</div>
-			{{-- @if (Auth::id() != $base->ID)
-			<div class="col-12 text-center">
-				<a class="btn btn-info" href="{{route('referraltree', strtolower($type))}}">Regresar a mi arbol</a>
+			@if (Auth::id() != $base->ID)
+			<div class="text-center float-right">
+				<a class="btn btn-primary" href="{{route('referraltree', strtolower($type))}}">Regresar a mi arbol</a>
 			</div>
-			@endif --}}
+			@endif
 		</div>
 	</div>
 </div>
 
 <script>
-	if (Auth::user()->rol_id === 0) {
+	// if (Auth::user()->rol_id === 0) {
+
+	// }
 		
 		
 		function nuevoreferido(id, type) {
@@ -351,7 +353,6 @@ right connector from last child*/
 		}else{
 			alert('Rellene el campo de id de usuario')
 		}
-	}
 	}
 </script>
 @endsection
