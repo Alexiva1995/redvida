@@ -44,36 +44,19 @@ Route::prefix('mioficina')->group(function (){
         Route::get('/record', 'LiquidationController@record')->name('user.liquidations.record');
         Route::get('show-commissions-list/{liquidation_id}', 'LiquidationController@show_commissions_list')->name('user.liquidations.show-commissions-list');
       });
-   });
-   /*FIN DE RUTAS PARA EL USUARIO */
 
-     // TIENDA
+          // TIENDA
      Route::get('/shop/index', 'ProductsController@index')->name('shop.index');
-     Route::get('/shop/list', 'ProductsController@list')->name('shop.list');
      Route::get('/shop/list-user', 'ProductsController@listUser')->name('shop.list-user');
      Route::get('/shop/show/{id}', 'ProductsController@show')->name('shop.show');
      Route::post('/shop/save', 'ProductsController@saveOrden')->name('shop.save');
-     Route::get('/shop/create', 'ProductsController@create')->name('shop.create');
-     Route::get('/shop/edit/{id}', 'ProductsController@edit')->name('shop.edit');
-     Route::post('/shop/store', 'ProductsController@store')->name('shop.store');
-     Route::post('/shop/update/{id}', 'ProductsController@update')->name('shop.update');
-     Route::delete('/shop/delete/{id}', 'ProductsController@delete')->name('shop.delete');
 
-     // RANGO
-     Route::get('/range/index', 'RangesController@index')->name('range.index');
-     Route::get('/range/list', 'RangesController@list')->name('range.list');
-     Route::get('/range/create', 'RangesController@create')->name('range.create');
-     Route::get('/range/edit/{id}', 'RangesController@edit')->name('range.edit');
-     Route::post('/range/store', 'RangesController@store')->name('range.store');
-     Route::post('/range/update/{id}', 'RangesController@update')->name('range.update');
-     Route::delete('/range/delete/{id}', 'RangesController@delete')->name('range.delete');
-
-     // admin
-     Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
      // no admin
      Route::get('/impersonate/stop', 'ImpersonateController@stop')->name('impersonate.stop');
 
 
+   });
+   /*FIN DE RUTAS PARA EL USUARIO */
 
    //Route::get('getcurrency', 'AdminController@getCurrency')->name('get.currency');
    Route::get('vistaCorreo', function (){
@@ -107,10 +90,32 @@ Route::prefix('mioficina')->group(function (){
       Route::get('edit-my-profile', 'UserController@edit_my_profile')->name('admin.edit-my-profile');
       Route::post('update-my-profile', 'UserController@update_my_profile')->name('admin.update-my-profile');
 
+
+        // TIENDA
+      Route::get('/shop/list', 'ProductsController@list')->name('shop.list');
+      Route::get('/shop/create', 'ProductsController@create')->name('shop.create');
+      Route::get('/shop/edit/{id}', 'ProductsController@edit')->name('shop.edit');
+      Route::post('/shop/store', 'ProductsController@store')->name('shop.store');
+      Route::post('/shop/update/{id}', 'ProductsController@update')->name('shop.update');
+      Route::delete('/shop/delete/{id}', 'ProductsController@delete')->name('shop.delete');
+ 
+        // RANGO
+      Route::get('/range/index', 'RangesController@index')->name('range.index');
+      Route::get('/range/list', 'RangesController@list')->name('range.list');
+      Route::get('/range/create', 'RangesController@create')->name('range.create');
+      Route::get('/range/edit/{id}', 'RangesController@edit')->name('range.edit');
+      Route::post('/range/store', 'RangesController@store')->name('range.store');
+      Route::post('/range/update/{id}', 'RangesController@update')->name('range.update');
+      Route::delete('/range/delete/{id}', 'RangesController@delete')->name('range.delete');
+
+       // admin
+      Route::post('/impersonate/{user}/start', 'ImpersonateController@start')->name('impersonate.start');
+
       Route::group(['prefix' => 'liquidations'], function (){
         Route::get('pending', 'LiquidationController@pending')->name('admin.liquidations.pending');
         Route::get('completed', 'LiquidationController@completed')->name('admin.liquidations.completed');
         Route::post('update', 'LiquidationController@update')->name('admin.liquidations.update');
+        
       });
       /*Route::group(['prefix' => 'liquidacion'], function (){
          // Liquidaciones Pendientes
