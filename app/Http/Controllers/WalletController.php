@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\User; 
-use App\WalletTransaction;
-use App\Http\Controllers\ComisionesController;
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\LiquidationController;
-use PragmaRX\Google2FA\Google2FA;
+//use stdClass;
+use App\Pagos;
 use Carbon\Carbon; 
-use PhpParser\Node\Expr\Cast\Object_;
-use stdClass;
 use App\MetodoPago;
 use App\OrdenInversion;
-use App\Pagos;
+use App\WalletTransaction;
+use Illuminate\Http\Request;
+use PragmaRX\Google2FA\Google2FA;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
+//use PhpParser\Node\Expr\Cast\Object_;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\ComisionesController;
+use App\Http\Controllers\LiquidationController;
 
 class WalletController extends Controller
 {
@@ -163,7 +163,7 @@ class WalletController extends Controller
 							'tipotransacion' => 1,
 						];
 						$this->saveWallet($datosW);
-						$user->save();
+						//$user->save();
 						Pagos::create([
 							'iduser' => Auth::user()->ID,
 							'username' => Auth::user()->display_name,

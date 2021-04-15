@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Formulario;
-use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use Carbon\Carbon; 
-use App\Settings;
-// include(app_path() .'/../public/PHPExcel/Classes/PHPExcel.php');
 // use PHPExcel;
-// use PHPExcel_IOFactory;
+use App\Settings;
 // use Reflector;
+use Carbon\Carbon; 
+use App\Formulario;
+// use PHPExcel_IOFactory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Hashing\Hasher as HasherContract;
+// include(app_path() .'/../public/PHPExcel/Classes/PHPExcel.php');
 
 use function GuzzleHttp\json_encode;
 
@@ -58,7 +58,7 @@ class HomeController extends Controller
     {
         view()->share('title', 'Usuarios Inactivos');
         $settings = Settings::first();
-        $product = DB::table($settings->prefijo_wp.'posts as wp')
+        $product = DB::table('posts as wp')
                     ->where([
                         ['wp.post_type', '=', 'product'],
                     ])
@@ -88,8 +88,8 @@ class HomeController extends Controller
         ]);
         if ($validate) {
             $settings = Settings::first();
-            $product = DB::table($settings->prefijo_wp.'posts as wp')
-                        ->join($settings->prefijo_wp.'postmeta as wpm', 'wp.ID', '=', 'wpm.post_id' )
+            $product = DB::table('posts as wp')
+                        ->join('postmeta as wpm', 'wp.ID', '=', 'wpm.post_id' )
                         ->where([
                             ['wpm.meta_key', '=', '_price'],
                             ['wp.post_type', '=', 'product'],
@@ -108,7 +108,7 @@ class HomeController extends Controller
             $rentabilidad = ($product->meta_value * 2);
             $paquete = json_encode($paquete);
             $user = User::find($request->iduser);
-            DB::table($settings->prefijo_wp.'users')
+            DB::table('users')
                         ->where('ID', '=', $request->iduser)
                         ->update([
                             'status' => true,
@@ -146,7 +146,7 @@ class HomeController extends Controller
 
         $datos = [];
         $settings = Settings::first();
-        $usuarios = DB::table($settings->prefijo_wp.'users')
+        $usuarios = DB::table('users')
                         ->orderBy('display_name', 'ASC')
                         ->get();
 

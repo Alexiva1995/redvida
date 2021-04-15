@@ -27,29 +27,29 @@
 						@php
 						$cont++;
 
-						$numOrden = DB::table($settings->prefijo_wp.'postmeta')
+						$numOrden = DB::table('postmeta')
 						->select('meta_value')
 						->where('post_id', '=', $orden->post_id)
 						->where('meta_key', '=', '_order_key')
 						->first();
 
-						$fechaOrden = DB::table($settings->prefijo_wp.'posts')
+						$fechaOrden = DB::table('posts')
 						->select('post_date')
 						->where('ID', '=', $orden->post_id)
 						->first();
 
-						$estado = DB::table($settings->prefijo_wp.'posts')
+						$estado = DB::table('posts')
 						->select('post_status')
 						->where('ID', '=', $orden->post_id)
 						->first();
 
-						$totalOrden = DB::table($settings->prefijo_wp.'postmeta')
+						$totalOrden = DB::table('postmeta')
 						->select('meta_value')
 						->where('post_id', '=', $orden->post_id)
 						->where('meta_key', '=', '_order_total')
 						->first();
 
-						$itemsOrden = DB::table($settings->prefijo_wp.'woocommerce_order_items')
+						$itemsOrden = DB::table('woocommerce_order_items')
 						->select('order_item_name')
 						->where('order_id', '=', $orden->post_id)
 						->where('order_item_type', '=', 'line_item')

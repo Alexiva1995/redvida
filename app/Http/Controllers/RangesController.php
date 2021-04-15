@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
 use App\Range;
-
+use Illuminate\Http\Request;
 
 class RangesController extends Controller
 {

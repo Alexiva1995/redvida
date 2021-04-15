@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Http\Controllers\InversionController;
-use Carbon\Carbon;
 
 class checkPucharse extends Command
 {

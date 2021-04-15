@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Crypt;
-use PragmaRX\Google2FA\Google2FA;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+
 use App\User; 
 use App\Settings; 
 use Carbon\Carbon;
-use App\Formulario; 
-use App\OpcionesSelect;
-use App\SettingCorreo;
-use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
+//use App\Formulario; 
+//use App\SettingCorreo;
+//use App\OpcionesSelect;
+use Illuminate\Http\Request;
+//use PragmaRX\Google2FA\Google2FA;
+//use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+//use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+//use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
 class RegisterController extends Controller{
     use RegistersUsers;
@@ -34,7 +35,6 @@ class RegisterController extends Controller{
     }
 
     public function post_register(Request $data){
-        try {
             // Obtenemos las configuraciones por defecto
             $settings = Settings::first();
 
@@ -45,7 +45,7 @@ class RegisterController extends Controller{
             ];
 
             $validator = Validator::make($data->all(), [
-                'user_email' => 'max:100|unique:'.$settings->prefijo_wp.'users|confirmed',
+                'user_email' => 'max:100|unique:'.'users|confirmed',
                 'password' => 'confirmed',
             ], $messages);
 
@@ -77,13 +77,9 @@ class RegisterController extends Controller{
                 'referred_id' => $referido,
                 'status' => '0'
             ]);
-
             Auth::guard()->login($user);
             return redirect()->action('HomeController@index')->with('msj', 'Se Registrado Exitosamente');
-        } catch (\Throwable $th) {
-            \Log::info("Error en registro ".$th);
-            return redirect()->back()->withInput()->with('msj2', 'El Registro no fue valido, hubo un error en el proceso de registro, contacte con el adminitrador');
-        }
+
     }
 
     public function VerificarUser($id){

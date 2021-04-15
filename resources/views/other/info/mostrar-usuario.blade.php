@@ -27,7 +27,7 @@
 					@foreach ($buscar as $bus)
 
 					@php
-					$referido = DB::table($settings->prefijo_wp.'users')
+					$referido = DB::table('users')
 					->select('user_nicename')
 					->where('ID', '=', $bus->referred_id)
 					->get();

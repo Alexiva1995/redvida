@@ -25,7 +25,7 @@
 						@foreach ($pago as $pa)
 
 						@php
-						$faltante = DB::table($settings->prefijo_wp.'users')
+						$faltante = DB::table('users')
 						->where('ID', '=', $pa->iduser)
 						->get();
 						@endphp

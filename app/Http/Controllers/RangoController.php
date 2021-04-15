@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-
-
-use App\Commission;
-use App\OrdenInversion;
-use App\User;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use App\SettingsRol;
 use App\Rol;
-use App\Http\Controllers\ComisionesController;
+use App\User;
+//use Carbon\Carbon;
+//use App\Commission;
+//use App\SettingsRol;
+use App\OrdenInversion;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\IndexController;
-
+use App\Http\Controllers\ComisionesController;
 class RangoController extends Controller
 {
 	function __construct()

@@ -25,7 +25,7 @@ class ActividadController extends Controller
 	     
 	      $sesion = Sesion::orderBy('id','ASC')->paginate(10);
 	      $settings = Settings::first();
-	      $sql="SELECT c.*, wu.display_name FROM sesions c, ".$settings->prefijo_wp."users wu WHERE c.user_id=wu.ID order By  c.fecha ASC ";
+	      $sql="SELECT c.*, wu.display_name FROM sesions c, "."users wu WHERE c.user_id=wu.ID order By  c.fecha ASC ";
         $sesion =DB::select($sql);
                 return view('actividad.actividad', compact('sesion')); 
 	    

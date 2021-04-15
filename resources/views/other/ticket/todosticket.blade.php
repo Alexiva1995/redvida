@@ -28,7 +28,7 @@
 						@foreach ($ticket as $tic)
 						@php
 						$nombre = 'Usuario Eliminado';
-						$buscar = DB::table($settings->prefijo_wp.'users')
+						$buscar = DB::table('users')
 						->where('ID', '=', $tic->user_id)
 						->first();
 						if (!empty($buscar)) {

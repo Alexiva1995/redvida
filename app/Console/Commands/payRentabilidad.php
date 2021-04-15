@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\ComisionesController;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use App\Http\Controllers\ComisionesController;
 
 class payRentabilidad extends Command
 {

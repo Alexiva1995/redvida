@@ -163,15 +163,15 @@ class RankingController extends Controller
     public function chartVentas()
     {
         $settings = Settings::first();
-        // $sql = "SELECT month(wp.post_date) as mes, SUM(wpm.meta_value) as total FROM $settings->prefijo_wp.postmeta as wpm INNER JOIN $settings->prefijo_wp.posts as wp on (wp.ID = wpm.post_id) WHERE wp.post_status = 'wc-completed' AND wpm.meta_key = '_order_total' AND YEAR(wp.post_date) = year(now()) GROUP BY month(wp.post_date)";
-        $ventas = DB::table($settings->prefijo_wp.'postmeta')
-                        ->join($settings->prefijo_wp.'posts', $settings->prefijo_wp.'postmeta.post_id', '=', $settings->prefijo_wp.'posts.id')
-                        ->select(DB::raw('month('.$settings->prefijo_wp.'posts.post_date) as mes'), DB::raw('SUM('.$settings->prefijo_wp.'postmeta.meta_value) as total'))
+        // $sql = "SELECT month(wp.post_date) as mes, SUM(wpm.meta_value) as total FROM postmeta as wpm INNER JOIN posts as wp on (wp.ID = wpm.post_id) WHERE wp.post_status = 'wc-completed' AND wpm.meta_key = '_order_total' AND YEAR(wp.post_date) = year(now()) GROUP BY month(wp.post_date)";
+        $ventas = DB::table('postmeta')
+                        ->join('posts', 'postmeta.post_id', '=', 'posts.id')
+                        ->select(DB::raw('month('.'posts.post_date) as mes'), DB::raw('SUM('.'postmeta.meta_value) as total'))
                         ->where([
-                            [$settings->prefijo_wp.'posts.post_status', '=', 'wc-completed'],
-                            [$settings->prefijo_wp.'postmeta.meta_key', '=', '_order_total'],
-                            [DB::raw('YEAR('.$settings->prefijo_wp.'posts.post_date)'), '=', 'year(now())'],
-                        ])->groupBy(DB::raw('month('.$settings->prefijo_wp.'posts.post_date)'))->get();
+                            ['posts.post_status', '=', 'wc-completed'],
+                            ['postmeta.meta_key', '=', '_order_total'],
+                            [DB::raw('YEAR('.'posts.post_date)'), '=', 'year(now())'],
+                        ])->groupBy(DB::raw('month('.'posts.post_date)'))->get();
         
         return json_encode($ventas);
     }
@@ -187,27 +187,27 @@ class RankingController extends Controller
     public function chartRangos()
     {
         $settings = Settings::first();
-        // $sql = "SELECT r.name, COUNT(wu.rol_id) FROM roles as r LEFT JOIN $settings->prefijo_wp.users as wu on (r.id = wu.rol_id) GROUP BY r.name";
+        // $sql = "SELECT r.name, COUNT(wu.rol_id) FROM roles as r LEFT JOIN users as wu on (r.id = wu.rol_id) GROUP BY r.name";
         if (Auth::user()->ID != 1) {
             if ($this->obtenerEstructura() == 'arbol') {
                 $roles = DB::table('roles')
-                    ->leftjoin($settings->prefijo_wp.'users', 'roles.id', '=', $settings->prefijo_wp.'users.rol_id')
-                    ->select('roles.name', DB::raw('COUNT('.$settings->prefijo_wp.'users.rol_id) as cantidad'))
-                    ->where($settings->prefijo_wp.'users.referred_id', Auth::user()->ID)
+                    ->leftjoin('users', 'roles.id', '=', 'users.rol_id')
+                    ->select('roles.name', DB::raw('COUNT('.'users.rol_id) as cantidad'))
+                    ->where('users.referred_id', Auth::user()->ID)
                     ->orderBy('roles.id', 'asc')
                     ->groupBy('roles.name')->get();
             } else {
                 $roles = DB::table('roles')
-                    ->leftjoin($settings->prefijo_wp.'users', 'roles.id', '=', $settings->prefijo_wp.'users.rol_id')
-                    ->select('roles.name', DB::raw('COUNT('.$settings->prefijo_wp.'users.rol_id) as cantidad'))
-                    ->where($settings->prefijo_wp.'users.sponsor_id', Auth::user()->ID)
+                    ->leftjoin('users', 'roles.id', '=', 'users.rol_id')
+                    ->select('roles.name', DB::raw('COUNT('.'users.rol_id) as cantidad'))
+                    ->where('users.sponsor_id', Auth::user()->ID)
                     ->orderBy('roles.id', 'asc')
                     ->groupBy('roles.name')->get();
             }
         } else {
             $roles = DB::table('roles')
-                    ->join($settings->prefijo_wp.'users', 'roles.id', '=', $settings->prefijo_wp.'users.rol_id')
-                    ->select('roles.name', DB::raw('COUNT('.$settings->prefijo_wp.'users.rol_id) as cantidad'))
+                    ->join('users', 'roles.id', '=', 'users.rol_id')
+                    ->select('roles.name', DB::raw('COUNT('.'users.rol_id) as cantidad'))
                     ->orderBy('roles.id', 'asc')
                     ->groupBy('roles.name')->get();
         }
@@ -324,7 +324,7 @@ class RankingController extends Controller
         $settings = Settings::first();
         $cantVentasMont = 0;
         foreach ($users as $user) {
-            $ordenes = DB::table($settings->prefijo_wp.'postmeta')
+            $ordenes = DB::table('postmeta')
                             ->select('post_id')
                             ->where('meta_key', '=', '_customer_user')
                             ->where('meta_value', '=', $user['ID'])
@@ -332,7 +332,7 @@ class RankingController extends Controller
                             ->get();
 
             foreach ($ordenes as $orden){
-                $totalOrden = DB::table($settings->prefijo_wp.'postmeta')
+                $totalOrden = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $orden->id)
                         ->where('meta_key', '=', '_order_total')
@@ -396,7 +396,7 @@ class RankingController extends Controller
         $cantVentas = 0;
         $settings = Settings::first();
         foreach($TodosUsuarios as $user){
-            $ordenes = DB::table($settings->prefijo_wp.'postmeta')
+            $ordenes = DB::table('postmeta')
                             ->select('post_id')
                             ->where('meta_key', '=', '_customer_user')
                             ->where('meta_value', '=', $user['ID'])
@@ -424,7 +424,7 @@ class RankingController extends Controller
         $cantVentasMont = 0;
         $settings = Settings::first();
         foreach($TodosUsuarios as $user){
-            $ordenes = DB::table($settings->prefijo_wp.'postmeta')
+            $ordenes = DB::table('postmeta')
                             ->select('post_id')
                             ->where('meta_key', '=', '_customer_user')
                             ->where('meta_value', '=', $user['ID'])
@@ -432,7 +432,7 @@ class RankingController extends Controller
                             ->get();
 
             foreach ($ordenes as $orden){
-                $totalOrden = DB::table($settings->prefijo_wp.'postmeta')
+                $totalOrden = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $orden->id)
                         ->where('meta_key', '=', '_order_total')

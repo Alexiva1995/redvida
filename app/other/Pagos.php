@@ -2,8 +2,7 @@
 
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class Pagos extends Model
 {
     protected $table = "pagos";
@@ -17,7 +16,7 @@ class Pagos extends Model
     ];
     
      public function scopeSearch($query, $iduser){
-         $query->where(\DB::raw("CONCAT(iduser,'', email)"),"LIKE" ,"%$iduser%");
+         $query->where(DB::raw("CONCAT(iduser,'', email)"),"LIKE" ,"%$iduser%");
    
 
     }

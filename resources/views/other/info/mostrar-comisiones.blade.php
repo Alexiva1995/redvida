@@ -25,7 +25,7 @@
 
 						@php
 
-						$faltante = DB::table($settings->prefijo_wp.'users')
+						$faltante = DB::table('users')
 						->where('ID', '=', $usua->user_id)
 						->get();
 						@endphp

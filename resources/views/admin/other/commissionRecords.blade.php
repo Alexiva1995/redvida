@@ -41,7 +41,7 @@
 			@foreach($comisiones as $comision)
 				@php
 					$cont++;
-					$usuario = DB::table($settings->prefijo_wp.'users')
+					$usuario = DB::table('users')
 								->select('display_name')
 								->where('id', '=', $comision->user_id)
 								->first();

@@ -2,8 +2,6 @@
 
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-
 class MetodoPago extends Model
 {
     protected $table = "settingpagos";

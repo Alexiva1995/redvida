@@ -9,12 +9,12 @@
 			<li>Post_id: {{ $compra->post_id }}</li>
 
 			@php
-				$status_compra = DB::table($settings->prefijo_wp.'posts')
+				$status_compra = DB::table('posts')
 								->select('post_status')
 								->where('ID', '=', $compra->post_id)
 								->first();
 
-				$total_compra = DB::table($settings->prefijo_wp.'postmeta')
+				$total_compra = DB::table('postmeta')
 								->select('meta_value')
 								->where('post_id', '=', $compra->post_id)
 								->where('meta_key', '=', '_order_total')

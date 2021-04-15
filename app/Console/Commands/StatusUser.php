@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 use App\Http\Controllers\ActivacionController;
 
 class StatusUser extends Command

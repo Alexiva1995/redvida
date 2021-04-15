@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\User;
-
 use Carbon\Carbon;
-use App\Http\Controllers\IndexController;
-
 use function GuzzleHttp\json_encode;
-
+use App\Http\Controllers\IndexController;
 class ActivacionController extends Controller
 {
 

@@ -26,7 +26,7 @@
 					<tbody>
 						@foreach($usuario as $usua)
 						@php
-						$referido = DB::table($settings->prefijo_wp.'users')
+						$referido = DB::table('users')
 						->select('user_nicename')
 						->where('ID', '=', $usua->referred_id)
 						->get();

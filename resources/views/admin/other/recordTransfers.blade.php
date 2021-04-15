@@ -34,7 +34,7 @@
 			@foreach($transferencias as $transferencia)
 				@php
 					$cont++;
-					$usuario = DB::table($settings->prefijo_wp.'users')
+					$usuario = DB::table('users')
 								->select('display_name')
 								->where('id', '=', $transferencia->user_id)
 								->first();

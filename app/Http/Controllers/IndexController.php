@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\OrdenInversion;
 use App\User;
 use Carbon\Carbon;
+use App\OrdenInversion;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\RangoController;
-
 use function GuzzleHttp\json_decode;
+use App\Http\Controllers\RangoController;
 
 class IndexController extends Controller
 {

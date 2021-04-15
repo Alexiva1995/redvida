@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Carbon\Carbon;
 use App\Commission;
 use App\Liquidation;
-use App\User;
 use App\WalletTransaction;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\ComisionesController;
-use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Auth;
+//use App\Http\Controllers\ComisionesController;
+//use App\Http\Controllers\WalletController;
 
 
 class LiquidationController extends Controller
@@ -308,18 +308,18 @@ class LiquidationController extends Controller
      * @param Request $request
      * @return void
      */
-    public function liduidarUser(Request $request)
-    {
-        $validate = $request->validate([
-            'listuser' => ['required']
-        ]);
-        if ($validate) {
-            foreach ($request->listuser as $user) {
-                $this->generanLiquidacion($user, []);
-            }
-            return redirect()->route('liquidacion')->with('msj', 'Liquidaciones Procesadas, salvo las que estan por debajo de 50$');
-        }
-    }
+    // public function liduidarUser(Request $request)
+    // {
+    //     $validate = $request->validate([
+    //         'listuser' => ['required']
+    //     ]);
+    //     if ($validate) {
+    //         foreach ($request->listuser as $user) {
+    //             $this->generanLiquidacion($user, []);
+    //         }
+    //         return redirect()->route('liquidacion')->with('msj', 'Liquidaciones Procesadas, salvo las que estan por debajo de 50$');
+    //     }
+    // }
 
     /**
      * Permite Procesar las liquidaciones de forma individual para cada usuario
@@ -467,7 +467,7 @@ class LiquidationController extends Controller
      */
     public function saveLiquidation($data): int
     {
-        $liquidacion = Liquidacion::create($data);
+        $liquidacion = Liquidation::create($data);
 
         return $liquidacion->id;
     }

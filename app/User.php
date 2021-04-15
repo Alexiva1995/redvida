@@ -2,11 +2,11 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Hexters\CoinPayment\Entities\CoinPaymentuserRelation;
+// use Hexters\CoinPayment\Entities\CoinPaymentuserRelation;
 
 class User extends Authenticatable
 

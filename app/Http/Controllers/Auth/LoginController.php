@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 use App\User;
-use App\Sesion;
 use Socialite;
-use Google_Client;
-use Google_Service_People;
-use Auth;
+use App\Sesion;
+//use Google_Client;
+//use Google_Service_People;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller{
     use AuthenticatesUsers;
@@ -47,35 +47,35 @@ class LoginController extends Controller{
         } 
     }
 
-    public function redirectToProvider($provider){
-        return Socialite::driver($provider)->redirect();
-    }
+    // public function redirectToProvider($provider){
+    //     return Socialite::driver($provider)->redirect();
+    // }
 
-    public function handleProviderCallback($provider){
-        try{
-            $user = Socialite::driver($provider)->user();
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            abort(403, 'Unauthorized action.');
-            return redirect()->to('/');
-        }
-        $attributes = [
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'avatar' => $user->getAvatar(),
+    // public function handleProviderCallback($provider){
+    //     try{
+    //         $user = Socialite::driver($provider)->user();
+    //     } catch (\GuzzleHttp\Exception\ClientException $e) {
+    //         abort(403, 'Unauthorized action.');
+    //         return redirect()->to('/');
+    //     }
+    //     $attributes = [
+    //         'name' => $user->getName(),
+    //         'email' => $user->getEmail(),
+    //         'avatar' => $user->getAvatar(),
 
-        ];
+    //     ];
 
-        $user = User::where('provider_id', $user->getId() )->first();
+    //     $user = User::where('provider_id', $user->getId() )->first();
         
-        if (!$user){
-            try{
-                $user=  User::create($attributes);
-            }catch (ValidationException $e){
-              return redirect()->to('/home');
-            }
-        }
+    //     if (!$user){
+    //         try{
+    //             $user=  User::create($attributes);
+    //         }catch (ValidationException $e){
+    //           return redirect()->to('/home');
+    //         }
+    //     }
 
-        $this->guard()->login($user);
-        return redirect()->to($this->redirectTo);
-    }        
+    //     $this->guard()->login($user);
+    //     return redirect()->to($this->redirectTo);
+    // }        
 }

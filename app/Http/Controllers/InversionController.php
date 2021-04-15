@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use CoinPayment;
+use Carbon\Carbon;
 use App\OrdenInversion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-use App\User;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use CoinPayment;
-
+use Illuminate\Support\Facades\Auth;
+//use function GuzzleHttp\json_decode;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ComisionesController;
 use App\Http\Controllers\ActivacionController;
 
-use function GuzzleHttp\json_decode;
 
 class InversionController extends Controller
 {
@@ -35,40 +33,40 @@ class InversionController extends Controller
      * @param Request $request
      * @return void
      */
-    public function pago(Request $request)
-    {
-        $validate = $request->validate([
-            'inversion' => ['required', 'numeric', 'min:100'],
-            // 'inversion' => ['required'],
-            'name' => ['required']
-        ]);
-        try {
-            if ($validate) {
-                $inversion = (double) $request->inversion;
-                $porcentage = ($inversion * 0.06);
-                $total = ($inversion + $porcentage);
-                $transacion = [
-                    'amountTotal' => $total,
-                    'note' => 'Inversion de '.number_format($request->inversion, 2, ',', '.').' USD',
-                    'idorden' => $this->saveOrden($inversion, 0),
-                    'tipo' => 'inversion',
-                    'buyer_email' => Auth::user()->user_email,
-                    'redirect_url' => route('tienda-index')
-                ];
-                $transacion['items'][] = [
-                    'itemDescription' => 'Inversion de '.number_format($request->inversion, 2, ',', '.').' USD',
-                    'itemPrice' => $inversion, // USD
-                    'itemQty' => (INT) 1,
-                    'itemSubtotalAmount' => $inversion // USD
-                ];
+    // public function pago(Request $request)
+    // {
+    //     $validate = $request->validate([
+    //         'inversion' => ['required', 'numeric', 'min:100'],
+    //         // 'inversion' => ['required'],
+    //         'name' => ['required']
+    //     ]);
+    //     try {
+    //         if ($validate) {
+    //             $inversion = (double) $request->inversion;
+    //             $porcentage = ($inversion * 0.06);
+    //             $total = ($inversion + $porcentage);
+    //             $transacion = [
+    //                 'amountTotal' => $total,
+    //                 'note' => 'Inversion de '.number_format($request->inversion, 2, ',', '.').' USD',
+    //                 'idorden' => $this->saveOrden($inversion, 0),
+    //                 'tipo' => 'inversion',
+    //                 'buyer_email' => Auth::user()->user_email,
+    //                 'redirect_url' => route('tienda-index')
+    //             ];
+    //             $transacion['items'][] = [
+    //                 'itemDescription' => 'Inversion de '.number_format($request->inversion, 2, ',', '.').' USD',
+    //                 'itemPrice' => $inversion, // USD
+    //                 'itemQty' => (INT) 1,
+    //                 'itemSubtotalAmount' => $inversion // USD
+    //             ];
     
-                $ruta = CoinPayment::generatelink($transacion);
-                return redirect($ruta);
-            }
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('msj', 'Ah Ocurrido un error, por favor contacte con el administrador');
-        }
-    }
+    //             $ruta = CoinPayment::generatelink($transacion);
+    //             return redirect($ruta);
+    //         }
+    //     } catch (\Throwable $th) {
+    //         return redirect()->back()->with('msj', 'Ah Ocurrido un error, por favor contacte con el administrador');
+    //     }
+    // }
 
     /**
      * Permite guardar la orden de compra de la inversion
@@ -123,44 +121,44 @@ class InversionController extends Controller
      *
      * @return void
      */
-    public function verificarCompras()
-    {
-        try {
-            $transaciones = DB::table('coinpayment_transactions')->where([
-                ['status', '=', 0]
-            ])->get();
-            foreach ($transaciones as $transacion) {
-                $result = CoinPayment::getstatusbytxnid($transacion->txn_id);
-                DB::table('coinpayment_transactions')->where('txn_id', $transacion->txn_id)->update($result);
-                $orden = null;
-                if ($result['status'] == 100) {
-                    $orden = OrdenInversion::find($transacion->idorden);
-                }
-                if ($orden != null) {
-                    if ($orden->paquete_inversion == 0) {
-                        $fecha_inicio = new Carbon($transacion->created_at);
-                        $fecha_fin = new Carbon($transacion->created_at);
-                        DB::table('orden_inversiones')->where('idtrasancion', '=', $orden->idtrasancion)->update([
-                            'fecha_inicio' => $fecha_inicio,
-                            'fecha_fin' => $fecha_fin->addYear(),
-                            'status' => 1
-                        ]);
-                        $this->comisionController->checkExictRentabilidad($orden->iduser, $orden->id);
-                    }elseif($orden->paquete_inversion == 100){
-                        $fecha_inicio = new Carbon($transacion->created_at);
-                        DB::table('orden_inversiones')->where('idtrasancion', '=', $orden->idtrasancion)->update([
-                            'fecha_inicio' => $fecha_inicio,
-                            'fecha_fin' => $fecha_inicio,
-                            'status' => 1
-                        ]);
-                        $this->activacionController->activarPaqueteGold($orden->iduser);
-                    }
-                }
-            }
-        } catch (\Throwable $th) {
-            dd($th);
-        }
-    }
+    // public function verificarCompras()
+    // {
+    //     try {
+    //         $transaciones = DB::table('coinpayment_transactions')->where([
+    //             ['status', '=', 0]
+    //         ])->get();
+    //         foreach ($transaciones as $transacion) {
+    //             $result = CoinPayment::getstatusbytxnid($transacion->txn_id);
+    //             DB::table('coinpayment_transactions')->where('txn_id', $transacion->txn_id)->update($result);
+    //             $orden = null;
+    //             if ($result['status'] == 100) {
+    //                 $orden = OrdenInversion::find($transacion->idorden);
+    //             }
+    //             if ($orden != null) {
+    //                 if ($orden->paquete_inversion == 0) {
+    //                     $fecha_inicio = new Carbon($transacion->created_at);
+    //                     $fecha_fin = new Carbon($transacion->created_at);
+    //                     DB::table('orden_inversiones')->where('idtrasancion', '=', $orden->idtrasancion)->update([
+    //                         'fecha_inicio' => $fecha_inicio,
+    //                         'fecha_fin' => $fecha_fin->addYear(),
+    //                         'status' => 1
+    //                     ]);
+    //                     $this->comisionController->checkExictRentabilidad($orden->iduser, $orden->id);
+    //                 }elseif($orden->paquete_inversion == 100){
+    //                     $fecha_inicio = new Carbon($transacion->created_at);
+    //                     DB::table('orden_inversiones')->where('idtrasancion', '=', $orden->idtrasancion)->update([
+    //                         'fecha_inicio' => $fecha_inicio,
+    //                         'fecha_fin' => $fecha_inicio,
+    //                         'status' => 1
+    //                     ]);
+    //                     $this->activacionController->activarPaqueteGold($orden->iduser);
+    //                 }
+    //             }
+    //         }
+    //     } catch (\Throwable $th) {
+    //         dd($th);
+    //     }
+    // }
 
     /**
      * Permite Verificar las compras procesadas
@@ -227,32 +225,32 @@ class InversionController extends Controller
      *
      * @return void
      */
-    public function pagoGold()
-    {
-        try{      
-            $inversion = $this->getValorPaqueteGold(Auth::user()->ID);
-            $porcentage = ($inversion * 0.06);
-            $total = ($inversion + $porcentage);
-            $transacion = [
-                'amountTotal' => $total,
-                'note' => 'Paquete Gold',
-                'idorden' => $this->saveOrden($inversion, 100),
-                'tipo' => 'Paquete',
-                'buyer_email' => Auth::user()->user_email,
-                'redirect_url' => route('tienda-index')
-            ];
-            $transacion['items'][] = [
-                'itemDescription' => 'Paquete gold',
-                'itemPrice' => $inversion, // USD
-                'itemQty' => (INT) 1,
-                'itemSubtotalAmount' => $inversion // USD
-            ];
+    // public function pagoGold()
+    // {
+    //     try{      
+    //         $inversion = $this->getValorPaqueteGold(Auth::user()->ID);
+    //         $porcentage = ($inversion * 0.06);
+    //         $total = ($inversion + $porcentage);
+    //         $transacion = [
+    //             'amountTotal' => $total,
+    //             'note' => 'Paquete Gold',
+    //             'idorden' => $this->saveOrden($inversion, 100),
+    //             'tipo' => 'Paquete',
+    //             'buyer_email' => Auth::user()->user_email,
+    //             'redirect_url' => route('tienda-index')
+    //         ];
+    //         $transacion['items'][] = [
+    //             'itemDescription' => 'Paquete gold',
+    //             'itemPrice' => $inversion, // USD
+    //             'itemQty' => (INT) 1,
+    //             'itemSubtotalAmount' => $inversion // USD
+    //         ];
 
-            $ruta = CoinPayment::generatelink($transacion);
-            return redirect($ruta);
+    //         $ruta = CoinPayment::generatelink($transacion);
+    //         return redirect($ruta);
             
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('msj', 'Ah Ocurrido un error, por favor contacte con el administrador');
-        }
-    }
+    //     } catch (\Throwable $th) {
+    //         return redirect()->back()->with('msj', 'Ah Ocurrido un error, por favor contacte con el administrador');
+    //     }
+    // }
 }

@@ -36,8 +36,8 @@ class ProductController extends Controller
     public function getProduct()
     {
         $settings = Settings::first();
-        $result = DB::table($settings->prefijo_wp.'posts as wp')
-                    ->join($settings->prefijo_wp.'postmeta as wpm', 'wp.ID', '=', 'wpm.post_id' )
+        $result = DB::table('posts as wp')
+                    ->join('postmeta as wpm', 'wp.ID', '=', 'wpm.post_id' )
                     ->where([
                         ['wpm.meta_key', '=', '_price'],
                         ['wp.post_type', '=', 'product'],
@@ -77,7 +77,7 @@ class ProductController extends Controller
             if (empty($request->visible)) {
                 $request->visible = 'No Visible';
             }
-            $id = DB::table($settings->prefijo_wp.'posts')->insertGetId([
+            $id = DB::table('posts')->insertGetId([
                 'post_author' => 1,
                 'post_date' => $fecha->now(),
                 'post_date_gmt' => $fecha->now(),
@@ -134,7 +134,7 @@ class ProductController extends Controller
     public function savePostmetaProduct($idproduc, $datos)
     {
         $settings = Settings::first();
-        DB::table($settings->prefijo_wp.'postmeta')
+        DB::table('postmeta')
             ->insert([
                 ['post_id' => $idproduc, 'meta_key' => '_edit_last', 'meta_value' => 1],
                 ['post_id' => $idproduc, 'meta_key' => '_edit_lock', 'meta_value' => Carbon::now()->format('ymdhis').':1'],
@@ -168,8 +168,8 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         $settings = Settings::first();
-        DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->delete();
-        DB::table($settings->prefijo_wp.'postmeta')->where('post_id', $id)->delete();
+        DB::table('posts')->where('ID', $id)->delete();
+        DB::table('postmeta')->where('post_id', $id)->delete();
 
         return redirect()->back()->with('msj', 'Producto borrado sastifactoriamente');
     }
@@ -189,14 +189,14 @@ class ProductController extends Controller
             $settings = Settings::first();
             $fecha = new Carbon();
             $name = str_replace(' ', '-', $request->name);
-            $file = DB::table($settings->prefijo_wp.'posts')->where('ID', $request->idproduct)->select('guid', 'post_excerpt', 'post_mime_type')->first();
+            $file = DB::table('posts')->where('ID', $request->idproduct)->select('guid', 'post_excerpt', 'post_mime_type')->first();
             $routeLogo = $file->post_excerpt;
             
             if (!empty($request->file('imagen'))) {
                 $file = $request->file('imagen');
                 $routeLogo = $this->fileSave('Logo', $file, 'logo_'.$name);
             }
-            DB::table($settings->prefijo_wp.'posts')->where('ID', $request->idproduct)->update([
+            DB::table('posts')->where('ID', $request->idproduct)->update([
                 'post_title' => strtoupper($request->name),
                 'post_name' => strtolower($name),
                 'post_content' => $request->content,
@@ -219,7 +219,7 @@ class ProductController extends Controller
             //     'porcentaje' => ($request->porcentaje / 100)
             // ];
             
-            DB::table($settings->prefijo_wp.'postmeta')->where([
+            DB::table('postmeta')->where([
                 ['post_id', '=', $request->idproduct],
                 ['meta_key', '=', '_price']
             ])->update([

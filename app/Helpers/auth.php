@@ -1,19 +1,19 @@
 <?php
-if (!function_exists('checkAndShareAuth')) {
-	//
-	function checkAndShareAuth()
-	{
-		$isAuth = Auth::check();
+// if (!function_exists('checkAndShareAuth')) {
+// 	//
+// 	function checkAndShareAuth()
+// 	{
+// 		$isAuth = Auth::check();
 
-		return dd( $isAuth );
+// 		return dd( $isAuth );
 
-		if( $isAuth ) {
-		    //
-		    $member = Auth::user();
-		    //
-		    view()->share( compact('member') );
-		}
+// 		if( $isAuth ) {
+// 		    //
+// 		    $member = Auth::user();
+// 		    //
+// 		    view()->share( compact('member') );
+// 		}
 
-		view()->share( compact('isAuth') );
-	}
-}
+// 		view()->share( compact('isAuth') );
+// 	}
+// }

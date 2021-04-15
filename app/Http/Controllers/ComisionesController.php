@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use App\User; 
+use Carbon\Carbon;
 use App\Commission;
 use App\OrdenInversion;
+use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\WalletController;
 

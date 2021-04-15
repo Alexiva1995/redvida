@@ -407,7 +407,7 @@ class SettingController extends Controller
 	 */
 	public function allProductos(){
 		$settings = Settings::first();
-		$productos = DB::table($settings->prefijo_wp.'posts')->select('ID')->where('post_type', 'product')->orderBy('ID')->get();
+		$productos = DB::table('posts')->select('ID')->where('post_type', 'product')->orderBy('ID')->get();
 		return json_encode($productos);
 	 }
 	
@@ -504,7 +504,7 @@ class SettingController extends Controller
 			}
 		}else{
 			$settings = Settings::first();
-			$productos = DB::table($settings->prefijo_wp.'posts')->select('ID')->where('post_type', 'product')->orderBy('ID')->get();
+			$productos = DB::table('posts')->select('ID')->where('post_type', 'product')->orderBy('ID')->get();
 
 			foreach ($productos as $item ) {
 				$tmparray = [];
@@ -666,12 +666,12 @@ class SettingController extends Controller
 	 */
 	 public function resetSystem(){
 		$settings = Settings::first();
-		DB::table($settings->prefijo_wp.'users')->where('ID', '!=', 1)->delete();
-		DB::table($settings->prefijo_wp.'users')->where('ID', '=', 1)->update([
+		DB::table('users')->where('ID', '!=', 1)->delete();
+		DB::table('users')->where('ID', '=', 1)->update([
 			'wallet_amount' => 0, 
 			'puntos' => 0, 
 		]);
-		$sql = 'ALTER TABLE '.$settings->prefijo_wp.'users AUTO_INCREMENT = 2';
+		$sql = 'ALTER TABLE '.'users AUTO_INCREMENT = 2';
 		DB::statement($sql);
 		DB::table('user_campo')->where('ID', '!=', 1)->delete();
 		DB::table('walletlog')->delete();
@@ -1124,7 +1124,7 @@ class SettingController extends Controller
 	{
 		$settings = Settings::first();
 		$validatedData = $datos->validate([
-            'user_email' => 'required|string|email|max:100|unique:'.$settings->prefijo_wp.'users',
+            'user_email' => 'required|string|email|max:100|unique:'.'users',
         ]);
 		if ($validatedData) {
 			$user = User::create([

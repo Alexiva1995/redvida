@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Settings;
+//use App\Rol;
 use App\User;
-use App\Rol;
+use App\Settings;
 use App\SettingsEstructura;
-use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
-
-
+use Illuminate\Http\Request;
 use PragmaRX\Google2FA\Google2FA;
-use BaconQrCode\Renderer\Image\Png;
-use BaconQrCode\Writer as BaconQrCodeWriter;
+use Illuminate\Support\Facades\DB;
+//use BaconQrCode\Renderer\Image\Png;
+use Illuminate\Support\Facades\Auth;
+//use BaconQrCode\Writer as BaconQrCodeWriter;
+use Modules\ReferralTree\Http\Controllers\ReferralTreeController;
 
 class ActualizarController extends Controller
 {
@@ -170,7 +168,7 @@ class ActualizarController extends Controller
             if ($validate) {
                 if ($user->user_email != $request->user_email) {
                     $validate2 = $request->validate([
-                        'user_email' => 'required|max:100|unique:'.$settings->prefijo_wp.'users|confirmed',
+                        'user_email' => 'required|max:100|unique:'.'users|confirmed',
                     ]);
                     if ($validate2) {
                         $user->user_email = $request->user_email;

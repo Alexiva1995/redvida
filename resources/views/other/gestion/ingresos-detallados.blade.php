@@ -23,7 +23,7 @@
 						@foreach ($comision as $comi)
 
 						@php
-						$falta = DB::table($settings->prefijo_wp.'users')
+						$falta = DB::table('users')
 						->where('user_email', '=', $comi->referred_email)
 						->first();
 						@endphp

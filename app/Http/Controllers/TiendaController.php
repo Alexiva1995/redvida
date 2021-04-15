@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\View;
-
 use App\User; 
-
+//use CoinPayment;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Settings; use App\Monedas; 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\ActivacionController;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
-use CoinPayment;
+use App\Http\Controllers\ActivacionController;
 
 
 class TiendaController extends Controller
@@ -65,8 +61,8 @@ class TiendaController extends Controller
     public function getProductoWP()
     {   
         $settings = Settings::first();
-        $result = DB::table($settings->prefijo_wp.'posts as wp')
-                    ->join($settings->prefijo_wp.'postmeta as wpm', 'wp.ID', '=', 'wpm.post_id' )
+        $result = DB::table('posts as wp')
+                    ->join('postmeta as wpm', 'wp.ID', '=', 'wpm.post_id' )
                     ->where([
                         ['wpm.meta_key', '=', '_price'],
                         ['wp.post_type', '=', 'product'],
@@ -96,26 +92,26 @@ class TiendaController extends Controller
      * @param integer $idorden - orden de la compra
      * @return string
      */
-    public function linkCoinPayMent($nombre, $precio, $idorden): string
-    {
-        $inversion = $precio;
-        $transacion = [
-            'amountTotal' => $inversion,
-            'note' => $nombre,
-            'idorden' => $idorden,
-            'tipo' => 'plan',
-            'buyer_email' => Auth::user()->user_email,
-            'redirect_url' => route('tienda-index')
-        ];
-        $transacion['items'][] = [
-            'itemDescription' => $nombre,
-            'itemPrice' => $inversion, // USD
-            'itemQty' => (INT) 1,
-            'itemSubtotalAmount' => $inversion // USD
-        ];
-        $ruta = CoinPayment::generatelink($transacion);
-        return $ruta;
-    }
+    // public function linkCoinPayMent($nombre, $precio, $idorden): string
+    // {
+    //     $inversion = $precio;
+    //     $transacion = [
+    //         'amountTotal' => $inversion,
+    //         'note' => $nombre,
+    //         'idorden' => $idorden,
+    //         'tipo' => 'plan',
+    //         'buyer_email' => Auth::user()->user_email,
+    //         'redirect_url' => route('tienda-index')
+    //     ];
+    //     $transacion['items'][] = [
+    //         'itemDescription' => $nombre,
+    //         'itemPrice' => $inversion, // USD
+    //         'itemQty' => (INT) 1,
+    //         'itemSubtotalAmount' => $inversion // USD
+    //     ];
+    //     $ruta = CoinPayment::generatelink($transacion);
+    //     return $ruta;
+    // }
 
 
     /**
@@ -139,7 +135,7 @@ class TiendaController extends Controller
             $tpmname = str_replace(',', '', $tpmname);
             $tpmname2 = str_replace(' ', '-', $fecha->now()->format('hi a'));
             $name = 'perdido-'.$tpmname.'-'.$tpmname2;
-            $id = DB::table($settings->prefijo_wp.'posts')->insertGetId([
+            $id = DB::table('posts')->insertGetId([
                 'post_author' => 1,
                 'post_date' => $fecha->now(),
                 'post_date_gmt' => $fecha->now(),
@@ -171,7 +167,7 @@ class TiendaController extends Controller
             ];
             if ($id) {
                 $linkProducto = str_replace('mioficina', '?post_type=shop_order&#038;p=', $datos->root());
-                DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->update([
+                DB::table('posts')->where('ID', $id)->update([
                     'guid' => $linkProducto.$id
                 ]);
                 $this->saveOrdenPostmeta($id, $data, $datos->tipo);
@@ -196,7 +192,7 @@ class TiendaController extends Controller
     public function saveOrderItems($post_id, $name, $data)
     {
         $settings = Settings::first();
-        $id = DB::table($settings->prefijo_wp.'woocommerce_order_items')->insertGetId([
+        $id = DB::table('woocommerce_order_items')->insertGetId([
             'order_item_name' => $name,
             'order_item_type' => 'line_item',
             'order_id' => $post_id,
@@ -212,7 +208,7 @@ class TiendaController extends Controller
     public function saveOrderItemeta($post_id, $data)
     {
         $settings = Settings::first();
-        DB::table($settings->prefijo_wp.'woocommerce_order_itemmeta')->insert([
+        DB::table('woocommerce_order_itemmeta')->insert([
             ['order_item_id' => $post_id, 'meta_key' => '_product_id', 'meta_value' => $data['idproducto']],
             ['order_item_id' => $post_id, 'meta_key' => '_variation_id', 'meta_value' => 0],
             ['order_item_id' => $post_id, 'meta_key' => '_qty', 'meta_value' => 1],
@@ -236,7 +232,7 @@ class TiendaController extends Controller
         $settings = Settings::first();
         $user = User::find(Auth::user()->ID);
         $infofull = $user->names.' '.$user->last_names.' '.$user->address.' '.$user->departamento.' '.$user->country.' '.$user->user_email.' '.$user->phone;
-        DB::table($settings->prefijo_wp.'postmeta')
+        DB::table('postmeta')
             ->insert([
                 ['post_id' => $post_id, 'meta_key' => '_orden_key', 'meta_value' => $datos['_order_key']],
                 ['post_id' => $post_id, 'meta_key' => '_customer_user', 'meta_value' => $user->ID],
@@ -308,8 +304,8 @@ class TiendaController extends Controller
      */
 	public function getShopping(){
         $settings = Settings::first();
-        $comprasID = DB::table($settings->prefijo_wp.'postmeta as wpm')
-                    ->join($settings->prefijo_wp.'posts as wp', 'wp.ID', 'wpm.post_id')
+        $comprasID = DB::table('postmeta as wpm')
+                    ->join('posts as wp', 'wp.ID', 'wpm.post_id')
                     ->select('wpm.post_id', 'wp.post_date', 'wp.post_status', 'code_coinbase', 'id_coinbase')
                     ->where([
                         ['meta_key', '=', '_payment_method_title'],
@@ -336,13 +332,13 @@ class TiendaController extends Controller
     public function getDatos($idpost)
     {
         $settings = Settings::first();
-        $total = DB::table($settings->prefijo_wp.'postmeta')
+        $total = DB::table('postmeta')
                     ->select('meta_value')
                     ->where([
                         ['post_id', '=', $idpost],
                         ['meta_key', '=', '_order_total'],
                     ])->first();;
-        $iduser = DB::table($settings->prefijo_wp.'postmeta')
+        $iduser = DB::table('postmeta')
                     ->select('meta_value')
                     ->where([
                         ['post_id', '=', $idpost],
@@ -472,8 +468,8 @@ class TiendaController extends Controller
             $datoscompra = $this->getDatos($id);
             $user = User::find($datoscompra['iduser']);
             $admin = User::find(1);
-            // $coinpayment = DB::table($settings->prefijo_wp.'postmeta')->where([['post_id', '=', $id], ['meta_key', '=', '_payment_method_title']])->select('meta_value')->get()[0];
-            $file = DB::table($settings->prefijo_wp.'posts')->where('ID', $id)->select('guid')->first();
+            // $coinpayment = DB::table('postmeta')->where([['post_id', '=', $id], ['meta_key', '=', '_payment_method_title']])->select('meta_value')->get()[0];
+            $file = DB::table('posts')->where('ID', $id)->select('guid')->first();
             // if ($coinpayment->meta_value == 'Wallet') {
             //     $user->wallet_amount = ($user->wallet_amount - floatval($datoscompra['total']));
             //     $admin->wallet_amount = ($admin->wallet_amount + floatval($datoscompra['total']));
@@ -504,30 +500,30 @@ class TiendaController extends Controller
     public function actualizarBD($id, $estado)
     {
         $settings = Settings::first();
-        DB::table($settings->prefijo_wp.'posts')
+        DB::table('posts')
             ->where('ID', $id)
             ->update([
                 'post_status' => $estado,
                 'post_modified' => Carbon::now(),
                 'post_modified_gmt' => Carbon::now(),
             ]);
-        $order_key = DB::table($settings->prefijo_wp.'postmeta')->where(['post_id' => $id, 'meta_key' => '_orden_key'])
+        $order_key = DB::table('postmeta')->where(['post_id' => $id, 'meta_key' => '_orden_key'])
                             ->select('meta_value')->first();
-        DB::table($settings->prefijo_wp.'postmeta')->insert([
+        DB::table('postmeta')->insert([
             ['post_id' => $id, 'meta_key' => '_edit_lock', 'meta_value' => Carbon::now()->format('dmYs').':1'],
             ['post_id' => $id, 'meta_key' => '_edit_last', 'meta_value' => 1],
             ['post_id' => $id, 'meta_key' => '_order_key', 'meta_value' => $order_key->meta_value],
         ]);
         if ($estado == 'wc-completed') {
-            DB::table($settings->prefijo_wp.'postmeta')->where(['post_id' => $id, 'meta_key' => '_date_completed'])
+            DB::table('postmeta')->where(['post_id' => $id, 'meta_key' => '_date_completed'])
                     ->update(['meta_value' => Carbon::now()->format('dmYs')]);
-            DB::table($settings->prefijo_wp.'postmeta')->where(['post_id' => $id, 'meta_key' => '_completed_date'])
+            DB::table('postmeta')->where(['post_id' => $id, 'meta_key' => '_completed_date'])
                     ->update(['meta_value' => Carbon::now()->format('dmYs')]);
-            DB::table($settings->prefijo_wp.'postmeta')->where([ 'post_id' => $id, 'meta_key' => '_date_paid'])
+            DB::table('postmeta')->where([ 'post_id' => $id, 'meta_key' => '_date_paid'])
                     ->update(['meta_value' => Carbon::now()->format('dmYs')]);
-            DB::table($settings->prefijo_wp.'postmeta')->where([ 'post_id' => $id, 'meta_key' => '_paid_date'])
+            DB::table('postmeta')->where([ 'post_id' => $id, 'meta_key' => '_paid_date'])
                     ->update(['meta_value' => Carbon::now()->format('dmYs')]);
-            DB::table($settings->prefijo_wp.'postmeta')->insert([
+            DB::table('postmeta')->insert([
                 ['post_id' => $id, 'meta_key' => '_download_permissions_granted', 'meta_value' => 'yes'],
             ]);
         }        

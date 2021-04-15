@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Botbrainbow;
-use App\Http\Controllers\BotBrainbowController;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
+use App\Botbrainbow;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Http\Controllers\BotBrainbowController;
 
 class BotImport implements ToModel, WithHeadingRow
 {

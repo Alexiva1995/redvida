@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Support\Facades\View;
-use App\Product;
 use App\User;
+use App\Order;
+use App\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Order;
-
 
 class ProductsController extends Controller
 {

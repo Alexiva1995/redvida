@@ -38,7 +38,7 @@ class GestionController extends Controller
     	public function gestion(Request $request)
     {
         $settings = Settings::first();
-          $buscar = DB::table($settings->prefijo_wp.'users')
+          $buscar = DB::table('users')
                         ->where('user_nicename', '=', $request->user_nicename)
                         ->first();
                            
@@ -49,7 +49,7 @@ class GestionController extends Controller
                 
              if($buscar != null){   
                  $settings = Settings::first();
-                  $buscar = DB::table($settings->prefijo_wp.'users')
+                  $buscar = DB::table('users')
                     ->where('user_nicename', '=', $request->user_nicename)
                     ->get();  
        
@@ -91,7 +91,7 @@ class GestionController extends Controller
         $yo =  Crypt::decrypt($id);
  
         $settings = Settings::first();
-  $referidos = DB::table($settings->prefijo_wp.'users')
+  $referidos = DB::table('users')
                             ->where('referred_id', '=', $yo)
                             ->get();
                             

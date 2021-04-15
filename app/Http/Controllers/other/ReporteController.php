@@ -33,7 +33,7 @@ class ReporteController extends Controller
         view()->share('do', collect(['name' => 'inicio', 'text' => 'Inicio']));
         $settings = Settings::first();        
 
-          $buscar = DB::table($settings->prefijo_wp.'users')
+          $buscar = DB::table('users')
                     ->where('user_nicename', '=', $request->user_nicename)
                     ->first();
                            
@@ -44,7 +44,7 @@ class ReporteController extends Controller
                 
              if($buscar != null){   
     
-                  $buscar = DB::table($settings->prefijo_wp.'users')
+                  $buscar = DB::table('users')
                 ->where('user_nicename', '=', $request->user_nicename)
                 ->get();  
        
@@ -59,7 +59,7 @@ class ReporteController extends Controller
         
         $settings = Settings::first();
 
-          $buscar = DB::table($settings->prefijo_wp.'users')
+          $buscar = DB::table('users')
                             ->where('ID', '=', $request->id)
                             ->first();
                            
@@ -70,7 +70,7 @@ class ReporteController extends Controller
                 
              if($buscar != null){   
               
-                  $buscar = DB::table($settings->prefijo_wp.'users')
+                  $buscar = DB::table('users')
                             ->where('ID', '=', $request->id)
                             ->get();  
        
@@ -127,7 +127,7 @@ class ReporteController extends Controller
     {
       
         $settings = Settings::first();
-$usuario = DB::table($settings->prefijo_wp.'users')
+$usuario = DB::table('users')
                 ->where('referred_id', '=', Auth::user()->ID)
                 ->whereDate('created_at','=', $request->fecha)
                 ->get();
@@ -148,7 +148,7 @@ $usuario = DB::table($settings->prefijo_wp.'users')
     public function mostrarrango(Request $request)
     {
         $settings = Settings::first();
-      $rango = DB::table($settings->prefijo_wp.'users')
+      $rango = DB::table('users')
                             ->where('rol_id', '=', $request->rango)
                             ->get();
     
@@ -285,7 +285,7 @@ $usuario = DB::table($settings->prefijo_wp.'users')
     {
        $primero =date('d-m-Y', strtotime($_POST['fecha']));
       $settings = Settings::first();
-     $ordenes = DB::table($settings->prefijo_wp.'postmeta')
+     $ordenes = DB::table('postmeta')
                     ->select('post_id')
                     ->where('meta_key', '=', '_customer_user')
                     ->orderBy('post_id', 'DESC')
@@ -307,31 +307,31 @@ $usuario = DB::table($settings->prefijo_wp.'users')
      */
     public function getDetailsOrder($order_id, $array_datos, $level, $nombre, $desde, $hasta) : array { 
         $settings = Settings::first();
-        $numOrden = DB::table($settings->prefijo_wp.'postmeta')
+        $numOrden = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $order_id)
                         ->where('meta_key', '=', '_order_key')
                         ->first();
-        $fechaOrden = DB::table($settings->prefijo_wp.'posts')
+        $fechaOrden = DB::table('posts')
                         ->select('post_date')
                         ->where('ID', '=', $order_id)
                         ->first();
-        $totalOrden = DB::table($settings->prefijo_wp.'postmeta')
+        $totalOrden = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $order_id)
                         ->where('meta_key', '=', '_order_total')
                         ->first();
-        $idUsuario = DB::table($settings->prefijo_wp.'postmeta')
+        $idUsuario = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $order_id)
                         ->where('meta_key', '=', '_customer_user')
                         ->first();
-        $nombreOrden = DB::table($settings->prefijo_wp.'postmeta')
+        $nombreOrden = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $order_id)
                         ->where('meta_key', '=', '_billing_first_name')
                         ->first();
-        $apellidoOrden = DB::table($settings->prefijo_wp.'postmeta')
+        $apellidoOrden = DB::table('postmeta')
                         ->select('meta_value')
                         ->where('post_id', '=', $order_id)
                         ->where('meta_key', '=', '_billing_last_name')
@@ -345,12 +345,12 @@ $usuario = DB::table($settings->prefijo_wp.'users')
                 $nombreCompleto = $tmpuser->display_name;
             }
         }
-        $itemsOrden = DB::table($settings->prefijo_wp.'woocommerce_order_items')
+        $itemsOrden = DB::table('woocommerce_order_items')
                         ->select('order_item_name')
                         ->where('order_id', '=', $order_id)
                         ->where('order_item_type', '=', 'line_item')
                         ->get();
-        $estadoOrden = DB::table($settings->prefijo_wp.'posts')
+        $estadoOrden = DB::table('posts')
                         ->select('post_status')
                         ->where('ID', '=', $order_id)
                         ->first();
@@ -404,7 +404,7 @@ $usuario = DB::table($settings->prefijo_wp.'users')
         $segundo = new Carbon($datos->fecha2);;
         $settings = Settings::first();
         $compras = [];
-        $ordenes = DB::table($settings->prefijo_wp.'postmeta')
+        $ordenes = DB::table('postmeta')
                     ->select('post_id')
                     ->where('meta_key', '=', '_customer_user')
                     ->orderBy('post_id', 'DESC')
